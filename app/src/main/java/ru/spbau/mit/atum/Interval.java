@@ -40,4 +40,29 @@ public class Interval {
     public int end() {
         return end;
     }
+
+    /**
+     * Проверяет является ли интервал пустым.
+     *
+     * @return true, если интервал пустой.
+     */
+    public boolean isEmpty() {
+        return begin == end;
+    }
+
+    /**
+     * Пересекает этот интервал с переданным в качестве аргумента, сохраняя резуьтат в текущем
+     * интервале. Если пересечение пустое, то результатом будет интервал вида [a, a), где a -
+     * наибольший из левых концов пересекаемых интервалов.
+     *
+     * @param interval интервал, с которым нужно пересечь.
+     */
+    public void intersectWith(Interval interval) {
+        begin = Math.max(begin, interval.begin);
+        end = Math.min(end, interval.end);
+
+        if (end < begin) {
+            end = begin;
+        }
+    }
 }
