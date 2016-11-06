@@ -4,17 +4,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class SegmentTest {
+public class IntervalTest {
     /**
      * Проверяет работоспособность конструктора. Последний вызов должен выбросить исключение.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor() throws Exception {
-        new Segment(1, 2);
-        new Segment(0, 0);
+        new Interval(1, 2);
+        new Interval(0, 0);
 
         // Тут должно вылететь исключение
-        new Segment(2, 1);
+        new Interval(2, 1);
     }
 
     /**
@@ -22,9 +22,9 @@ public class SegmentTest {
      */
     @Test
     public void testGetters() throws Exception {
-        Segment segment = new Segment(-1, 2);
+        Interval interval = new Interval(-1, 2);
 
-        assertEquals(-1, segment.begin());
-        assertEquals(2, segment.end());
+        assertEquals(-1, interval.begin());
+        assertEquals(2, interval.end());
     }
 }
