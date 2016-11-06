@@ -7,8 +7,6 @@ import static org.junit.Assert.assertEquals;
 public class SegmentTest {
     /**
      * Проверяет работоспособность конструктора. Последний вызов должен выбросить исключение.
-     *
-     * @throws Exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor() throws Exception {
@@ -21,8 +19,6 @@ public class SegmentTest {
 
     /**
      * Проверяет работоспособность методов доступа к полям.
-     *
-     * @throws Exception
      */
     @Test
     public void testGetters() throws Exception {
