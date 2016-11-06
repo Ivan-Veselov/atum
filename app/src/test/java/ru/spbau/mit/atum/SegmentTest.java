@@ -7,17 +7,22 @@ import static org.junit.Assert.assertEquals;
 public class SegmentTest {
     /**
      * Проверяет работоспособность конструктора. Последний вызов должен выбросить исключение.
+     *
+     * @throws Exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor() throws Exception {
         new Segment(1, 2);
         new Segment(0, 0);
 
-        new Segment(2, 1); // Тут должно вылететь исключение
+        // Тут должно вылететь исключение
+        new Segment(2, 1);
     }
 
     /**
      * Проверяет работоспособность методов доступа к полям.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetters() throws Exception {
