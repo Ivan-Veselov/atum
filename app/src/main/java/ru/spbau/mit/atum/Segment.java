@@ -9,6 +9,7 @@ public class Segment {
             "Coordinate of the end of the Segment is less than coordinate of the beginning.";
 
     private int begin;
+
     private int end;
 
     /**
