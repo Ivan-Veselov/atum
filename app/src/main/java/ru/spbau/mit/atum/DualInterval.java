@@ -25,7 +25,7 @@ public class DualInterval extends Interval {
     /**
      * @return true, если интервал исключающий.
      */
-    boolean isExclusive() {
+    public boolean isExclusive() {
         return exclusiveFlag;
     }
 }
