@@ -1,6 +1,6 @@
 package ru.spbau.mit.atum;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -42,5 +42,49 @@ public abstract class TimeFilter {
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
      *         задает фильтр.
      */
-    public abstract List<DualInterval> intervalRepresentation(Date initialMoment, Date finalMoment);
+    public List<DualInterval> intervalRepresentation(Calendar initialMoment, Calendar finalMoment) {
+        if (!checkOrderOfMoments(initialMoment, finalMoment)) {
+            throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
+        }
+
+        return intervalRepresentationImpl(initialMoment,
+                new Interval(0, convertToPointRelative(initialMoment, finalMoment)));
+    }
+
+    /**
+     * Вспомогательный метод, который должны перегружать производные классы, в то время как
+     * intervalRepresentation выполняет общую работу и вызывает этот метод.
+     *
+     * @param initialMoment точка отсчета и нижняя граница времени.
+     * @param globalInterval целочисленный интервал всего доступного времени.
+     * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
+     *         задает фильтр.
+     */
+    protected abstract List<DualInterval> intervalRepresentationImpl(Calendar initialMoment,
+                                                                     Interval globalInterval);
+
+    /**
+     * Вспомогательный метод, который проверяет, что переданные моменты времени идут в правильном
+     * порядке: сначала первый, затем второй.
+     *
+     * @param initialMoment первый момент времени.
+     * @param finalMoment второй момент времени.
+     * @return true, если проверка успешна.
+     */
+    protected static boolean checkOrderOfMoments(Calendar initialMoment, Calendar finalMoment) {
+        return initialMoment.compareTo(finalMoment) > 0;
+    }
+
+    /**
+     * Вспомогательный метод, который переводит момент времени в число, которое является сдвигом
+     * в минутах относительно другого момента времени. Сдвиг высчитывается, отбрасывая более точные
+     * единицы измерения.
+     *
+     * @param initialMoment момент времени, относительно которого считается сдвиг.
+     * @param moment момент времени, который нужно перевести в число.
+     * @return численное представление момента времени.
+     */
+    protected static int convertToPointRelative(Calendar initialMoment, Calendar moment) {
+        return moment.get(Calendar.MINUTE) - initialMoment.get(Calendar.MINUTE);
+    }
 }
