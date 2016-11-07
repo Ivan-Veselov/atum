@@ -5,12 +5,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class IntervalTest {
-    @Test(expected = IllegalArgumentException.class)
-    public void testConstructor() throws Exception {
+    @Test
+    public void testConstructor1() throws Exception {
         new Interval(1, 2);
         new Interval(0, 0);
+    }
 
-        // Тут должно вылететь исключение
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor2() throws Exception {
         new Interval(2, 1);
     }
 
