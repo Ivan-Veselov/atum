@@ -86,7 +86,7 @@ public abstract class TimeFilter {
      * @return численное представление момента времени.
      */
     protected static int convertToPointRelative(Calendar initialMoment, Calendar moment) {
-        return (int)(TimeUnit.MILLISECONDS.toMinutes(moment.getTimeInMillis()) -
-                     TimeUnit.MILLISECONDS.toMinutes(initialMoment.getTimeInMillis()));
+        return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getTimeInMillis())
+                      - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getTimeInMillis()));
     }
 }
