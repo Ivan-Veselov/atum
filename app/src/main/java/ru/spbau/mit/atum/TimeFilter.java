@@ -2,6 +2,7 @@ package ru.spbau.mit.atum;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Временной фильтр задает некоторым специфичным образом временные промежутки. Фильтр может быть
@@ -72,7 +73,7 @@ public abstract class TimeFilter {
      * @return true, если проверка успешна.
      */
     protected static boolean checkOrderOfMoments(Calendar initialMoment, Calendar finalMoment) {
-        return initialMoment.compareTo(finalMoment) > 0;
+        return initialMoment.compareTo(finalMoment) <= 0;
     }
 
     /**
@@ -85,6 +86,7 @@ public abstract class TimeFilter {
      * @return численное представление момента времени.
      */
     protected static int convertToPointRelative(Calendar initialMoment, Calendar moment) {
-        return moment.get(Calendar.MINUTE) - initialMoment.get(Calendar.MINUTE);
+        return (int)(TimeUnit.MILLISECONDS.toMinutes(moment.getTimeInMillis()) -
+                     TimeUnit.MILLISECONDS.toMinutes(initialMoment.getTimeInMillis()));
     }
 }
