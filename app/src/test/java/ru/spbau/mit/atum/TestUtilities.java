@@ -30,4 +30,9 @@ public class TestUtilities {
     public static AbstractDateTime theFirstOfJan(int hour, int minute) {
         return theNthOfJan(1, hour, minute);
     }
+
+    /**
+     * Класс является хранилищем статических методов.
+     */
+    private TestUtilities() {}
 }

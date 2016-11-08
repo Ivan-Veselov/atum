@@ -1,10 +1,10 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
-import org.joda.time.ReadableDateTime;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
+import org.joda.time.ReadableDateTime;
 
 /**
  * Временной фильтр задает некоторым специфичным образом временные промежутки. Фильтр может быть

@@ -1,17 +1,17 @@
 package ru.spbau.mit.atum;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.ReadableDateTime;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Фильтр, который задает непрерывный промежуток времени для каждого из заданных дней недели.
  * Промежуток может заканчиваться на следующий день, но его длительность не должна превышать суток.
  *
- * TODO: ограничение на длину промежутка можно убрать.
+ * <p>TODO: ограничение на длину промежутка можно убрать.
  * Для этого потребуется усложнить алгоритм преобразования в список отрезков.
  */
 public class WeekFilter extends TimeFilter {
@@ -87,7 +87,7 @@ public class WeekFilter extends TimeFilter {
         List<DualInterval> intervalList = new ArrayList<>();
 
         while (currentIntervalBeginning < globalInterval.end()) {
-           if (mask.isSet(dayOfWeek)) {
+            if (mask.isSet(dayOfWeek)) {
                 DualInterval interval = new DualInterval(currentIntervalBeginning,
                         currentIntervalBeginning + duration,
                         isExclusive());
