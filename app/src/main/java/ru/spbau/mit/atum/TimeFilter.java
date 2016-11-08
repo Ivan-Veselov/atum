@@ -1,8 +1,8 @@
 package ru.spbau.mit.atum;
 
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.ReadableDateTime;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,8 +45,9 @@ public abstract class TimeFilter {
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
      *         задает фильтр.
      */
-    public @NotNull List<DualInterval> intervalRepresentation(@NotNull Calendar initialMoment,
-                                                              @NotNull Calendar finalMoment) {
+    public @NotNull List<DualInterval> intervalRepresentation(
+                                                        @NotNull ReadableDateTime initialMoment,
+                                                        @NotNull ReadableDateTime finalMoment) {
         if (!checkOrderOfMoments(initialMoment, finalMoment)) {
             throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
         }
@@ -64,7 +65,7 @@ public abstract class TimeFilter {
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
      *         задает фильтр.
      */
-    protected abstract List<DualInterval> intervalRepresentationImpl(Calendar initialMoment,
+    protected abstract List<DualInterval> intervalRepresentationImpl(ReadableDateTime initialMoment,
                                                                      Interval globalInterval);
 
     /**
@@ -75,8 +76,8 @@ public abstract class TimeFilter {
      * @param finalMoment второй момент времени.
      * @return true, если проверка успешна.
      */
-    protected static boolean checkOrderOfMoments(@NotNull Calendar initialMoment,
-                                                 @NotNull Calendar finalMoment) {
+    protected static boolean checkOrderOfMoments(@NotNull ReadableDateTime initialMoment,
+                                                 @NotNull ReadableDateTime finalMoment) {
         return initialMoment.compareTo(finalMoment) <= 0;
     }
 
@@ -89,9 +90,9 @@ public abstract class TimeFilter {
      * @param moment момент времени, который нужно перевести в число.
      * @return численное представление момента времени.
      */
-    protected static int convertToPointRelative(@NotNull Calendar initialMoment,
-                                                @NotNull Calendar moment) {
-        return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getTimeInMillis())
-                      - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getTimeInMillis()));
+    protected static int convertToPointRelative(@NotNull ReadableDateTime initialMoment,
+                                                @NotNull ReadableDateTime moment) {
+        return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getMillis())
+                      - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
     }
 }

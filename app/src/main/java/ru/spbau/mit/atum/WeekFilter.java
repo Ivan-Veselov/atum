@@ -1,11 +1,11 @@
 package ru.spbau.mit.atum;
 
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Фильтр, который задает непрерывный промежуток времени для каждого из заданных дней недели.
@@ -16,14 +16,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class WeekFilter extends TimeFilter {
     private static final String INVALID_INTERVAL_MSG = "Invalid time interval for week filter.";
-
-    // TODO: стоило бы вынести эти константы в более подходящее место
-
-    private static final int minutesInDay = (int) TimeUnit.DAYS.toMinutes(1);
-
-    private static final int minutesInHour = (int) TimeUnit.HOURS.toMinutes(1);
-
-    private static final int daysInWeek = 7;
 
     private int firstMinute;
 
@@ -37,15 +29,15 @@ public class WeekFilter extends TimeFilter {
      * @param firstMinute первая минута дня, которую задает фильтр.
      * @param duration длина одного промежутка. Не должна превышать 24 часа.
      * @param mask маска, представляющая те дни недели, в которых находятся временные промежутки,
-     *             которые задает фильтр. Неделя начинается с воскресенья.
+     *             которые задает фильтр. Неделя начинается с понедельника.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
     public WeekFilter(int firstMinute, int duration, @NotNull WeekMask mask,
                       boolean exclusiveFlag) {
         super(exclusiveFlag);
 
-        if (firstMinute < 0 || firstMinute >= minutesInDay
-                || duration < 0 || duration > minutesInDay) {
+        if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
+                || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
             throw new IllegalArgumentException(INVALID_INTERVAL_MSG);
         }
 
@@ -82,13 +74,13 @@ public class WeekFilter extends TimeFilter {
      *         задает фильтр.
      */
     @Override
-    protected List<DualInterval> intervalRepresentationImpl(@NotNull Calendar initialMoment,
+    protected List<DualInterval> intervalRepresentationImpl(@NotNull ReadableDateTime initialMoment,
                                                             @NotNull Interval globalInterval) {
-        int minuteOffset = initialMoment.get(Calendar.HOUR_OF_DAY) * minutesInHour
-                         + initialMoment.get(Calendar.MINUTE);
+        int minuteOffset = initialMoment.getHourOfDay() * DateTimeConstants.MINUTES_PER_HOUR
+                         + initialMoment.getMinuteOfHour();
 
-        // У воскресенье номер 1
-        int dayOfWeek = initialMoment.get(Calendar.DAY_OF_WEEK) - Calendar.SUNDAY;
+        // У понедельника номер 1
+        int dayOfWeek = initialMoment.getDayOfWeek() - DateTimeConstants.MONDAY;
 
         int currentIntervalBeginning = firstMinute - minuteOffset;
 
@@ -106,8 +98,8 @@ public class WeekFilter extends TimeFilter {
                 }
             }
 
-            dayOfWeek = (dayOfWeek + 1) % daysInWeek;
-            currentIntervalBeginning += minutesInDay;
+            dayOfWeek = (dayOfWeek + 1) % DateTimeConstants.DAYS_PER_WEEK;
+            currentIntervalBeginning += DateTimeConstants.MINUTES_PER_DAY;
         }
 
         return intervalList;

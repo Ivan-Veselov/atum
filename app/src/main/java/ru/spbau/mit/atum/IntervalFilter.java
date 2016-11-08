@@ -1,18 +1,18 @@
 package ru.spbau.mit.atum;
 
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
  * Фильтр, который задает непрерывный интервал времени.
  */
 public class IntervalFilter extends TimeFilter {
-    private Calendar filterInitialMoment;
+    private ReadableDateTime filterInitialMoment;
 
-    private Calendar filterFinalMoment;
+    private ReadableDateTime filterFinalMoment;
 
     /**
      * Создает новый фильтр.
@@ -21,8 +21,8 @@ public class IntervalFilter extends TimeFilter {
      * @param filterFinalMoment конечный момент интервала, который задает фильтр.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
-    public IntervalFilter(@NotNull Calendar filterInitialMoment,
-                          @NotNull Calendar filterFinalMoment, boolean exclusiveFlag) {
+    public IntervalFilter(@NotNull ReadableDateTime filterInitialMoment,
+                          @NotNull ReadableDateTime filterFinalMoment, boolean exclusiveFlag) {
         super(exclusiveFlag);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
@@ -36,14 +36,14 @@ public class IntervalFilter extends TimeFilter {
     /**
      * @return начальный момент интервала, который задает фильтр.
      */
-    public @NotNull Calendar getInitialMoment() {
+    public @NotNull ReadableDateTime getInitialMoment() {
         return filterInitialMoment;
     }
 
     /**
      * @return конечный момент интервала, который задает фильтр.
      */
-    public @NotNull Calendar getFinalMoment() {
+    public @NotNull ReadableDateTime getFinalMoment() {
         return filterFinalMoment;
     }
 
@@ -55,7 +55,7 @@ public class IntervalFilter extends TimeFilter {
      */
     @Override
     protected @NotNull List<DualInterval> intervalRepresentationImpl(
-                                                @NotNull Calendar initialMoment,
+                                                @NotNull ReadableDateTime initialMoment,
                                                 @NotNull Interval globalInterval) {
         DualInterval filterInterval = new DualInterval(
                                         convertToPointRelative(initialMoment, filterInitialMoment),

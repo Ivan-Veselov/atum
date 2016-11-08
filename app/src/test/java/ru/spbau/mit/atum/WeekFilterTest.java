@@ -74,7 +74,7 @@ public class WeekFilterTest {
     @Test
     public void testIntervalRepresentation() throws Exception {
         int duration = 65;
-        WeekFilter filter = new WeekFilter(12 * 60, duration, new WeekMask(2, 6), false);
+        WeekFilter filter = new WeekFilter(12 * 60, duration, new WeekMask(1, 5), false);
 
         // вт(4, 13:00-13:05)/сб(8, 12:00-13:05)/вт(11, 12:00-13:05)/сб(15, 12:00-12:31)
         List<DualInterval> list = filter.intervalRepresentation(theNthOfJan(4, 13, 0),

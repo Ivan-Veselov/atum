@@ -1,13 +1,12 @@
 package ru.spbau.mit.atum;
 
+import org.joda.time.DateTimeConstants;
+
 /**
  * Класс представляющий произвольный набор дней недели.
  */
 public class WeekMask {
     private static final String DAY_OUT_OF_RANGE_MSG = "Day of week number is out of range [0, 6].";
-
-    // TODO: стоило бы вынести эту константу в более подходящее место
-    private static final int daysInWeek = 7;
 
     private int mask;
 
@@ -51,6 +50,6 @@ public class WeekMask {
      * @return true, если число является номером дня недели.
      */
     private boolean checkDayNumber(int dayNumber) {
-        return 0 <= dayNumber && dayNumber < daysInWeek;
+        return 0 <= dayNumber && dayNumber < DateTimeConstants.DAYS_PER_WEEK;
     }
 }

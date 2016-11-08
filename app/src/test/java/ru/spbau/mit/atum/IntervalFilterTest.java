@@ -1,8 +1,8 @@
 package ru.spbau.mit.atum;
 
+import org.joda.time.base.AbstractDateTime;
 import org.junit.Test;
 
-import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -22,8 +22,8 @@ public class IntervalFilterTest {
     /**
      * Вспомогательный метод, который тестирует методы доступа
      */
-    private void testGettersOn(Calendar initialMoment,
-                               Calendar finalMoment, boolean exclusiveFlag) throws Exception {
+    private void testGettersOn(AbstractDateTime initialMoment,
+                               AbstractDateTime finalMoment, boolean exclusiveFlag) throws Exception {
 
         IntervalFilter filter = new IntervalFilter(initialMoment, finalMoment, exclusiveFlag);
 
@@ -38,11 +38,11 @@ public class IntervalFilterTest {
         testGettersOn(theFirstOfJan(12, 0), theFirstOfJan(22, 23), true);
     }
 
-    private void testIntervalRepresentationOn(Calendar filterInitialMoment,
-                                              Calendar filterFinalMoment,
+    private void testIntervalRepresentationOn(AbstractDateTime filterInitialMoment,
+                                              AbstractDateTime filterFinalMoment,
                                               boolean exclusiveFlag,
-                                              Calendar initialMoment,
-                                              Calendar finalMoment,
+                                              AbstractDateTime initialMoment,
+                                              AbstractDateTime finalMoment,
                                               int begin,
                                               int end) throws Exception {
         IntervalFilter filter = new IntervalFilter(filterInitialMoment,
@@ -57,11 +57,11 @@ public class IntervalFilterTest {
         assertEquals(exclusiveFlag, interval.isExclusive());
     }
 
-    private void testIntervalRepresentationOnEmpty(Calendar filterInitialMoment,
-                                                   Calendar filterFinalMoment,
+    private void testIntervalRepresentationOnEmpty(AbstractDateTime filterInitialMoment,
+                                                   AbstractDateTime filterFinalMoment,
                                                    boolean exclusiveFlag,
-                                                   Calendar initialMoment,
-                                                   Calendar finalMoment) throws Exception {
+                                                   AbstractDateTime initialMoment,
+                                                   AbstractDateTime finalMoment) throws Exception {
         IntervalFilter filter = new IntervalFilter(filterInitialMoment,
                 filterFinalMoment, exclusiveFlag);
 

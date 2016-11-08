@@ -1,7 +1,7 @@
 package ru.spbau.mit.atum;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.base.AbstractDateTime;
 
 /**
  * Вспомогательные метода для тестирования.
@@ -15,8 +15,8 @@ public class TestUtilities {
      * @param minute минута.
      * @return объект класса Calendar.
      */
-    public static Calendar theNthOfJan(int day, int hour, int minute) {
-        return new GregorianCalendar(2000, 0, day, hour, minute, 0);
+    public static AbstractDateTime theNthOfJan(int day, int hour, int minute) {
+        return new DateTime(2000, 1, day, hour, minute, 0);
     }
 
     /**
@@ -27,7 +27,7 @@ public class TestUtilities {
      * @param minute минута.
      * @return объект класса Calendar.
      */
-    public static Calendar theFirstOfJan(int hour, int minute) {
+    public static AbstractDateTime theFirstOfJan(int hour, int minute) {
         return theNthOfJan(1, hour, minute);
     }
 }
