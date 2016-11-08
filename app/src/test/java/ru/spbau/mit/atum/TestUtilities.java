@@ -6,7 +6,13 @@ import org.joda.time.base.AbstractDateTime;
 /**
  * Вспомогательные метода для тестирования.
  */
-public class TestUtilities {
+public final class TestUtilities {
+    /**
+     * Класс является хранилищем статических методов.
+     */
+    private TestUtilities() {
+    }
+
     /**
      * Генерирует объект класса Calendar, который задает некоторое время в январе 2000 года.
      *
@@ -30,9 +36,4 @@ public class TestUtilities {
     public static AbstractDateTime theFirstOfJan(int hour, int minute) {
         return theNthOfJan(1, hour, minute);
     }
-
-    /**
-     * Класс является хранилищем статических методов.
-     */
-    private TestUtilities() {}
 }
