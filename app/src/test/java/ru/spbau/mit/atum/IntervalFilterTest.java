@@ -3,16 +3,12 @@ package ru.spbau.mit.atum;
 import org.junit.Test;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static ru.spbau.mit.atum.TestUtilities.theFirstOfJan;
 
 public class IntervalFilterTest {
-    private Calendar theFirstOfJan(int hour, int minute) {
-        return new GregorianCalendar(2000, 0, 1, hour, minute, 0);
-    }
-
     @Test
     public void testConstructor1() throws Exception {
         new IntervalFilter(theFirstOfJan(0, 0), theFirstOfJan(12, 0), false);
