@@ -1,5 +1,7 @@
 package ru.spbau.mit.atum;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +45,8 @@ public abstract class TimeFilter {
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
      *         задает фильтр.
      */
-    public List<DualInterval> intervalRepresentation(Calendar initialMoment, Calendar finalMoment) {
+    public @NotNull List<DualInterval> intervalRepresentation(@NotNull Calendar initialMoment,
+                                                              @NotNull Calendar finalMoment) {
         if (!checkOrderOfMoments(initialMoment, finalMoment)) {
             throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
         }
@@ -72,7 +75,8 @@ public abstract class TimeFilter {
      * @param finalMoment второй момент времени.
      * @return true, если проверка успешна.
      */
-    protected static boolean checkOrderOfMoments(Calendar initialMoment, Calendar finalMoment) {
+    protected static boolean checkOrderOfMoments(@NotNull Calendar initialMoment,
+                                                 @NotNull Calendar finalMoment) {
         return initialMoment.compareTo(finalMoment) <= 0;
     }
 
@@ -85,7 +89,8 @@ public abstract class TimeFilter {
      * @param moment момент времени, который нужно перевести в число.
      * @return численное представление момента времени.
      */
-    protected static int convertToPointRelative(Calendar initialMoment, Calendar moment) {
+    protected static int convertToPointRelative(@NotNull Calendar initialMoment,
+                                                @NotNull Calendar moment) {
         return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getTimeInMillis())
                       - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getTimeInMillis()));
     }

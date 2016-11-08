@@ -1,5 +1,7 @@
 package ru.spbau.mit.atum;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,8 +21,8 @@ public class IntervalFilter extends TimeFilter {
      * @param filterFinalMoment конечный момент интервала, который задает фильтр.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
-    public IntervalFilter(Calendar filterInitialMoment,
-                          Calendar filterFinalMoment, boolean exclusiveFlag) {
+    public IntervalFilter(@NotNull Calendar filterInitialMoment,
+                          @NotNull Calendar filterFinalMoment, boolean exclusiveFlag) {
         super(exclusiveFlag);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
@@ -34,14 +36,14 @@ public class IntervalFilter extends TimeFilter {
     /**
      * @return начальный момент интервала, который задает фильтр.
      */
-    public Calendar getInitialMoment() {
+    public @NotNull Calendar getInitialMoment() {
         return filterInitialMoment;
     }
 
     /**
      * @return конечный момент интервала, который задает фильтр.
      */
-    public Calendar getFinalMoment() {
+    public @NotNull Calendar getFinalMoment() {
         return filterFinalMoment;
     }
 
@@ -52,8 +54,9 @@ public class IntervalFilter extends TimeFilter {
      *         задает фильтр.
      */
     @Override
-    protected List<DualInterval> intervalRepresentationImpl(Calendar initialMoment,
-                                                            Interval globalInterval) {
+    protected @NotNull List<DualInterval> intervalRepresentationImpl(
+                                                @NotNull Calendar initialMoment,
+                                                @NotNull Interval globalInterval) {
         DualInterval filterInterval = new DualInterval(
                                         convertToPointRelative(initialMoment, filterInitialMoment),
                                         convertToPointRelative(initialMoment, filterFinalMoment),
