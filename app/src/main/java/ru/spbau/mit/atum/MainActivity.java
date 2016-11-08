@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onNewTaskClick(View view) {
-        Intent intent = new Intent(this, TaskActivity.class);
+        Intent intent = new Intent(this, TaskEditorActivity.class);
         startActivity(intent);
     }
 

@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskActivity">
+        <activity android:name=".TaskEditorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
