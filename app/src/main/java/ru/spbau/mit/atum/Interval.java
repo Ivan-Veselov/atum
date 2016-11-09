@@ -58,14 +58,14 @@ public class Interval {
     /**
      * @return объект класса EndPoint, представляющий левый конец интервала.
      */
-    public EndPoint leftEndPoint() {
+    public @NotNull EndPoint leftEndPoint() {
         return new EndPoint(left, false);
     }
 
     /**
      * @return объект класса EndPoint, представляющий правый конец интервала.
      */
-    public EndPoint rightEndPoint() {
+    public @NotNull EndPoint rightEndPoint() {
         return new EndPoint(right, true);
     }
 
@@ -77,7 +77,7 @@ public class Interval {
      * @param other интервал, с которым нужно найти пересечение.
      * @return новый интервал, который является пересечением текущего интервала и аргумента.
      */
-    public Interval intersection(Interval other) {
+    public @NotNull Interval intersection(@NotNull Interval other) {
         int begin = Math.max(this.left, other.left);
         int end = Math.min(this.right, other.right);
 
@@ -97,7 +97,8 @@ public class Interval {
      * @param intervalsSet список интервалов, которые нужно привести в нормальный вид.
      * @return результирующий нормальный вид.
      */
-    public static List<Interval> normalize(List<? extends Interval> intervalsSet) {
+    public static @NotNull List<Interval> normalize(
+                                            @NotNull List<? extends Interval> intervalsSet) {
         throw new UnsupportedOperationException();
     }
 
