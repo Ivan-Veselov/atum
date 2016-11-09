@@ -3,6 +3,8 @@ package ru.spbau.mit.atum;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -118,7 +120,30 @@ public class Interval {
      */
     public static @NotNull List<Interval> normalize(
                                             @NotNull List<? extends Interval> intervalsSet) {
-        throw new UnsupportedOperationException();
+        List<EndPoint> endPoints = endPoints(intervalsSet);
+        Collections.sort(endPoints);
+
+        List<Interval> result = new ArrayList<>();
+        int openedIntervalsNumber = 0;
+
+        // Начальное значение не будет использовано
+        int leastCoveredPoint = 0;
+
+        for (EndPoint point : endPoints) {
+            if (!point.isRight()) {
+                openedIntervalsNumber++;
+                if (openedIntervalsNumber == 1) {
+                    leastCoveredPoint = point.getCoordinate();
+                }
+            } else {
+                openedIntervalsNumber--;
+                if (openedIntervalsNumber == 0) {
+                    result.add(new Interval(leastCoveredPoint, point.getCoordinate()));
+                }
+            }
+        }
+
+        return result;
     }
 
     /**

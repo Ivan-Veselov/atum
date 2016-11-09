@@ -48,6 +48,11 @@ public class IntervalTest {
         assertEquals(true, right.isRight());
     }
 
+    private void assertInterval(int left, int right, Interval interval) throws Exception {
+        assertEquals(left, interval.left());
+        assertEquals(right, interval.right());
+    }
+
     /**
      * Вспомогательный метод, который тестирует пересечени двух интервалов.
      */
@@ -60,8 +65,7 @@ public class IntervalTest {
         Interval interval;
         interval = new Interval(firstIntervalLeftEnd, firstIntervalRightEnd);
         interval = interval.intersection(new Interval(secondIntervalLeftEnd, secondIntervalRightEnd));
-        assertEquals(resultIntervalLeftEnd, interval.left());
-        assertEquals(resultIntervalRightEnd, interval.right());
+        assertInterval(resultIntervalLeftEnd, resultIntervalRightEnd, interval);
     }
 
     /**
@@ -158,5 +162,17 @@ public class IntervalTest {
         assertEndPoint(5, false, list.get(1));
         assertEndPoint(5, true, list.get(2));
         assertEndPoint(10, true, list.get(3));
+    }
+
+    @Test
+    public void testNormalize() throws Exception {
+        List<Interval> list = Interval.normalize(Arrays.asList(new Interval(0, 3),
+                                                               new Interval(2, 5),
+                                                               new Interval(9, 10),
+                                                               new Interval(8, 10)));
+
+        assertEquals(2, list.size());
+        assertInterval(0, 5, list.get(0));
+        assertInterval(8, 10, list.get(1));
     }
 }
