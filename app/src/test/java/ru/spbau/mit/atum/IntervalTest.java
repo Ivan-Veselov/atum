@@ -33,15 +33,15 @@ public class IntervalTest {
     /**
      * Вспомогательный метод, который тестирует пересечени двух интервалов.
      */
-    private void testIntersectWithOnImpl(int firstIntervalBegin,
-                                         int firstIntervalEnd,
-                                         int secondIntervalBegin,
-                                         int secondIntervalEnd,
-                                         int resultIntervalBegin,
-                                         int resultIntervalEnd) throws Exception {
+    private void testIntersectionOnImpl(int firstIntervalBegin,
+                                        int firstIntervalEnd,
+                                        int secondIntervalBegin,
+                                        int secondIntervalEnd,
+                                        int resultIntervalBegin,
+                                        int resultIntervalEnd) throws Exception {
         Interval interval;
         interval = new Interval(firstIntervalBegin, firstIntervalEnd);
-        interval.intersectWith(new Interval(secondIntervalBegin, secondIntervalEnd));
+        interval = interval.intersection(new Interval(secondIntervalBegin, secondIntervalEnd));
         assertEquals(resultIntervalBegin, interval.begin());
         assertEquals(resultIntervalEnd, interval.end());
     }
@@ -50,33 +50,33 @@ public class IntervalTest {
      * Вспомогательный метод, который тестирует пересечение двух интервалов, вызывая метод сначала
      * от одного, а затем от другого.
      */
-    private void testIntersectWithOn(int firstIntervalBegin,
-                                     int firstIntervalEnd,
-                                     int secondIntervalBegin,
-                                     int secondIntervalEnd,
-                                     int resultIntervalBegin,
-                                     int resultIntervalEnd) throws Exception {
-        testIntersectWithOnImpl(firstIntervalBegin, firstIntervalEnd,
-                                secondIntervalBegin, secondIntervalEnd,
-                                resultIntervalBegin, resultIntervalEnd);
+    private void testIntersectionOn(int firstIntervalBegin,
+                                    int firstIntervalEnd,
+                                    int secondIntervalBegin,
+                                    int secondIntervalEnd,
+                                    int resultIntervalBegin,
+                                    int resultIntervalEnd) throws Exception {
+        testIntersectionOnImpl(firstIntervalBegin, firstIntervalEnd,
+                               secondIntervalBegin, secondIntervalEnd,
+                               resultIntervalBegin, resultIntervalEnd);
 
-        testIntersectWithOnImpl(secondIntervalBegin, secondIntervalEnd,
-                                firstIntervalBegin, firstIntervalEnd,
-                                resultIntervalBegin, resultIntervalEnd);
+        testIntersectionOnImpl(secondIntervalBegin, secondIntervalEnd,
+                               firstIntervalBegin, firstIntervalEnd,
+                               resultIntervalBegin, resultIntervalEnd);
     }
 
     @Test
     public void testIntersectWith() throws Exception {
         // Нет пересечения
-        testIntersectWithOn(0, 1, 2, 3,
-                            2, 2);
+        testIntersectionOn(0, 1, 2, 3,
+                           2, 2);
 
         // Вложение интервалов
-        testIntersectWithOn(0, 3, 1, 2,
-                            1, 2);
+        testIntersectionOn(0, 3, 1, 2,
+                           1, 2);
 
         // Частичное пересечени
-        testIntersectWithOn(0, 2, 1, 3,
-                            1, 2);
+        testIntersectionOn(0, 2, 1, 3,
+                           1, 2);
     }
 }

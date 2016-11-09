@@ -7,9 +7,9 @@ package ru.spbau.mit.atum;
 public class Interval {
     private static final String END_LESS_THAN_BEG = "End of the Interval is less than beginning.";
 
-    private int begin;
+    private final int begin;
 
-    private int end;
+    private final int end;
 
     /**
      * Создает новый интервал с заданными концами. В случае некорректных аргументов выбрасывается
@@ -51,18 +51,21 @@ public class Interval {
     }
 
     /**
-     * Пересекает этот интервал с переданным в качестве аргумента, сохраняя резуьтат в текущем
-     * интервале. Если пересечение пустое, то результатом будет интервал вида [a, a), где a -
+     * Возвращает новый интервал, который является пересечением текущего и переданного в качестве
+     * аргумента. Если пересечение пустое, то результатом будет интервал вида [a, a), где a -
      * наибольший из левых концов пересекаемых интервалов.
      *
-     * @param interval интервал, с которым нужно пересечь.
+     * @param other интервал, с которым нужно найти пересечение.
+     * @return новый интервал, который является пересечением текущего интервала и аргумента.
      */
-    public void intersectWith(Interval interval) {
-        begin = Math.max(begin, interval.begin);
-        end = Math.min(end, interval.end);
+    public Interval intersection(Interval other) {
+        int begin = Math.max(this.begin, other.begin);
+        int end = Math.min(this.end, other.end);
 
         if (end < begin) {
             end = begin;
         }
+
+        return new Interval(begin, end);
     }
 }

@@ -61,7 +61,7 @@ public class IntervalFilter extends TimeFilter {
                                         convertToPointRelative(initialMoment, filterInitialMoment),
                                         convertToPointRelative(initialMoment, filterFinalMoment));
 
-        filterInterval.intersectWith(globalInterval);
+        filterInterval = filterInterval.intersection(globalInterval);
 
         List<Interval> intervalList = new ArrayList<>();
 

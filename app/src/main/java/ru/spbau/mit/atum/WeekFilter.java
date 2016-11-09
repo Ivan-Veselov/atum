@@ -91,7 +91,7 @@ public class WeekFilter extends TimeFilter {
                 Interval interval = new Interval(currentIntervalBeginning,
                                                  currentIntervalBeginning + duration);
 
-                interval.intersectWith(globalInterval);
+                interval = interval.intersection(globalInterval);
                 if (!interval.isEmpty()) {
                     intervalList.add(interval);
                 }
