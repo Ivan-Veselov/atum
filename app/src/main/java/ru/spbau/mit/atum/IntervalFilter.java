@@ -10,9 +10,9 @@ import org.joda.time.ReadableDateTime;
  * Фильтр, который задает непрерывный интервал времени.
  */
 public class IntervalFilter extends TimeFilter {
-    private ReadableDateTime filterInitialMoment;
+    private final ReadableDateTime filterInitialMoment;
 
-    private ReadableDateTime filterFinalMoment;
+    private final ReadableDateTime filterFinalMoment;
 
     /**
      * Создает новый фильтр.

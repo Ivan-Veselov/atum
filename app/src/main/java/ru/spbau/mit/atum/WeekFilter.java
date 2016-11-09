@@ -17,11 +17,11 @@ import org.joda.time.ReadableDateTime;
 public class WeekFilter extends TimeFilter {
     private static final String INVALID_INTERVAL_MSG = "Invalid time interval for week filter.";
 
-    private int firstMinute;
+    private final int firstMinute;
 
-    private int duration;
+    private final int duration;
 
-    private WeekMask mask;
+    private final WeekMask mask;
 
     /**
      * Создает новый фильтр.

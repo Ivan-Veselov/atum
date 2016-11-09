@@ -14,7 +14,7 @@ import org.joda.time.ReadableDateTime;
 public abstract class TimeFilter {
     protected static final String FINAL_LESS_THAN_INIT_MSG = "Final moment is less than initial.";
 
-    private boolean exclusiveFlag;
+    private final boolean exclusiveFlag;
 
     /**
      * Создает новый фильтр.

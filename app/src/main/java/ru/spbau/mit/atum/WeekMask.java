@@ -8,7 +8,7 @@ import org.joda.time.DateTimeConstants;
 public class WeekMask {
     private static final String DAY_OUT_OF_RANGE_MSG = "Day of week number is out of range [0, 6].";
 
-    private int mask;
+    private final int mask;
 
     /**
      * Конструирует набор на основе списка чисел. Если номер дня недели встречается в списке хотя бы
@@ -18,13 +18,16 @@ public class WeekMask {
      * @param daysList список номеров дней недели.
      */
     public WeekMask(int... daysList) {
+        int maskBuilder = 0;
         for (int dayNumber : daysList) {
             if (!checkDayNumber(dayNumber)) {
                 throw new IllegalArgumentException(DAY_OUT_OF_RANGE_MSG);
             }
 
-            mask |= 1 << dayNumber;
+            maskBuilder |= 1 << dayNumber;
         }
+
+        mask = maskBuilder;
     }
 
     /**
