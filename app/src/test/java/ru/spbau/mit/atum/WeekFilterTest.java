@@ -61,7 +61,7 @@ public class WeekFilterTest {
         assertEquals(true, mask.isSet(6));
     }
 
-    private int[] dualIntervalsToArray(List<DualInterval> list) {
+    private int[] intervalsToArray(List<Interval> list) {
         int[] array = new int[list.size() * 2];
         for (int i = 0; i < list.size(); i++) {
             array[2 * i] = list.get(i).begin();
@@ -77,8 +77,8 @@ public class WeekFilterTest {
         WeekFilter filter = new WeekFilter(12 * 60, duration, new WeekMask(1, 5), false);
 
         // вт(4, 13:00-13:05)/сб(8, 12:00-13:05)/вт(11, 12:00-13:05)/сб(15, 12:00-12:31)
-        List<DualInterval> list = filter.intervalRepresentation(theNthOfJan(4, 13, 0),
-                                                                theNthOfJan(15, 12, 31));
+        List<Interval> list = filter.intervalRepresentation(theNthOfJan(4, 13, 0),
+                                                            theNthOfJan(15, 12, 31));
 
         int the8 = (int) TimeUnit.DAYS.toMinutes(4) - 60;
         int the11 = (int) TimeUnit.DAYS.toMinutes(7) - 60;
@@ -87,6 +87,6 @@ public class WeekFilterTest {
                                      the8, the8 + duration,
                                      the11, the11 + duration,
                                      the15, the15 + 31},
-                          dualIntervalsToArray(list));
+                          intervalsToArray(list));
     }
 }

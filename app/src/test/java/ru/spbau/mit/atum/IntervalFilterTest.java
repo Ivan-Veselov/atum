@@ -48,13 +48,12 @@ public class IntervalFilterTest {
         IntervalFilter filter = new IntervalFilter(filterInitialMoment,
                                                    filterFinalMoment, exclusiveFlag);
 
-        List<DualInterval> list = filter.intervalRepresentation(initialMoment, finalMoment);
+        List<Interval> list = filter.intervalRepresentation(initialMoment, finalMoment);
         assertEquals(1, list.size());
 
-        DualInterval interval = list.get(0);
+        Interval interval = list.get(0);
         assertEquals(begin, interval.begin());
         assertEquals(end, interval.end());
-        assertEquals(exclusiveFlag, interval.isExclusive());
     }
 
     private void testIntervalRepresentationOnEmpty(AbstractDateTime filterInitialMoment,
@@ -65,7 +64,7 @@ public class IntervalFilterTest {
         IntervalFilter filter = new IntervalFilter(filterInitialMoment,
                 filterFinalMoment, exclusiveFlag);
 
-        List<DualInterval> list = filter.intervalRepresentation(initialMoment, finalMoment);
+        List<Interval> list = filter.intervalRepresentation(initialMoment, finalMoment);
         assertEquals(0, list.size());
     }
 

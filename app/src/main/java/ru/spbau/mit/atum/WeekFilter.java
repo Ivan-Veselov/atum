@@ -74,8 +74,8 @@ public class WeekFilter extends TimeFilter {
      *         задает фильтр.
      */
     @Override
-    protected List<DualInterval> intervalRepresentationImpl(@NotNull ReadableDateTime initialMoment,
-                                                            @NotNull Interval globalInterval) {
+    protected List<Interval> intervalRepresentationImpl(@NotNull ReadableDateTime initialMoment,
+                                                        @NotNull Interval globalInterval) {
         int minuteOffset = initialMoment.getHourOfDay() * DateTimeConstants.MINUTES_PER_HOUR
                          + initialMoment.getMinuteOfHour();
 
@@ -84,13 +84,12 @@ public class WeekFilter extends TimeFilter {
 
         int currentIntervalBeginning = firstMinute - minuteOffset;
 
-        List<DualInterval> intervalList = new ArrayList<>();
+        List<Interval> intervalList = new ArrayList<>();
 
         while (currentIntervalBeginning < globalInterval.end()) {
             if (mask.isSet(dayOfWeek)) {
-                DualInterval interval = new DualInterval(currentIntervalBeginning,
-                        currentIntervalBeginning + duration,
-                        isExclusive());
+                Interval interval = new Interval(currentIntervalBeginning,
+                                                 currentIntervalBeginning + duration);
 
                 interval.intersectWith(globalInterval);
                 if (!interval.isEmpty()) {

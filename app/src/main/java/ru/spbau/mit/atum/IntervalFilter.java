@@ -54,17 +54,16 @@ public class IntervalFilter extends TimeFilter {
      *         задает фильтр.
      */
     @Override
-    protected @NotNull List<DualInterval> intervalRepresentationImpl(
+    protected @NotNull List<Interval> intervalRepresentationImpl(
                                                 @NotNull ReadableDateTime initialMoment,
                                                 @NotNull Interval globalInterval) {
-        DualInterval filterInterval = new DualInterval(
+        Interval filterInterval = new Interval(
                                         convertToPointRelative(initialMoment, filterInitialMoment),
-                                        convertToPointRelative(initialMoment, filterFinalMoment),
-                                        isExclusive());
+                                        convertToPointRelative(initialMoment, filterFinalMoment));
 
         filterInterval.intersectWith(globalInterval);
 
-        List<DualInterval> intervalList = new ArrayList<>();
+        List<Interval> intervalList = new ArrayList<>();
 
         if (!filterInterval.isEmpty()) {
             intervalList.add(filterInterval);
