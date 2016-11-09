@@ -38,11 +38,12 @@ public abstract class TimeFilter {
      * Точкой отсчета считается первый аргумент, все временные промежутки до нее обрезаются или
      * отбрасываются. Второй аргумент задает правую границу, все временные промежутки после нее
      * обрезаются или отбрасываются. Таким образом бесконечное число интервалов получится не может.
+     * Интервалы расположены в отсортированном порядке.
      *
      * @param initialMoment точка отсчета и нижняя граница времени.
      * @param finalMoment верхняя граница времени.
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
-     *         задает фильтр.
+     *         задает фильтр, в отсортированном порядке.
      */
     public @NotNull List<Interval> intervalRepresentation(@NotNull ReadableDateTime initialMoment,
                                                           @NotNull ReadableDateTime finalMoment) {
@@ -61,7 +62,7 @@ public abstract class TimeFilter {
      * @param initialMoment точка отсчета и нижняя граница времени.
      * @param globalInterval целочисленный интервал всего доступного времени.
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
-     *         задает фильтр.
+     *         задает фильтр, в отсортированном порядке.
      */
     protected abstract List<Interval> intervalRepresentationImpl(ReadableDateTime initialMoment,
                                                                  Interval globalInterval);

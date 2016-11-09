@@ -51,7 +51,7 @@ public class IntervalFilter extends TimeFilter {
      * @param initialMoment точка отсчета и нижняя граница времени.
      * @param globalInterval целочисленный интервал всего доступного времени.
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
-     *         задает фильтр.
+     *         задает фильтр, в отсортированном порядке.
      */
     @Override
     protected @NotNull List<Interval> intervalRepresentationImpl(
