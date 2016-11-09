@@ -9,40 +9,41 @@ import java.util.List;
  * началом и концом. Начало всегда не превосходит конца.
  */
 public class Interval {
-    private static final String END_LESS_THAN_BEG = "End of the Interval is less than beginning.";
+    private static final String RIGHT_LESS_THAN_LEFT =
+            "Right right of the Interval is less than left right.";
 
-    private final int begin;
+    private final int left;
 
-    private final int end;
+    private final int right;
 
     /**
      * Создает новый интервал с заданными концами. В случае некорректных аргументов выбрасывается
      * исключение.
      *
-     * @param begin начало интервала.
-     * @param end конец интервала.
+     * @param left левый конец интервала.
+     * @param right правый конец интервала.
      */
-    public Interval(int begin, int end) {
-        if (end < begin) {
-            throw new IllegalArgumentException(END_LESS_THAN_BEG);
+    public Interval(int left, int right) {
+        if (right < left) {
+            throw new IllegalArgumentException(RIGHT_LESS_THAN_LEFT);
         }
 
-        this.begin = begin;
-        this.end = end;
+        this.left = left;
+        this.right = right;
     }
 
     /**
      * @return начало интервала.
      */
-    public int begin() {
-        return begin;
+    public int left() {
+        return left;
     }
 
     /**
      * @return конец интервала.
      */
-    public int end() {
-        return end;
+    public int right() {
+        return right;
     }
 
     /**
@@ -51,21 +52,21 @@ public class Interval {
      * @return true, если интервал пустой.
      */
     public boolean isEmpty() {
-        return begin == end;
+        return left == right;
     }
 
     /**
      * @return объект класса EndPoint, представляющий левый конец интервала.
      */
     public EndPoint leftEndPoint() {
-        return new EndPoint(begin, false);
+        return new EndPoint(left, false);
     }
 
     /**
      * @return объект класса EndPoint, представляющий правый конец интервала.
      */
     public EndPoint rightEndPoint() {
-        return new EndPoint(end, true);
+        return new EndPoint(right, true);
     }
 
     /**
@@ -77,8 +78,8 @@ public class Interval {
      * @return новый интервал, который является пересечением текущего интервала и аргумента.
      */
     public Interval intersection(Interval other) {
-        int begin = Math.max(this.begin, other.begin);
-        int end = Math.min(this.end, other.end);
+        int begin = Math.max(this.left, other.left);
+        int end = Math.min(this.right, other.right);
 
         if (end < begin) {
             end = begin;

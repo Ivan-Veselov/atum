@@ -86,7 +86,7 @@ public class WeekFilter extends TimeFilter {
 
         List<Interval> intervalList = new ArrayList<>();
 
-        while (currentIntervalBeginning < globalInterval.end()) {
+        while (currentIntervalBeginning < globalInterval.right()) {
             if (mask.isSet(dayOfWeek)) {
                 Interval interval = new Interval(currentIntervalBeginning,
                                                  currentIntervalBeginning + duration);

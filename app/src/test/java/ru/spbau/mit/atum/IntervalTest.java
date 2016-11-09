@@ -20,8 +20,8 @@ public class IntervalTest {
     public void testGetters() throws Exception {
         Interval interval = new Interval(-1, 2);
 
-        assertEquals(-1, interval.begin());
-        assertEquals(2, interval.end());
+        assertEquals(-1, interval.left());
+        assertEquals(2, interval.right());
     }
 
     @Test
@@ -46,36 +46,36 @@ public class IntervalTest {
     /**
      * Вспомогательный метод, который тестирует пересечени двух интервалов.
      */
-    private void testIntersectionOnImpl(int firstIntervalBegin,
-                                        int firstIntervalEnd,
-                                        int secondIntervalBegin,
-                                        int secondIntervalEnd,
-                                        int resultIntervalBegin,
-                                        int resultIntervalEnd) throws Exception {
+    private void testIntersectionOnImpl(int firstIntervalLeftEnd,
+                                        int firstIntervalRightEnd,
+                                        int secondIntervalLeftEnd,
+                                        int secondIntervalRightEnd,
+                                        int resultIntervalLeftEnd,
+                                        int resultIntervalRightEnd) throws Exception {
         Interval interval;
-        interval = new Interval(firstIntervalBegin, firstIntervalEnd);
-        interval = interval.intersection(new Interval(secondIntervalBegin, secondIntervalEnd));
-        assertEquals(resultIntervalBegin, interval.begin());
-        assertEquals(resultIntervalEnd, interval.end());
+        interval = new Interval(firstIntervalLeftEnd, firstIntervalRightEnd);
+        interval = interval.intersection(new Interval(secondIntervalLeftEnd, secondIntervalRightEnd));
+        assertEquals(resultIntervalLeftEnd, interval.left());
+        assertEquals(resultIntervalRightEnd, interval.right());
     }
 
     /**
      * Вспомогательный метод, который тестирует пересечение двух интервалов, вызывая метод сначала
      * от одного, а затем от другого.
      */
-    private void testIntersectionOn(int firstIntervalBegin,
-                                    int firstIntervalEnd,
-                                    int secondIntervalBegin,
-                                    int secondIntervalEnd,
-                                    int resultIntervalBegin,
-                                    int resultIntervalEnd) throws Exception {
-        testIntersectionOnImpl(firstIntervalBegin, firstIntervalEnd,
-                               secondIntervalBegin, secondIntervalEnd,
-                               resultIntervalBegin, resultIntervalEnd);
+    private void testIntersectionOn(int firstIntervalLeftEnd,
+                                    int firstIntervalRightEnd,
+                                    int secondIntervalLeftEnd,
+                                    int secondIntervalRightEnd,
+                                    int resultIntervalLeftEnd,
+                                    int resultIntervalRightEnd) throws Exception {
+        testIntersectionOnImpl(firstIntervalLeftEnd, firstIntervalRightEnd,
+                               secondIntervalLeftEnd, secondIntervalRightEnd,
+                               resultIntervalLeftEnd, resultIntervalRightEnd);
 
-        testIntersectionOnImpl(secondIntervalBegin, secondIntervalEnd,
-                               firstIntervalBegin, firstIntervalEnd,
-                               resultIntervalBegin, resultIntervalEnd);
+        testIntersectionOnImpl(secondIntervalLeftEnd, secondIntervalRightEnd,
+                               firstIntervalLeftEnd, firstIntervalRightEnd,
+                               resultIntervalLeftEnd, resultIntervalRightEnd);
     }
 
     @Test

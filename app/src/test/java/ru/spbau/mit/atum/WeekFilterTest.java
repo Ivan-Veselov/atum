@@ -64,8 +64,8 @@ public class WeekFilterTest {
     private int[] intervalsToArray(List<Interval> list) {
         int[] array = new int[list.size() * 2];
         for (int i = 0; i < list.size(); i++) {
-            array[2 * i] = list.get(i).begin();
-            array[2 * i + 1] = list.get(i).end();
+            array[2 * i] = list.get(i).left();
+            array[2 * i + 1] = list.get(i).right();
         }
 
         return array;

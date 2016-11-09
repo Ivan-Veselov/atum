@@ -52,8 +52,8 @@ public class IntervalFilterTest {
         assertEquals(1, list.size());
 
         Interval interval = list.get(0);
-        assertEquals(begin, interval.begin());
-        assertEquals(end, interval.end());
+        assertEquals(begin, interval.left());
+        assertEquals(end, interval.right());
     }
 
     private void testIntervalRepresentationOnEmpty(AbstractDateTime filterInitialMoment,
