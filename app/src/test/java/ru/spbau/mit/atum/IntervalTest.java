@@ -106,7 +106,7 @@ public class IntervalTest {
     }
 
     @Test
-    public void testEndPoints() throws Exception {
+    public void testEndPoints1() throws Exception {
         List<Interval.EndPoint> list = Interval.endPoints(Arrays.asList(new Interval(-10, 10),
                                                                         new Interval(-8, -6),
                                                                         new Interval(-7, 20)));
@@ -120,5 +120,21 @@ public class IntervalTest {
         assertEndPoint(-6, true, list.get(3));
         assertEndPoint(10, true, list.get(4));
         assertEndPoint(20, true, list.get(5));
+    }
+
+    @Test
+    public void testEndPoints2() throws Exception {
+        // Тест на дубликаты
+
+        List<Interval.EndPoint> list = Interval.endPoints(Arrays.asList(new Interval(-1, 5),
+                                                                        new Interval(-1, 5)));
+
+        Collections.sort(list);
+        assertEquals(4, list.size());
+
+        assertEndPoint(-1, false, list.get(0));
+        assertEndPoint(-1, false, list.get(1));
+        assertEndPoint(5, true, list.get(2));
+        assertEndPoint(5, true, list.get(3));
     }
 }
