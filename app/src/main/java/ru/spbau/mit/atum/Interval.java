@@ -155,14 +155,25 @@ public class Interval {
         }
 
         /**
-         * Естественный порядок отношения на точках. Обычное сравнение координат.
+         * Естественный порядок отношения на точках. Обычное сравнение координат. В случае равенства
+         * координат левые границы считаются меньше правых.
          *
          * @param other концевая точка, с которой нужно сравниться.
          * @return результат сравнения.
          */
         @Override
         public int compareTo(@NotNull EndPoint other) {
-            return Integer.compare(coordinate, other.coordinate);
+            int comparisonResult = Integer.compare(coordinate, other.coordinate);
+
+            if (comparisonResult != 0) {
+                return comparisonResult;
+            }
+
+            if (rightFlag == other.rightFlag) {
+                return 0;
+            }
+
+            return rightFlag ? 1 : -1;
         }
     }
 }
