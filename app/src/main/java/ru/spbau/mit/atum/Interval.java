@@ -2,6 +2,7 @@ package ru.spbau.mit.atum;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -86,6 +87,24 @@ public class Interval {
         }
 
         return new Interval(begin, end);
+    }
+
+    /**
+     * Преобразует набор интервалов в набор концов этих интервалов.
+     *
+     * @param intervalsSet список интервалов.
+     * @return список концов каждого интервала из исходного набора.
+     */
+    public static @NotNull List<EndPoint> endPoints(
+                                            @NotNull List<? extends Interval> intervalsSet) {
+        List<EndPoint> result = new ArrayList<>(2 * intervalsSet.size());
+
+        for (Interval interval : intervalsSet) {
+            result.add(interval.leftEndPoint());
+            result.add(interval.rightEndPoint());
+        }
+
+        return result;
     }
 
     /**

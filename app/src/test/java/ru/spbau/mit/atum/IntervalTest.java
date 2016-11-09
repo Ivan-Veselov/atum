@@ -2,6 +2,11 @@ package ru.spbau.mit.atum;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class IntervalTest {
@@ -31,7 +36,7 @@ public class IntervalTest {
     }
 
     @Test
-    public void testEndPoints() throws Exception {
+    public void testEndPointsGetters() throws Exception {
         Interval interval = new Interval(-42, -10);
 
         Interval.EndPoint left = interval.leftEndPoint();
@@ -91,5 +96,29 @@ public class IntervalTest {
         // Частичное пересечени
         testIntersectionOn(0, 2, 1, 3,
                            1, 2);
+    }
+
+    private void assertEndPoint(int coordinate,
+                                boolean rightFlag,
+                                Interval.EndPoint endPoint) throws Exception{
+        assertEquals(coordinate, endPoint.getCoordinate());
+        assertEquals(rightFlag, endPoint.isRight());
+    }
+
+    @Test
+    public void testEndPoints() throws Exception {
+        List<Interval.EndPoint> list = Interval.endPoints(Arrays.asList(new Interval(-10, 10),
+                                                                        new Interval(-8, -6),
+                                                                        new Interval(-7, 20)));
+
+        Collections.sort(list);
+        assertEquals(6, list.size());
+
+        assertEndPoint(-10, false, list.get(0));
+        assertEndPoint(-8, false, list.get(1));
+        assertEndPoint(-7, false, list.get(2));
+        assertEndPoint(-6, true, list.get(3));
+        assertEndPoint(10, true, list.get(4));
+        assertEndPoint(20, true, list.get(5));
     }
 }
