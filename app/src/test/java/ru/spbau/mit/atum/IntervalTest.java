@@ -30,6 +30,19 @@ public class IntervalTest {
         assertEquals(true, (new Interval(0, 0).isEmpty()));
     }
 
+    @Test
+    public void testEndPoints() throws Exception {
+        Interval interval = new Interval(-42, -10);
+
+        Interval.EndPoint left = interval.leftEndPoint();
+        assertEquals(-42, left.getCoordinate());
+        assertEquals(false, left.isRight());
+
+        Interval.EndPoint right = interval.rightEndPoint();
+        assertEquals(-10, right.getCoordinate());
+        assertEquals(true, right.isRight());
+    }
+
     /**
      * Вспомогательный метод, который тестирует пересечени двух интервалов.
      */
