@@ -146,6 +146,20 @@ public class Interval {
     }
 
     /**
+     * Рассматривая два набора интервалов на прямой как два множества, возвращает разность этих
+     * множеств в виде набора интервалов в нормальном виде.
+     *
+     * @param minuend уменьшаемое. Множество из которого вычитают.
+     * @param subtrahend вычитаемое. Множество, которое вычитают.
+     * @return результат операции в виде набора интервалов в нормальном виде.
+     */
+    public static @NotNull List<Interval> difference(
+                                                @NotNull List<? extends Interval> minuend,
+                                                @NotNull List<? extends Interval> subtrahend) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Класс представляющий собой концевую точку интервала.
      */
     public static class EndPoint implements Comparable<EndPoint> {
