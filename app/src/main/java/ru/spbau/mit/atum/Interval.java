@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Interval {
     private static final String RIGHT_LESS_THAN_LEFT =
-            "Right right of the Interval is less than left right.";
+            "Right end of the Interval is less than left end.";
 
     private final int left;
 
