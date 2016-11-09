@@ -66,7 +66,7 @@ public class IntervalTest {
     }
 
     @Test
-    public void testIntersectWith() throws Exception {
+    public void testIntersection() throws Exception {
         // Нет пересечения
         testIntersectionOn(0, 1, 2, 3,
                            2, 2);
