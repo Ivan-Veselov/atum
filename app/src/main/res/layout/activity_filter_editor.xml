@@ -27,7 +27,8 @@
         android:layout_marginTop="27dp"
         android:id="@+id/week_filter"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="onWeekFilterClick" />
 
     <Button
         android:text="OK"

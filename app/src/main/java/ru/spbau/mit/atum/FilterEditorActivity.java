@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 public class FilterEditorActivity extends AppCompatActivity {
@@ -20,4 +17,16 @@ public class FilterEditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter_editor);
     }
 
+    public void onWeekFilterClick(View view) {
+        Intent intent = new Intent(this, WeekFilterEditorActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ans = data.getIntExtra("filter", 0);
+        if (ans == 1) {
+            Toast.makeText(getBaseContext(), "It's week filter!!!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
