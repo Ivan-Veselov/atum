@@ -189,4 +189,81 @@ public class IntervalTest {
                            new int[] {5, 10},
                            list);
     }
+
+    @Test
+    public void testDifference1() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+                                                  Arrays.asList(new Interval(0, 1),
+                                                                new Interval(2, 3),
+                                                                new Interval(4, 5)));
+
+        assertIntervalList(new int[] {5},
+                           new int[] {10},
+                           list);
+    }
+
+    @Test
+    public void testDifference2() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+                                                  Arrays.asList(new Interval(3, 7)));
+
+        assertIntervalList(new int[] {7},
+                           new int[] {10},
+                           list);
+    }
+
+    @Test
+    public void testDifference3() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+                                                  Arrays.asList(new Interval(6, 7),
+                                                                new Interval(8, 9)));
+
+        assertIntervalList(new int[] {5, 7, 9},
+                           new int[] {6, 8, 10},
+                           list);
+    }
+
+    @Test
+    public void testDifference4() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+                                                  Arrays.asList(new Interval(8, 13)));
+
+        assertIntervalList(new int[] {5},
+                           new int[] {8},
+                           list);
+    }
+
+    @Test
+    public void testDifference5() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+                                                  Arrays.asList(new Interval(3, 10)));
+
+        assertIntervalList(new int[] {},
+                           new int[] {},
+                           list);
+    }
+
+    @Test
+    public void testDifference6() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+                                                  Arrays.asList(new Interval(12, 13),
+                                                                new Interval(14, 15)));
+
+        assertIntervalList(new int[] {5},
+                           new int[] {10},
+                           list);
+    }
+
+    @Test
+    public void testDifference7() throws Exception {
+        List<Interval> list = Interval.difference(Arrays.asList(new Interval(2, 6),
+                                                                new Interval(7, 10)),
+                                                  Arrays.asList(new Interval(0, 2),
+                                                                new Interval(3, 4),
+                                                                new Interval(5, 8)));
+
+        assertIntervalList(new int[] {2, 4, 8},
+                           new int[] {3, 5, 10},
+                           list);
+    }
 }

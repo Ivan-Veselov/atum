@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -156,7 +157,56 @@ public class Interval {
     public static @NotNull List<Interval> difference(
                                                 @NotNull List<? extends Interval> minuend,
                                                 @NotNull List<? extends Interval> subtrahend) {
-        throw new UnsupportedOperationException();
+        minuend = normalize(minuend);
+        subtrahend = normalize(subtrahend);
+
+        List<Interval> result = new ArrayList<>();
+        Iterator<? extends Interval> subtrahendIterator = subtrahend.iterator();
+        Interval subtrahendInterval = null;
+
+        if (subtrahendIterator.hasNext()) {
+            subtrahendInterval = subtrahendIterator.next();
+        }
+
+        withNewInterval:
+        for (Interval interval : minuend) {
+            withCurrentInterval:
+            while (true) {
+                while (subtrahendInterval != null
+                                            && subtrahendInterval.right() <= interval.left()) {
+                    if (subtrahendIterator.hasNext()) {
+                        subtrahendInterval = subtrahendIterator.next();
+                    } else {
+                        subtrahendInterval = null;
+                    }
+                }
+
+                if (subtrahendInterval == null) {
+                    result.add(interval);
+                    continue withNewInterval;
+                }
+
+                if (subtrahendInterval.left() <= interval.left()) {
+                    if (subtrahendInterval.right() < interval.right()) {
+                        interval = new Interval(subtrahendInterval.right(), interval.right());
+                        continue withCurrentInterval;
+                    } else {
+                        continue withNewInterval;
+                    }
+                } else {
+                    if (subtrahendInterval.left() < interval.right()) {
+                        result.add(new Interval(interval.left(), subtrahendInterval.left()));
+                        interval = new Interval(subtrahendInterval.left(), interval.right());
+                        continue withCurrentInterval;
+                    } else {
+                        result.add(interval);
+                        continue withNewInterval;
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
