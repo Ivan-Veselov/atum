@@ -3,7 +3,6 @@ package ru.spbau.mit.atum;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -261,7 +260,11 @@ public class Interval {
                 return 0;
             }
 
-            return rightFlag ? 1 : -1;
+            if (rightFlag) {
+                return 1;
+            } else {
+                return -1;
+            }
         }
     }
 }
