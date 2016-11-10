@@ -36,4 +36,7 @@ public final class TestUtilities {
     public static AbstractDateTime theFirstOfJan(int hour, int minute) {
         return theNthOfJan(1, hour, minute);
     }
+
+    public static class InvalidTestException extends Exception {
+    }
 }

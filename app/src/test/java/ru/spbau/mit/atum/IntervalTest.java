@@ -53,6 +53,19 @@ public class IntervalTest {
         assertEquals(right, interval.right());
     }
 
+    private void assertIntervalList(int[] lefts, int[] rights,
+                                    List<Interval> list) throws Exception {
+        if (lefts.length != rights.length) {
+            throw new TestUtilities.InvalidTestException();
+        }
+
+        assertEquals(lefts.length, list.size());
+
+        for (int i = 0; i < list.size(); ++i) {
+            assertInterval(lefts[i], rights[i], list.get(i));
+        }
+    }
+
     /**
      * Вспомогательный метод, который тестирует пересечени двух интервалов.
      */
@@ -109,10 +122,23 @@ public class IntervalTest {
         assertEquals(rightFlag, endPoint.isRight());
     }
 
+    private void assertEndPointList(int[] coordinates, boolean[] rightFlags,
+                                    List<Interval.EndPoint> list) throws Exception {
+        if (coordinates.length != rightFlags.length) {
+            throw new TestUtilities.InvalidTestException();
+        }
+
+        assertEquals(coordinates.length, list.size());
+
+        for (int i = 0; i < list.size(); ++i) {
+            assertEndPoint(coordinates[i], rightFlags[i], list.get(i));
+        }
+    }
+
     @Test
     public void testEndPoints1() throws Exception {
         List<Interval.EndPoint> list = Interval.endPoints(new ArrayList<Interval>());
-        assertEquals(0, list.size());
+        assertEndPointList(new int[] {}, new boolean[] {}, list);
     }
 
     @Test
@@ -122,15 +148,10 @@ public class IntervalTest {
                                                                         new Interval(-7, 20)));
 
         Collections.sort(list);
-        assertEquals(6, list.size());
-
-        assertEndPoint(-10, false, list.get(0));
-        assertEndPoint(-8, false, list.get(1));
-        assertEndPoint(-7, false, list.get(2));
-        assertEndPoint(-6, true, list.get(3));
-        assertEndPoint(10, true, list.get(4));
-        assertEndPoint(20, true, list.get(5));
-    }
+        assertEndPointList(new int[] {-10, -8, -7, -6, 10, 20},
+                           new boolean[] {false, false, false, true, true, true},
+                           list);
+        }
 
     @Test
     public void testEndPoints3() throws Exception {
@@ -140,12 +161,9 @@ public class IntervalTest {
                                                                         new Interval(-1, 5)));
 
         Collections.sort(list);
-        assertEquals(4, list.size());
-
-        assertEndPoint(-1, false, list.get(0));
-        assertEndPoint(-1, false, list.get(1));
-        assertEndPoint(5, true, list.get(2));
-        assertEndPoint(5, true, list.get(3));
+        assertEndPointList(new int[] {-1, -1, 5, 5},
+                           new boolean [] {false, false, true, true},
+                           list);
     }
 
     @Test
@@ -156,12 +174,8 @@ public class IntervalTest {
                 new Interval(5, 10)));
 
         Collections.sort(list);
-        assertEquals(4, list.size());
-
-        assertEndPoint(-1, false, list.get(0));
-        assertEndPoint(5, false, list.get(1));
-        assertEndPoint(5, true, list.get(2));
-        assertEndPoint(10, true, list.get(3));
+        assertEndPointList(new int[] {-1, 5, 5, 10},
+                           new boolean[] {false, false, true, true}, list);
     }
 
     @Test
@@ -171,8 +185,8 @@ public class IntervalTest {
                                                                new Interval(9, 10),
                                                                new Interval(8, 10)));
 
-        assertEquals(2, list.size());
-        assertInterval(0, 5, list.get(0));
-        assertInterval(8, 10, list.get(1));
+        assertIntervalList(new int[] {0, 8},
+                           new int[] {5, 10},
+                           list);
     }
 }
