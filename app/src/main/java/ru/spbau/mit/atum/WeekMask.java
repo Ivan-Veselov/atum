@@ -2,10 +2,12 @@ package ru.spbau.mit.atum;
 
 import org.joda.time.DateTimeConstants;
 
+import java.io.Serializable;
+
 /**
  * Класс представляющий произвольный набор дней недели.
  */
-public class WeekMask {
+public class WeekMask implements Serializable {
     private static final String DAY_OUT_OF_RANGE_MSG = "Day of week number is out of range [0, 6].";
 
     private final int mask;

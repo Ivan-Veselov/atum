@@ -1,11 +1,11 @@
 package ru.spbau.mit.atum;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.ReadableDateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Фильтр, который задает непрерывный промежуток времени для каждого из заданных дней недели.
