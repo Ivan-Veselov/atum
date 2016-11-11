@@ -22,7 +22,8 @@ public final class TestUtilities {
      * @return объект класса Calendar.
      */
     public static AbstractDateTime theNthOfJan(int day, int hour, int minute) {
-        return new DateTime(2000, 1, day, hour, minute, 0);
+        int year = 2000;
+        return new DateTime(year, 1, day, hour, minute, 0);
     }
 
     /**
@@ -35,5 +36,14 @@ public final class TestUtilities {
      */
     public static AbstractDateTime theFirstOfJan(int hour, int minute) {
         return theNthOfJan(1, hour, minute);
+    }
+
+    /**
+     * Исключение, которое означает, что при работе теста произошла ошибка, связанная со структурой
+     * теста, а не с тестируемым объектом.
+     */
+    public static class InvalidTestException extends Exception {
+        InvalidTestException() {
+        }
     }
 }
