@@ -1,7 +1,9 @@
 package ru.spbau.mit.atum;
 
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.ReadableDateTime;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,5 +54,37 @@ public abstract class AbstractFiltersHolder {
      */
     public @NotNull List<TimeFilter> getFilterList() {
         return filterList;
+    }
+
+    /**
+     * Конвертирует подмножество временной прямой, которое задает набор фильтров, в набор
+     * непересекающихся интервалов на прямой. Интервалы целочисленные, единицей дискретизации
+     * является минута.
+     * Точкой отсчета считается первый аргумент, все интервалы до нее обрезаются или отбрасываются.
+     * Второй аргумент задает правую границу, все интервалы после нее обрезаются или отбрасываются.
+     * Таким образом бесконечное число интервалов получится не может. Интервалы расположены в
+     * отсортированном порядке.
+     *
+     * @param initialMoment точка отсчета и нижняя граница времени.
+     * @param finalMoment верхняя граница времени.
+     * @return набор непересекающихся интервалов, представляющий подмножество временной прямой,
+     *         которое задает набор фильтров, в отсортированном порядке.
+     */
+    public @NotNull List<Interval> intervalRepresentation(@NotNull ReadableDateTime initialMoment,
+                                                          @NotNull ReadableDateTime finalMoment) {
+        List<Interval> commonFiltersRepresentation = new ArrayList<>();
+        List<Interval> exclusiveFiltersRepresentation = new ArrayList<>();
+
+        for (TimeFilter filter : filterList) {
+            List<Interval> filterRepresentation = filter.intervalRepresentation(initialMoment,
+                                                                                finalMoment);
+            if (filter.isExclusive()) {
+                exclusiveFiltersRepresentation.addAll(filterRepresentation);
+            } else {
+                commonFiltersRepresentation.addAll(filterRepresentation);
+            }
+        }
+
+        return Interval.difference(commonFiltersRepresentation, exclusiveFiltersRepresentation);
     }
 }
