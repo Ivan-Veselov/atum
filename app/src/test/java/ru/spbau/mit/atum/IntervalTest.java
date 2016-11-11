@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static ru.spbau.mit.atum.TestUtilities.assertIntervalEquals;
+import static ru.spbau.mit.atum.TestUtilities.assertIntervalListEquals;
 
 public class IntervalTest {
     @Test
@@ -48,24 +50,6 @@ public class IntervalTest {
         assertEquals(true, right.isRight());
     }
 
-    private void assertInterval(int left, int right, Interval interval) throws Exception {
-        assertEquals(left, interval.left());
-        assertEquals(right, interval.right());
-    }
-
-    private void assertIntervalList(int[] lefts, int[] rights,
-                                    List<Interval> list) throws Exception {
-        if (lefts.length != rights.length) {
-            throw new TestUtilities.InvalidTestException();
-        }
-
-        assertEquals(lefts.length, list.size());
-
-        for (int i = 0; i < list.size(); ++i) {
-            assertInterval(lefts[i], rights[i], list.get(i));
-        }
-    }
-
     /**
      * Вспомогательный метод, который тестирует пересечени двух интервалов.
      */
@@ -78,7 +62,7 @@ public class IntervalTest {
         Interval interval;
         interval = new Interval(firstIntervalLeftEnd, firstIntervalRightEnd);
         interval = interval.intersection(new Interval(secondIntervalLeftEnd, secondIntervalRightEnd));
-        assertInterval(resultIntervalLeftEnd, resultIntervalRightEnd, interval);
+        assertIntervalEquals(resultIntervalLeftEnd, resultIntervalRightEnd, interval);
     }
 
     /**
@@ -185,9 +169,9 @@ public class IntervalTest {
                                                                new Interval(9, 10),
                                                                new Interval(8, 10)));
 
-        assertIntervalList(new int[] {0, 8},
-                           new int[] {5, 10},
-                           list);
+        assertIntervalListEquals(new int[] {0, 8},
+                                 new int[] {5, 10},
+                                 list);
     }
 
     @Test
@@ -197,9 +181,9 @@ public class IntervalTest {
                                                                 new Interval(2, 3),
                                                                 new Interval(4, 5)));
 
-        assertIntervalList(new int[] {5},
-                           new int[] {10},
-                           list);
+        assertIntervalListEquals(new int[] {5},
+                                 new int[] {10},
+                                 list);
     }
 
     @Test
@@ -207,9 +191,9 @@ public class IntervalTest {
         List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
                                                   Arrays.asList(new Interval(3, 7)));
 
-        assertIntervalList(new int[] {7},
-                           new int[] {10},
-                           list);
+        assertIntervalListEquals(new int[] {7},
+                                 new int[] {10},
+                                 list);
     }
 
     @Test
@@ -218,9 +202,9 @@ public class IntervalTest {
                                                   Arrays.asList(new Interval(6, 7),
                                                                 new Interval(8, 9)));
 
-        assertIntervalList(new int[] {5, 7, 9},
-                           new int[] {6, 8, 10},
-                           list);
+        assertIntervalListEquals(new int[] {5, 7, 9},
+                                 new int[] {6, 8, 10},
+                                 list);
     }
 
     @Test
@@ -228,9 +212,9 @@ public class IntervalTest {
         List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
                                                   Arrays.asList(new Interval(8, 13)));
 
-        assertIntervalList(new int[] {5},
-                           new int[] {8},
-                           list);
+        assertIntervalListEquals(new int[] {5},
+                                 new int[] {8},
+                                 list);
     }
 
     @Test
@@ -238,9 +222,9 @@ public class IntervalTest {
         List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
                                                   Arrays.asList(new Interval(3, 10)));
 
-        assertIntervalList(new int[] {},
-                           new int[] {},
-                           list);
+        assertIntervalListEquals(new int[] {},
+                                 new int[] {},
+                                 list);
     }
 
     @Test
@@ -249,9 +233,9 @@ public class IntervalTest {
                                                   Arrays.asList(new Interval(12, 13),
                                                                 new Interval(14, 15)));
 
-        assertIntervalList(new int[] {5},
-                           new int[] {10},
-                           list);
+        assertIntervalListEquals(new int[] {5},
+                                 new int[] {10},
+                                 list);
     }
 
     @Test
@@ -262,8 +246,8 @@ public class IntervalTest {
                                                                 new Interval(3, 4),
                                                                 new Interval(5, 8)));
 
-        assertIntervalList(new int[] {2, 4, 8},
-                           new int[] {3, 5, 10},
-                           list);
+        assertIntervalListEquals(new int[] {2, 4, 8},
+                                 new int[] {3, 5, 10},
+                                 list);
     }
 }
