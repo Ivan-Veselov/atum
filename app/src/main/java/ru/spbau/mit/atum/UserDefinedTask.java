@@ -1,6 +1,8 @@
 package ru.spbau.mit.atum;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.joda.time.ReadableDateTime;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     private static final String NON_POS_DURATION_MSG = "Duration of task is non positive.";
 
     private final int duration;
+
+    private ReadableDateTime scheduledTime = null;
 
     /**
      * Создает новое задание.
@@ -40,5 +44,21 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      */
     public int getDuration() {
         return duration;
+    }
+
+    /**
+     * @return запланированное время начала выполнения задания.
+     */
+    public @Nullable ReadableDateTime getScheduledTime() {
+        return scheduledTime;
+    }
+
+    /**
+     * Задает запланированное время начала выполнения задания.
+     *
+     * @param scheduledTime новое время начала выполнения задания.
+     */
+    public void setScheduledTime(@Nullable ReadableDateTime scheduledTime) {
+        this.scheduledTime = scheduledTime;
     }
 }
