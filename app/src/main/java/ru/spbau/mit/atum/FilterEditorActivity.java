@@ -21,8 +21,15 @@ public class FilterEditorActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    public void onIntervalFilterClick(View view) {
+        Intent intent = new Intent(this, IntervalFilterEditorActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //timeFilter = (TimeFilter)data.getSerializableExtra("filter");
+        if (resultCode == RESULT_OK) {
+            timeFilter = (TimeFilter)data.getSerializableExtra("filter");
+        }
     }
 }
