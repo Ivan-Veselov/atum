@@ -11,43 +11,29 @@
     tools:context="ru.spbau.mit.atum.WeekFilterEditorActivity">
 
     <TextView
-        android:text="First minute (hh:mm)"
+        android:text="First free minute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="46dp"
         android:id="@+id/first_minute"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:layout_marginTop="38dp"
-        android:id="@+id/edit_first_minute"
-        android:layout_below="@+id/first_minute"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:onClick="onFirstMinuteClick"
+        android:textSize ="22sp" />
 
     <TextView
-        android:text="Duration (hh:mm)"
+        android:text="Duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/duration"
-        android:layout_below="@+id/edit_first_minute"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/first_minute"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/edit_first_minute"
-        android:id="@+id/edit_duration" />
+        android:clickable="true"
+        android:onClick="onDutationClick"
+        android:textSize ="22sp" />
 
     <Button
         android:text="OK"
