@@ -18,7 +18,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_week_filter_editor);
 
         tvFirstMinute = (TextView) findViewById(R.id.first_minute);
-        tvFirstMinute.setText("First free minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+        tvFirstMinute.setText("First minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
 
         tvDuration = (TextView) findViewById(R.id.duration);
         tvDuration.setText("Expected duration: " + durationHour + " hours " + durationMinute + " minutes");
@@ -30,6 +30,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         checkBoxFriday = (CheckBox) findViewById(R.id.checkBoxFriday);
         checkBoxSaturday = (CheckBox) findViewById(R.id.checkBoxSaturday);
         checkBoxSunday = (CheckBox) findViewById(R.id.checkBoxSunday);
+
+        isFreeTime = (CheckBox) findViewById(R.id.isFreeTime);
     }
 
     private int FIRST_MINUTE = 1;
@@ -38,6 +40,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
     private int firstMinuteMinute = 0;
     private int durationHour = 0;
     private int durationMinute = 0;
+
+    private CheckBox isFreeTime;
 
     private TextView tvFirstMinute;
     private TextView tvDuration;
@@ -75,7 +79,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             firstMinuteHour = hourOfDay;
             firstMinuteMinute = minute;
-            tvFirstMinute.setText("First free minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+            tvFirstMinute.setText("First minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
         }
     };
 
@@ -132,7 +136,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
 
         TimeFilter timeFilter = new WeekFilter(firstMinuteHour * 60 + firstMinuteMinute,
-                                               durationHour * 60 + durationMinute, new WeekMask(resList), true);
+                                               durationHour * 60 + durationMinute,
+                                               new WeekMask(resList), isFreeTime.isChecked());
 
         intent.putExtra("filter", timeFilter);
 

@@ -10,18 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ru.spbau.mit.atum.WeekFilterEditorActivity">
 
-    <TextView
-        android:text="First free minute"
+    <CheckBox
+        android:text="Free time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:id="@+id/first_minute"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:id="@+id/isFreeTime"
+        android:checked="true"
         android:layout_alignParentEnd="true"
-        android:clickable="true"
-        android:onClick="onFirstMinuteClick"
-        android:textSize ="15dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Expected Duration"
@@ -35,15 +32,6 @@
         android:onClick="onDutationClick"
         android:textSize ="15dp"
         android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="Select days of week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:id="@+id/days_of_week"
-        android:layout_below="@+id/duration"
-        android:layout_alignParentStart="true" />
 
     <CheckBox
         android:text="Monday"
@@ -111,5 +99,25 @@
         android:id="@+id/button"
         android:onClick="onButtonOKClick" />
 
+    <TextView
+        android:text="First minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:id="@+id/first_minute"
+        android:clickable="true"
+        android:onClick="onFirstMinuteClick"
+        android:textSize ="15dp"
+        android:layout_below="@+id/isFreeTime"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Select days of week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/days_of_week"
+        android:layout_below="@+id/duration"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
