@@ -3,6 +3,10 @@ package ru.spbau.mit.atum;
 import org.joda.time.DateTime;
 import org.joda.time.base.AbstractDateTime;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
 /**
  * Вспомогательные метода для тестирования.
  */
@@ -36,6 +40,40 @@ public final class TestUtilities {
      */
     public static AbstractDateTime theFirstOfJan(int hour, int minute) {
         return theNthOfJan(1, hour, minute);
+    }
+
+    /**
+     * Проверяет состояние класса Interval.
+     *
+     * @param left левая граница интервала.
+     * @param right правая граница интервала.
+     * @param interval состояние класса Interval.
+     * @throws Exception любое исключение, которое может вылететь во время тестирования.
+     */
+    public static void assertIntervalEquals(int left, int right, Interval interval) throws Exception {
+        assertEquals(left, interval.left());
+        assertEquals(right, interval.right());
+    }
+
+    /**
+     * Проверяет список состояний класса Interval.
+     *
+     * @param lefts список левых границ интервалов.
+     * @param rights список правых границ интервалов.
+     * @param list список состояний класса Interval.
+     * @throws Exception любое исключение, которое может вылететь во время тестирования.
+     */
+    public static void assertIntervalListEquals(int[] lefts, int[] rights,
+                                         List<Interval> list) throws Exception {
+        if (lefts.length != rights.length) {
+            throw new TestUtilities.InvalidTestException();
+        }
+
+        assertEquals(lefts.length, list.size());
+
+        for (int i = 0; i < list.size(); ++i) {
+            assertIntervalEquals(lefts[i], rights[i], list.get(i));
+        }
     }
 
     /**
