@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class UserPreferences {
     private List<UserDefinedTask> taskList;
+
     private List<UserDefinedTimeBlocker> blockerList;
 
     /**
