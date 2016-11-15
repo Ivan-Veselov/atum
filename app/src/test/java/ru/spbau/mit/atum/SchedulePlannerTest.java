@@ -12,7 +12,7 @@ import static ru.spbau.mit.atum.TestUtilities.theNthOfJan;
 
 public class SchedulePlannerTest {
     @Test
-    public void planSchedule() throws Exception {
+    public void planScheduleTest() throws Exception {
         UserPreferences userPreferences = new UserPreferences();
         List<UserDefinedTask> tasks = userPreferences.getTaskList();
         WeekFilter weekFilter1 = new WeekFilter(10 * 60, 90, new WeekMask(1, 2, 4), false);
@@ -27,21 +27,21 @@ public class SchedulePlannerTest {
         tasks.add(task1);
         tasks.add(task2);
 
-        ReadableDateTime initial_moment = theNthOfJan(1, 0, 0);
-        ReadableDateTime final_moment = theNthOfJan(10, 0, 0);
+        ReadableDateTime initialMoment = theNthOfJan(1, 0, 0);
+        ReadableDateTime finalMoment = theNthOfJan(10, 0, 0);
 
-        SchedulePlanner.planSchedule(userPreferences, initial_moment, final_moment);
+        SchedulePlanner.planSchedule(userPreferences, initialMoment, finalMoment);
         assertNotNull(task1.getScheduledTime());
         assertNotNull(task2.getScheduledTime());
 
         assertTrue(task1.getScheduledTime().getDayOfWeek() != 1 && task1.getScheduledTime().getDayOfWeek() != 7);
         assertTrue(task2.getScheduledTime().getDayOfWeek() != 1 && task2.getScheduledTime().getDayOfWeek() != 7);
 
-        assertTrue(task1.getScheduledTime().isAfter(initial_moment));
-        assertTrue(task2.getScheduledTime().isAfter(initial_moment));
+        assertTrue(task1.getScheduledTime().isAfter(initialMoment));
+        assertTrue(task2.getScheduledTime().isAfter(initialMoment));
 
-        assertTrue(task1.getScheduledTime().isBefore(final_moment));
-        assertTrue(task2.getScheduledTime().isBefore(final_moment));
+        assertTrue(task1.getScheduledTime().isBefore(finalMoment));
+        assertTrue(task2.getScheduledTime().isBefore(finalMoment));
 
         assertTrue(task1.getScheduledTime().toDateTime().plusMinutes(task1.getDuration()).
                 isBefore(task2.getScheduledTime()) ||
@@ -49,5 +49,5 @@ public class SchedulePlannerTest {
                         isBefore(task1.getScheduledTime())
         );
     }
-
+    
 }
