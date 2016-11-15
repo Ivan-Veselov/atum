@@ -23,7 +23,7 @@ public class SchedulePlanner {
             for (Interval interval: task.getTimeIntervals()) {
                 if (!interval.isIntersectionWithListOfIntervals(resultIntervals)) {
                     resultIntervals.add(interval);
-                    task.getHolder().setScheduledTime(initialMoment.toDateTime().plus(interval.left()));
+                    task.getHolder().setScheduledTime(initialMoment.toDateTime().plusMinutes(interval.left()));
                     break;
                 }
             }
