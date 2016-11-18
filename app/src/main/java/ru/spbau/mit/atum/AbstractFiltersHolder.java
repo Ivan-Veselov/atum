@@ -3,6 +3,7 @@ package ru.spbau.mit.atum;
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.ReadableDateTime;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * фильтров дает некоторое подмножество прямой. Если из этого объединения вычесть объединение
  * исключающих фильтров, то получится подмножество временной прямой, которое задает набор фильтров.
  */
-public abstract class AbstractFiltersHolder {
+public abstract class AbstractFiltersHolder implements Serializable {
     private final String name;
 
     private final String description;

@@ -1,5 +1,6 @@
 package ru.spbau.mit.atum;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +12,7 @@ import org.joda.time.ReadableDateTime;
  * обычным, а может быть "исключающим". Исключающий фильтр, в отличие от обычного, исключает
  * промежутки времени, которые он задает.
  */
-public abstract class TimeFilter {
+public abstract class TimeFilter implements Serializable {
     protected static final String FINAL_LESS_THAN_INIT_MSG = "Final moment is less than initial.";
 
     private final boolean exclusiveFlag;
