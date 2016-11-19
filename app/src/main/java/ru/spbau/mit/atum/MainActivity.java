@@ -24,11 +24,9 @@ public class MainActivity extends AppCompatActivity {
         filters.add(weekFilter1);
         filters.add(weekFilter2);
 
-        UserDefinedTask task1 = new UserDefinedTask("first", "", filters, 50);
-        UserDefinedTask task2 = new UserDefinedTask("second", "", filters, 60);
-
-        tasks.add(task1);
-        tasks.add(task2);
+        for (int i = 1; i <= 50; i++) {
+            tasks.add(new UserDefinedTask("task #" + i, "", filters, 5 * i));
+        }
 
     }
 

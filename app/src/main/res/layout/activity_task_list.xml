@@ -9,13 +9,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:textAlignment="center"
-        android:text="Task List"/>
+        android:text="TASK LIST"/>
 
     <ListView
         android:layout_height="456dp"
         android:layout_width="match_parent"
-        android:id="@+id/task_list" />
+        android:id="@+id/task_list"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
 </LinearLayout>

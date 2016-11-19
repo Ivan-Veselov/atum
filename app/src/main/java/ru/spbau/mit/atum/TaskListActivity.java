@@ -20,6 +20,7 @@ public class TaskListActivity extends AppCompatActivity {
     private ArrayList<UserDefinedTask> userDefinedTaskList;
 
     private final String TASK_NAME = "task_name";
+    private final String IS_SCHEDULED = "is_scheduled";
     private ListView listView;
     private SimpleAdapter adapter;
     private ArrayList<Map<String, Object>> data;
@@ -36,11 +37,17 @@ public class TaskListActivity extends AppCompatActivity {
         for (UserDefinedTask task: userDefinedTaskList) {
             m = new HashMap<>();
             m.put(TASK_NAME, task.getName());
+            if (task.getScheduledTime() == null) {
+                m.put(IS_SCHEDULED, "not scheduled");
+            } else {
+                m.put(IS_SCHEDULED, "OK");
+            }
+
             data.add(m);
         }
 
-        String[] from = { TASK_NAME };
-        int[] to = { R.id.task_name };
+        String[] from = { TASK_NAME, IS_SCHEDULED };
+        int[] to = { R.id.task_name, R.id.is_scheduled };
 
         adapter = new SimpleAdapter(this, data, R.layout.item, from, to);
 
