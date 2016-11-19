@@ -3,50 +3,86 @@ package ru.spbau.mit.atum;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TaskListActivity extends AppCompatActivity {
 
-    private List<String> taskList = new ArrayList<>();
+    private ArrayList<UserDefinedTask> userDefinedTaskList;
+
+    private final String TASK_NAME = "task_name";
+    private ListView listView;
+    private SimpleAdapter adapter;
+    private ArrayList<Map<String, Object>> data;
+    private Map<String, Object> m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        final ArrayList<UserDefinedTask> userDefinedTaskList =
-                (ArrayList<UserDefinedTask>)getIntent().getSerializableExtra("tasks");
+        userDefinedTaskList = (ArrayList<UserDefinedTask>)getIntent().getSerializableExtra("tasks");
 
+        data = new ArrayList<>();
         for (UserDefinedTask task: userDefinedTaskList) {
-            taskList.add(task.getName());
+            m = new HashMap<>();
+            m.put(TASK_NAME, task.getName());
+            data.add(m);
         }
 
-        ListView lvTaskList = (ListView)findViewById(R.id.task_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskList);
+        String[] from = { TASK_NAME };
+        int[] to = { R.id.task_name };
 
-        lvTaskList.setAdapter(adapter);
+        adapter = new SimpleAdapter(this, data, R.layout.item, from, to);
 
-        lvTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                UserDefinedTask task = userDefinedTaskList.get(position);
-                Toast.makeText(getApplicationContext(), "duration is " + task.getDuration(), Toast.LENGTH_LONG).show();
-            }
-        });
+        listView = (ListView) findViewById(R.id.task_list);
+        listView.setAdapter(adapter);
+        registerForContextMenu(listView);
+
+    }
+
+    private final int DELETE_ID = 0;
+    private final int EDIT_ID = 1;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(0, DELETE_ID, 0, "Delete");
+        menu.add(0, EDIT_ID, 0, "Edit");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == DELETE_ID) {
+            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            userDefinedTaskList.remove(adapterContextMenuInfo.position);
+            data.remove(adapterContextMenuInfo.position);
+            Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_LONG).show();
+            adapter.notifyDataSetChanged();
+            return true;
+        }
+        if (item.getItemId() == EDIT_ID) {
+            Toast.makeText(getApplicationContext(), "edit", Toast.LENGTH_LONG).show();
+            adapter.notifyDataSetChanged();
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("tasks", (Serializable)taskList);
+        intent.putExtra("tasks", userDefinedTaskList);
 
         setResult(RESULT_OK, intent);
         finish();

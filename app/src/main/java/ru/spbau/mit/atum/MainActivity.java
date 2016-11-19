@@ -11,21 +11,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<UserDefinedTask> tasks = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    public void onNewTaskClick(View view) {
-        Intent intent = new Intent(this, TaskEditorActivity.class);
-        startActivity(intent);
-    }
-
-    public void onTaskListClick(View view) {
-        Intent intent = new Intent(this, TaskListActivity.class);
-
-        List<UserDefinedTask> tasks = new ArrayList<>();
         WeekFilter weekFilter1 = new WeekFilter(10 * 60, 90, new WeekMask(1, 2, 4), false);
         WeekFilter weekFilter2 = new WeekFilter(10 * 60, 120, new WeekMask(1, 3, 5), false);
         List<TimeFilter> filters = new ArrayList<>();
@@ -38,6 +30,16 @@ public class MainActivity extends AppCompatActivity {
         tasks.add(task1);
         tasks.add(task2);
 
+    }
+
+    public void onNewTaskClick(View view) {
+        Intent intent = new Intent(this, TaskEditorActivity.class);
+        startActivity(intent);
+    }
+
+    public void onTaskListClick(View view) {
+        Intent intent = new Intent(this, TaskListActivity.class);
+
         intent.putExtra("tasks", (Serializable)tasks);
         startActivityForResult(intent, 0);
     }
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            List<UserDefinedTask> tasks = (ArrayList<UserDefinedTask>)data.getSerializableExtra("tasks");
+            tasks = (ArrayList<UserDefinedTask>)data.getSerializableExtra("tasks");
         }
     }
 }
