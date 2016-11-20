@@ -21,4 +21,16 @@
         android:onClick="onTaskListClick"
         />
 
+    <Button
+        android:text="Blocker List"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/task_list_button"
+        android:layout_marginTop="20dp"
+        android:id="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:onClick="onBlockerListClick"
+        />
+
 </RelativeLayout>

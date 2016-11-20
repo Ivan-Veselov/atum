@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class TaskListActivity extends AppCompatActivity {
 
-    private ArrayList<UserDefinedTask> userDefinedTaskList;
+    private ArrayList<AbstractFiltersHolder> filtersHolders;
 
     private final String TASK_NAME = "task_name";
     private final String IS_SCHEDULED = "is_scheduled";
@@ -32,16 +32,15 @@ public class TaskListActivity extends AppCompatActivity {
     private final int NEW_TASK_CODE = 0;
     private final int EDIT_TASK_CODE = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        userDefinedTaskList = (ArrayList<UserDefinedTask>)getIntent().getSerializableExtra("tasks");
+        filtersHolders = (ArrayList<AbstractFiltersHolder>)getIntent().getSerializableExtra("filter holders");
 
         data = new ArrayList<>();
-        for (UserDefinedTask task: userDefinedTaskList) {
+        for (AbstractFiltersHolder task: filtersHolders) {
             addNewTask(task);
         }
 
@@ -58,16 +57,21 @@ public class TaskListActivity extends AppCompatActivity {
 
     public void onNewTaskClick(View view) {
         Intent intent = new Intent(this, TaskEditorActivity.class);
+        intent.putExtra("edit task", "null");
         startActivityForResult(intent, NEW_TASK_CODE);
     }
 
-    private void addNewTask(UserDefinedTask task) {
+    private void addNewTask(AbstractFiltersHolder task) {
         m = new HashMap<>();
         m.put(TASK_NAME, task.getName());
-        if (task.getScheduledTime() == null) {
-            m.put(IS_SCHEDULED, "not scheduled");
-        } else {
-            m.put(IS_SCHEDULED, "OK");
+
+        if (task instanceof UserDefinedTask) {
+            UserDefinedTask userDefinedTask = (UserDefinedTask)task;
+            if (userDefinedTask.getScheduledTime() == null) {
+                m.put(IS_SCHEDULED, "not scheduled");
+            } else {
+                m.put(IS_SCHEDULED, "OK");
+            }
         }
 
         data.add(m);
@@ -77,7 +81,7 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NEW_TASK_CODE && resultCode == RESULT_OK) {
             UserDefinedTask newTask = (UserDefinedTask)data.getSerializableExtra("edit task");
-            userDefinedTaskList.add(newTask);
+            filtersHolders.add(newTask);
             addNewTask(newTask);
             adapter.notifyDataSetChanged();
         }
@@ -95,17 +99,19 @@ public class TaskListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == DELETE_ID) {
             AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            userDefinedTaskList.remove(adapterContextMenuInfo.position);
+            filtersHolders.remove(adapterContextMenuInfo.position);
             data.remove(adapterContextMenuInfo.position);
             Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_LONG).show();
             adapter.notifyDataSetChanged();
             return true;
         }
         if (item.getItemId() == EDIT_ID) {
+            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
             Intent intent = new Intent(this, TaskEditorActivity.class);
+            intent.putExtra("edit task", filtersHolders.get(adapterContextMenuInfo.position));
             startActivityForResult(intent, EDIT_TASK_CODE);
 
-            Toast.makeText(getApplicationContext(), "edit", Toast.LENGTH_LONG).show();
             adapter.notifyDataSetChanged();
             return true;
         }
@@ -116,7 +122,7 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("tasks", userDefinedTaskList);
+        intent.putExtra("filter holders", filtersHolders);
 
         setResult(RESULT_OK, intent);
         finish();

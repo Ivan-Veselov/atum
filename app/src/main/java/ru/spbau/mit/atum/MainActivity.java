@@ -11,7 +11,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<UserDefinedTask> tasks = new ArrayList<>();
+    private List<AbstractFiltersHolder> tasks = new ArrayList<>();
+    private List<AbstractFiltersHolder> blockers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +29,34 @@ public class MainActivity extends AppCompatActivity {
             tasks.add(new UserDefinedTask("task #" + i, "", filters, 5 * i));
         }
 
+        for (int i = 1; i <= 20; i++) {
+            blockers.add(new UserDefinedTimeBlocker("blocker #" + i, "", filters));
+        }
+
     }
 
-    public void onNewTaskClick(View view) {
-        Intent intent = new Intent(this, TaskEditorActivity.class);
-        startActivity(intent);
-    }
+    private final int TASK_CODE = 0;
+    private final int BLOCKER_CODE = 1;
 
     public void onTaskListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
+        intent.putExtra("filter holders", (Serializable)tasks);
+        startActivityForResult(intent, TASK_CODE);
+    }
 
-        intent.putExtra("tasks", (Serializable)tasks);
-        startActivityForResult(intent, 0);
+    public void onBlockerListClick(View view) {
+        Intent intent = new Intent(this, TaskListActivity.class);
+        intent.putExtra("filter holders", (Serializable)blockers);
+        startActivityForResult(intent, BLOCKER_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            tasks = (ArrayList<UserDefinedTask>)data.getSerializableExtra("tasks");
+            tasks = (ArrayList<AbstractFiltersHolder>)data.getSerializableExtra("filter holders");
+        }
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            blockers = (ArrayList<AbstractFiltersHolder>)data.getSerializableExtra("filter holders");
         }
     }
 }
