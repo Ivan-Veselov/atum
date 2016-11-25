@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 public class FilterEditorActivity extends AppCompatActivity {
 
-    TimeFilter timeFilter = null;
+    private TimeFilter timeFilter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,7 @@ public class FilterEditorActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            timeFilter = (TimeFilter)data.getSerializableExtra("filter");
+            timeFilter = (TimeFilter) data.getSerializableExtra("filter");
         }
     }
 }

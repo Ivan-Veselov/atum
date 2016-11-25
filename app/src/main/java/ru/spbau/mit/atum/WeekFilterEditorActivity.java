@@ -23,13 +23,13 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         tvDuration = (TextView) findViewById(R.id.duration);
         tvDuration.setText("Expected duration: " + durationHour + " hours " + durationMinute + " minutes");
 
-        checkBoxMonday = (CheckBox) findViewById(R.id.checkBoxMonday);
-        checkBoxTuesday = (CheckBox) findViewById(R.id.checkBoxTuesday);
-        checkBoxWednesday = (CheckBox) findViewById(R.id.checkBoxWednesday);
-        checkBoxThursday = (CheckBox) findViewById(R.id.checkBoxThursday);
-        checkBoxFriday = (CheckBox) findViewById(R.id.checkBoxFriday);
-        checkBoxSaturday = (CheckBox) findViewById(R.id.checkBoxSaturday);
-        checkBoxSunday = (CheckBox) findViewById(R.id.checkBoxSunday);
+        checkBoxList[0] = (CheckBox) findViewById(R.id.checkBoxMonday);
+        checkBoxList[1] = (CheckBox) findViewById(R.id.checkBoxTuesday);
+        checkBoxList[2] = (CheckBox) findViewById(R.id.checkBoxWednesday);
+        checkBoxList[3] = (CheckBox) findViewById(R.id.checkBoxThursday);
+        checkBoxList[4] = (CheckBox) findViewById(R.id.checkBoxFriday);
+        checkBoxList[5] = (CheckBox) findViewById(R.id.checkBoxSaturday);
+        checkBoxList[6] = (CheckBox) findViewById(R.id.checkBoxSunday);
 
         isFreeTime = (CheckBox) findViewById(R.id.isFreeTime);
     }
@@ -46,14 +46,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
     private TextView tvFirstMinute;
     private TextView tvDuration;
 
-    private CheckBox checkBoxMonday;
-    private CheckBox checkBoxTuesday;
-    private CheckBox checkBoxWednesday;
-    private CheckBox checkBoxThursday;
-    private CheckBox checkBoxFriday;
-    private CheckBox checkBoxSaturday;
-    private CheckBox checkBoxSunday;
-
+    private final int DAYS_IN_WEEK = 7;
+    private CheckBox [] checkBoxList = new CheckBox[DAYS_IN_WEEK];
 
     public void onFirstMinuteClick(View view) {
         showDialog(FIRST_MINUTE);
@@ -93,43 +87,16 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
     public void onButtonOKClick(View view) {
         Intent intent = new Intent();
-        int [] list = new int[7];
-        for (int i = 0; i < 7; i++) {
-            list[i] = 0;
-        }
         int resSize = 0;
-        if (checkBoxMonday.isChecked()) {
-            list[0] = 1;
-            resSize++;
-        }
-        if (checkBoxTuesday.isChecked()) {
-            list[1] = 1;
-            resSize++;
-        }
-        if (checkBoxWednesday.isChecked()) {
-            list[2] = 1;
-            resSize++;
-        }
-        if (checkBoxThursday.isChecked()) {
-            list[3] = 1;
-            resSize++;
-        }
-        if (checkBoxFriday.isChecked()) {
-            list[4] = 1;
-            resSize++;
-        }
-        if (checkBoxSaturday.isChecked()) {
-            list[5] = 1;
-            resSize++;
-        }
-        if (checkBoxSunday.isChecked()) {
-            list[6] = 1;
-            resSize++;
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            if (checkBoxList[i].isChecked()) {
+                resSize++;
+            }
         }
         int [] resList = new int[resSize];
         int cur = 0;
         for (int i = 0; i < 7; i++) {
-            if (list[i] == 1) {
+            if (checkBoxList[i].isChecked()) {
                 resList[cur] = i;
                 cur++;
             }
