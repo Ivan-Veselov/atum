@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,16 +33,30 @@ public class TaskListActivity extends AppCompatActivity {
     private final int NEW_TASK_CODE = 0;
     private final int EDIT_TASK_CODE = 1;
 
+    private boolean isUserDefinedTask = false;
+    private TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
 
+        setContentView(R.layout.activity_task_list);
         filtersHolders = (ArrayList<AbstractFiltersHolder>)getIntent().getSerializableExtra("filter holders");
+
+        if (filtersHolders.size() > 0 && filtersHolders.get(0) instanceof UserDefinedTask) {
+            isUserDefinedTask = true;
+        }
 
         data = new ArrayList<>();
         for (AbstractFiltersHolder task: filtersHolders) {
             addNewTask(task);
+        }
+
+        title = (TextView) findViewById(R.id.title);
+        if (isUserDefinedTask) {
+            title.setText("TASK LIST");
+        } else {
+            title.setText("BLOCKER LIST");
         }
 
         String[] from = { TASK_NAME, IS_SCHEDULED };
@@ -65,7 +80,7 @@ public class TaskListActivity extends AppCompatActivity {
         m = new HashMap<>();
         m.put(TASK_NAME, task.getName());
 
-        if (task instanceof UserDefinedTask) {
+        if (isUserDefinedTask) {
             UserDefinedTask userDefinedTask = (UserDefinedTask)task;
             if (userDefinedTask.getScheduledTime() == null) {
                 m.put(IS_SCHEDULED, "not scheduled");
