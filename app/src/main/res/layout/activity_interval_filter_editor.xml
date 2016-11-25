@@ -20,12 +20,12 @@
         android:id="@+id/interval_filter_editor_OK" />
 
     <CheckBox
-        android:text="Free time"
+        android:text="Exclusionary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/isFreeTime"
-        android:checked="true"
+        android:id="@+id/isExclusionary"
+        android:checked="false"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
@@ -34,7 +34,7 @@
         android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/isFreeTime"
+        android:layout_below="@+id/isExclusionary"
         android:layout_marginTop="51dp"
         android:id="@+id/interval_start"
         android:layout_alignParentEnd="true"

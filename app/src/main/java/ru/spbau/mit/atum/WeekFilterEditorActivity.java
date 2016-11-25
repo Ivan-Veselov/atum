@@ -31,7 +31,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         checkBoxList[5] = (CheckBox) findViewById(R.id.checkBoxSaturday);
         checkBoxList[6] = (CheckBox) findViewById(R.id.checkBoxSunday);
 
-        isFreeTime = (CheckBox) findViewById(R.id.isFreeTime);
+        isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
     }
 
     private int FIRST_MINUTE = 1;
@@ -41,7 +41,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
     private int durationHour = 0;
     private int durationMinute = 0;
 
-    private CheckBox isFreeTime;
+    private CheckBox isExclusionary;
 
     private TextView tvFirstMinute;
     private TextView tvDuration;
@@ -104,7 +104,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
         TimeFilter timeFilter = new WeekFilter(firstMinuteHour * 60 + firstMinuteMinute,
                                                durationHour * 60 + durationMinute,
-                                               new WeekMask(resList), isFreeTime.isChecked());
+                                               new WeekMask(resList), isExclusionary.isChecked());
 
         intent.putExtra("filter", timeFilter);
 

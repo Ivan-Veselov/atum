@@ -21,7 +21,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interval_filter_editor);
 
-        isFreeTime = (CheckBox) findViewById(R.id.isFreeTime);
+        isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
         tvStartDate = (TextView) findViewById(R.id.interval_start_date);
         tvStartTime = (TextView) findViewById(R.id.interval_start_time);
         tvEndDate = (TextView) findViewById(R.id.interval_end_date);
@@ -51,7 +51,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     private TextView tvEndDate;
     private TextView tvEndTime;
 
-    private CheckBox isFreeTime;
+    private CheckBox isExclusionary;
 
 
     public void onStartIntervalDateClick(View view) {
@@ -135,7 +135,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
         TimeFilter timeFilter = new IntervalFilter(new DateTime(startYear, startMonth,
                 startDay, startHour, startMinute), new DateTime(endYear, endMonth,
-                endDay, endHour, endMinute), isFreeTime.isChecked());
+                endDay, endHour, endMinute), isExclusionary.isChecked());
 
         intent.putExtra("filter", timeFilter);
 
