@@ -11,8 +11,10 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.ReadableDateTime;
 
 public class IntervalFilterEditorActivity extends AppCompatActivity {
 
@@ -133,9 +135,17 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     public void onButtonOKClick(View view) {
         Intent intent = new Intent();
 
-        TimeFilter timeFilter = new IntervalFilter(new DateTime(startYear, startMonth,
-                startDay, startHour, startMinute), new DateTime(endYear, endMonth,
-                endDay, endHour, endMinute), isExclusionary.isChecked());
+        ReadableDateTime startTime = new DateTime(startYear, startMonth,
+                startDay, startHour, startMinute);
+        ReadableDateTime endTime = new DateTime(endYear, endMonth,
+                endDay, endHour, endMinute);
+
+        if (endTime.compareTo(startTime) < 0) {
+            Toast.makeText(getApplicationContext(), "Invalid time interval", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        TimeFilter timeFilter = new IntervalFilter(startTime, endTime, isExclusionary.isChecked());
 
         intent.putExtra("filter", timeFilter);
 
