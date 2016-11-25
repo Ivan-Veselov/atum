@@ -7,13 +7,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Task List"/>
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:text="TASK LIST"/>
 
     <ListView
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:id="@+id/task_list" />
+        android:layout_height="456dp"
+        android:layout_width="match_parent"
+        android:id="@+id/task_list"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
 </LinearLayout>
