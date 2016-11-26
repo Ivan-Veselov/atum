@@ -1,8 +1,7 @@
 package ru.spbau.mit.atum;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.support.annotation.Nullable;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,22 +34,17 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         }
     }
 
-    public void onClickApplyButton(View view) {
+    @Override
+    protected @Nullable AbstractFiltersHolder buildFiltersHolder() {
         int duration = Integer.parseInt(durationField.getText().toString());
         if (duration == 0) {
             Toast.makeText(this, "Duration must not be 0", Toast.LENGTH_LONG).show();
-            return;
+            return null;
         }
 
-        UserDefinedTask resultingTask =
-                new UserDefinedTask(nameField.getText().toString(),
-                        descriptionField.getText().toString(),
-                        timeFilters,
-                        duration);
-
-        Intent result = new Intent();
-        result.putExtra(EXTRA_FILTER_HOLDER, resultingTask);
-        setResult(RESULT_OK, result);
-        finish();
+        return new UserDefinedTask(nameField.getText().toString(),
+                                   descriptionField.getText().toString(),
+                                   timeFilters,
+                                   duration);
     }
 }
