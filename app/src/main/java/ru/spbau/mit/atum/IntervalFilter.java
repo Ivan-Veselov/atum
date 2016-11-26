@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.ReadableDateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Фильтр, который задает непрерывный интервал времени.
  */

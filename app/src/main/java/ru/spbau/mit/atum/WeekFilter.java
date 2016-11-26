@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.ReadableDateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Фильтр, который задает непрерывный промежуток времени для каждого из заданных дней недели.
  * Промежуток может заканчиваться на следующий день, но его длительность не должна превышать суток.
