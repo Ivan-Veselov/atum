@@ -36,7 +36,13 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
 
     @Override
     protected @Nullable AbstractFiltersHolder buildFiltersHolder() {
-        int duration = Integer.parseInt(durationField.getText().toString());
+        String durationString = durationField.getText().toString();
+        if (durationString.isEmpty()) {
+            Toast.makeText(this, "Duration must not be empty", Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+        int duration = Integer.parseInt(durationString);
         if (duration == 0) {
             Toast.makeText(this, "Duration must not be 0", Toast.LENGTH_LONG).show();
             return null;
