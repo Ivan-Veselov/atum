@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ATUM</string>
+
+    <string name="interval_filter">Interval Filter</string>
+    <string name="week_filter">Week Filter</string>
 </resources>

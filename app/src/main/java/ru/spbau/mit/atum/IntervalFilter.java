@@ -1,5 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -21,9 +24,10 @@ public class IntervalFilter extends TimeFilter {
      * @param filterFinalMoment конечный момент интервала, который задает фильтр.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
+    @Deprecated
     public IntervalFilter(@NotNull ReadableDateTime filterInitialMoment,
                           @NotNull ReadableDateTime filterFinalMoment, boolean exclusiveFlag) {
-        super(exclusiveFlag);
+        super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
             throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
@@ -31,6 +35,38 @@ public class IntervalFilter extends TimeFilter {
 
         this.filterInitialMoment = filterInitialMoment;
         this.filterFinalMoment = filterFinalMoment;
+    }
+
+    /**
+     * Создает новый фильтр.
+     *
+     * @param description описание фильтра.
+     * @param filterInitialMoment начальный момент интервала, который задает фильтр.
+     * @param filterFinalMoment конечный момент интервала, который задает фильтр.
+     * @param exclusionType тип фильтра (исключающий или нет).
+     */
+    public IntervalFilter(@NonNull String description,
+                          @NonNull ReadableDateTime filterInitialMoment,
+                          @NonNull ReadableDateTime filterFinalMoment,
+                          @NonNull ExclusionType exclusionType) {
+        super(description, exclusionType);
+
+        if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
+            throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
+        }
+
+        this.filterInitialMoment = filterInitialMoment;
+        this.filterFinalMoment = filterFinalMoment;
+    }
+
+    /**
+     * Возвращает описание типа фильтра в заданном контексте.
+     *
+     * @param context контекст приложения.
+     * @return описание типа фильтра.
+     */
+    public @NonNull String getTypeDescription(Context context) {
+        return context.getString(R.string.interval_filter);
     }
 
     /**

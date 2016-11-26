@@ -1,5 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,22 +18,49 @@ import org.joda.time.ReadableDateTime;
 public abstract class TimeFilter implements Serializable {
     protected static final String FINAL_LESS_THAN_INIT_MSG = "Final moment is less than initial.";
 
-    private final boolean exclusiveFlag;
+    private final String description;
+
+    private final ExclusionType exclusionType;
 
     /**
      * Создает новый фильтр.
      *
-     * @param exclusiveFlag если true, то фильтр будет исключающим.
+     * @param description описание фильтра.
+     * @param exclusionType обозначает является ли фильтр исключающим.
      */
-    public TimeFilter(boolean exclusiveFlag) {
-        this.exclusiveFlag = exclusiveFlag;
+    protected TimeFilter(@NonNull String description, ExclusionType exclusionType) {
+        this.description = description;
+        this.exclusionType = exclusionType;
+    }
+
+    /**
+     * Возвращает описание типа фильтра в заданном контексте.
+     *
+     * @param context контекст приложения.
+     * @return описание типа фильтра.
+     */
+    public abstract @NonNull String getTypeDescription(Context context);
+
+    /**
+     * Возвращает описание фильтра.
+     */
+    public @NonNull String getDescription() {
+        return description;
     }
 
     /**
      * @return true, если фильтр исключающий.
      */
+    @Deprecated
     public boolean isExclusive() {
-        return exclusiveFlag;
+        return exclusionType == ExclusionType.EXCLUSIONARY;
+    }
+
+    /**
+     * Возвращает тип фильтра (исключающий или нет).
+     */
+    public @NonNull ExclusionType exclusionType() {
+        return exclusionType;
     }
 
     /**
@@ -95,4 +125,6 @@ public abstract class TimeFilter implements Serializable {
         return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getMillis())
                       - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
     }
+
+    public enum ExclusionType {COMMON, EXCLUSIONARY};
 }

@@ -1,5 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -32,9 +35,10 @@ public class WeekFilter extends TimeFilter {
      *             которые задает фильтр. Неделя начинается с понедельника.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
+    @Deprecated
     public WeekFilter(int firstMinute, int duration, @NotNull WeekMask mask,
                       boolean exclusiveFlag) {
-        super(exclusiveFlag);
+        super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
 
         if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
                 || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
@@ -44,6 +48,43 @@ public class WeekFilter extends TimeFilter {
         this.firstMinute = firstMinute;
         this.duration = duration;
         this.mask = mask;
+    }
+
+    /**
+     * Создает новый фильтр.
+     *
+     * @param description описание фильтра.
+     * @param firstMinute первая минута дня, которую задает фильтр.
+     * @param duration длина одного промежутка. Не должна превышать 24 часа.
+     * @param mask маска, представляющая те дни недели, в которых находятся временные промежутки,
+     *             которые задает фильтр. Неделя начинается с понедельника.
+     * @param exclusionType тип фильтра (исключающий или нет).
+     */
+    public WeekFilter(@NonNull String description,
+                      int firstMinute,
+                      int duration,
+                      @NonNull WeekMask mask,
+                      @NonNull ExclusionType exclusionType) {
+        super(description, exclusionType);
+
+        if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
+                || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
+            throw new IllegalArgumentException(INVALID_INTERVAL_MSG);
+        }
+
+        this.firstMinute = firstMinute;
+        this.duration = duration;
+        this.mask = mask;
+    }
+
+    /**
+     * Возвращает описание типа фильтра в заданном контексте.
+     *
+     * @param context контекст приложения.
+     * @return описание типа фильтра.
+     */
+    public @NonNull String getTypeDescription(Context context) {
+        return context.getString(R.string.week_filter);
     }
 
     /**
