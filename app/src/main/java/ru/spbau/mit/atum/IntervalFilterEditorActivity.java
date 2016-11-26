@@ -71,27 +71,27 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
     protected Dialog onCreateDialog(int id) {
         if (id == START_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, CallBackStartIntervalDate,
+            DatePickerDialog tpd = new DatePickerDialog(this, callBackStartIntervalDate,
                     startYear, startMonth, startDay);
             return tpd;
         }
         if (id == START_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, CallBackStartIntevalTime, startHour, startMinute, true);
+            TimePickerDialog tpd = new TimePickerDialog(this, callBackStartIntevalTime, startHour, startMinute, true);
             return tpd;
         }
         if (id == END_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, CallBackEndIntervalDate,
+            DatePickerDialog tpd = new DatePickerDialog(this, callBackEndIntervalDate,
                     startYear, startMonth, startDay);
             return tpd;
         }
         if (id == END_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, CallBackEndIntevalTime, startHour, startMinute, true);
+            TimePickerDialog tpd = new TimePickerDialog(this, callBackEndIntevalTime, startHour, startMinute, true);
             return tpd;
         }
         return super.onCreateDialog(id);
     }
 
-    private DatePickerDialog.OnDateSetListener CallBackStartIntervalDate = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener callBackStartIntervalDate = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -102,7 +102,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
     };
 
-    private DatePickerDialog.OnDateSetListener CallBackEndIntervalDate = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener callBackEndIntervalDate = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -113,7 +113,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener CallBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             startHour = hourOfDay;
             startMinute = minute;
@@ -121,7 +121,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener CallBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener callBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             endHour = hourOfDay;
             endMinute = minute;
