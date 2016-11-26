@@ -2,6 +2,7 @@ package ru.spbau.mit.atum;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -27,10 +28,17 @@ import java.util.ArrayList;
  * новый объект с нуля.
  * Результат своей работы (инициализированный объект) activity возвращает как Extra значение с
  * ключом EXTRA_FILTER_HOLDER.
+ * Вместе со значением EXTRA_FILTER_HOLDER в activity нужно передавать значение типа int по ключу
+ * EXTRA_FILTER_HOLDER_POSITION. Это же значение по этому же ключу вернется обратно. В этом значении
+ * необходимо сохранить позицию объекта (который редактируется) в массиве, чтобы в дальнейшем его
+ * можно было заменить.
  */
 public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActivity {
     public static final String EXTRA_FILTER_HOLDER =
             "ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER";
+
+    public static final String EXTRA_FILTER_HOLDER_POSITION =
+            "ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION";
 
     private static final String STATE_TIME_FILTERS = "TIME_FILTERS";
 
@@ -161,6 +169,31 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(STATE_TIME_FILTERS, timeFilters);
+    }
+
+    /**
+     * Классы наследники должны перегрузить этот метод. В нем они должны собирать объект класса
+     * наследника AbstractFiltersHolder из данных, которые ввел пользователь. Если объект собрать не
+     * получается, то метод должен возвращать null.
+     */
+    protected abstract @Nullable AbstractFiltersHolder buildFiltersHolder();
+
+    public void onClickApplyButton(View view) {
+        AbstractFiltersHolder resultingHolder = buildFiltersHolder();
+        if (resultingHolder == null) {
+            return;
+        }
+
+        Intent result = new Intent();
+        result.putExtra(EXTRA_FILTER_HOLDER, resultingHolder);
+
+        int position = getIntent().getIntExtra(EXTRA_FILTER_HOLDER_POSITION, -1);
+        if (position >= 0) {
+            result.putExtra(EXTRA_FILTER_HOLDER_POSITION, position);
+        }
+
+        setResult(RESULT_OK, result);
+        finish();
     }
 
     /*public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1,7 +1,6 @@
 package ru.spbau.mit.atum;
 
-import android.content.Intent;
-import android.view.View;
+import android.support.annotation.Nullable;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -18,15 +17,11 @@ public class TimeBlockerEditorActivity extends AbstractFiltersHolderEditorActivi
         timeFilterListView = (ListView) findViewById(R.id.time_blocker_editor_filter_list);
     }
 
-    public void onClickApplyButton(View view) {
-        UserDefinedTimeBlocker resultingTimeBlocker =
-                new UserDefinedTimeBlocker(nameField.getText().toString(),
-                                           descriptionField.getText().toString(),
-                                           timeFilters);
-
-        Intent result = new Intent();
-        result.putExtra(EXTRA_FILTER_HOLDER, resultingTimeBlocker);
-        setResult(RESULT_OK, result);
-        finish();
+    @Override
+    protected @Nullable
+    AbstractFiltersHolder buildFiltersHolder() {
+        return new UserDefinedTimeBlocker(nameField.getText().toString(),
+                                          descriptionField.getText().toString(),
+                                          timeFilters);
     }
 }
