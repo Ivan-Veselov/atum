@@ -30,6 +30,9 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
     public static final String EXTRA_FILTER_HOLDER =
             "ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER";
 
+    public static final String EXTRA_FILTER_HOLDER_POSITION =
+            "ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION";
+
     private static final String STATE_TIME_FILTERS = "TIME_FILTERS";
 
     protected EditText nameField;

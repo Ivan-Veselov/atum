@@ -107,10 +107,19 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NEW_TASK_CODE && resultCode == RESULT_OK) {
-            UserDefinedTask newTask = (UserDefinedTask)data
+            AbstractFiltersHolder newTask = (AbstractFiltersHolder)data
                     .getSerializableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
             addNewTask(newTask);
+            adapter.notifyDataSetChanged();
+        }
+        if (requestCode == EDIT_TASK_CODE && resultCode == RESULT_OK) {
+            filtersHolders.set((int)data.getSerializableExtra
+                    (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER),
+                        (AbstractFiltersHolder)data.getSerializableExtra
+                            (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER));
+
+
             adapter.notifyDataSetChanged();
         }
     }
@@ -143,7 +152,13 @@ public class TaskListActivity extends AppCompatActivity {
             } else {
                 intent = new Intent(this, TimeBlockerEditorActivity.class);
             }
-            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER, filtersHolders.get(adapterContextMenuInfo.position));
+
+            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER,
+                    filtersHolders.get(adapterContextMenuInfo.position));
+
+            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION,
+                    adapterContextMenuInfo.position);
+
             startActivityForResult(intent, EDIT_TASK_CODE);
 
             adapter.notifyDataSetChanged();
