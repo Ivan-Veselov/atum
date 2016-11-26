@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/time_blocker_editor_apply_button"
-        android:id="@+id/time_blocker_editor_add_filter_button" />
+        android:id="@+id/time_blocker_editor_add_filter_button"
+        android:onClick="onClickAddFilterButton" />
 
 </RelativeLayout>
