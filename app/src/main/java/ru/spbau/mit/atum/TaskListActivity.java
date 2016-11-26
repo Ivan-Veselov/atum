@@ -17,21 +17,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TaskListActivity extends AppCompatActivity {
+    private static final String TASK_NAME = "task_name";
+    private static final String IS_SCHEDULED = "is_scheduled";
+    private static final int DELETE_ID = 0;
+    private static final int EDIT_ID = 1;
+    private static final int NEW_TASK_CODE = 0;
+    private static final int EDIT_TASK_CODE = 1;
 
     private ArrayList<AbstractFiltersHolder> filtersHolders;
 
-    private final String TASK_NAME = "task_name";
-    private final String IS_SCHEDULED = "is_scheduled";
     private ListView listView;
     private SimpleAdapter adapter;
     private ArrayList<Map<String, Object>> data;
     private Map<String, Object> m;
-
-    private final int DELETE_ID = 0;
-    private final int EDIT_ID = 1;
-
-    private final int NEW_TASK_CODE = 0;
-    private final int EDIT_TASK_CODE = 1;
 
     private boolean isUserDefinedTask = false;
     private TextView title;
