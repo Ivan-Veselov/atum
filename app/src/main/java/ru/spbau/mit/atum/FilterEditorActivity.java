@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class FilterEditorActivity extends AppCompatActivity {
+    public static final String EXTRA_FILTER =
+            "ru.spbau.mit.atum.FilterEditorActivity.EXTRA_FILTER";
+
+    public static final String EXTRA_FILTER_POSITION =
+            "ru.spbau.mit.atum.FilterEditorActivity.EXTRA_FILTER_POSITION";
 
     private TimeFilter timeFilter = null;
 

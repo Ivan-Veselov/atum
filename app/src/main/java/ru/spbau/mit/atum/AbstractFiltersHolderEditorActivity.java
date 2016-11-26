@@ -1,5 +1,6 @@
 package ru.spbau.mit.atum;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,10 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             "ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION";
 
     private static final String STATE_TIME_FILTERS = "TIME_FILTERS";
+
+    private static final int ADD_FILTER_REQUEST = 0;
+
+    private static final int EDIT_FILTER_REQUEST = 1;
 
     protected EditText nameField;
 
@@ -117,6 +123,21 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
                 (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.filter_menu_edit_item:
+                TimeFilter filter = timeFilters.get(info.position);
+                Intent intent;
+
+                if (filter instanceof IntervalFilter) {
+                    intent = new Intent(this, IntervalFilterEditorActivity.class);
+                } else if (filter instanceof WeekFilter) {
+                    intent = new Intent(this, WeekFilterEditorActivity.class);
+                } else {
+                    return super.onContextItemSelected(item);
+                }
+
+                intent.putExtra(FilterEditorActivity.EXTRA_FILTER, filter);
+                intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, info.position);
+                startActivityForResult(intent, EDIT_FILTER_REQUEST);
+
                 return true;
             case R.id.filter_menu_delete_item:
                 timeFilters.remove(info.position);
@@ -126,6 +147,11 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    public void onClickAddFilterButton(View view) {
+        Intent intent = new Intent(this, FilterEditorActivity.class);
+        startActivityForResult(intent, ADD_FILTER_REQUEST);
     }
 
     @Override
@@ -139,5 +165,36 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
         super.onSaveInstanceState(outState);
         outState.putSerializable(STATE_TIME_FILTERS, timeFilters);
     }
+
+    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case ADD_FILTER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    TimeFilter filter =
+                        (TimeFilter) data.getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+
+                    timeFilters.add(filter);
+                    timeFilterListViewAdapter.notifyDataSetChanged();
+                }
+
+                break;
+
+            case EDIT_FILTER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    TimeFilter filter =
+                        (TimeFilter) data.getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+
+                    int position = data.getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, 0);
+
+                    timeFilters.set(position, filter);
+                    timeFilterListViewAdapter.notifyDataSetChanged();
+                }
+
+                break;
+
+            default:
+                break;
+        }
+    }*/
 }
 
