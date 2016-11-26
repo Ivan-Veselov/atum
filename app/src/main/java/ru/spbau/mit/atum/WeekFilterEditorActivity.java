@@ -11,8 +11,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class WeekFilterEditorActivity extends AppCompatActivity {
-    private int FIRST_MINUTE = 1;
-    private int DURATION = 2;
+    private final int FIRST_MINUTE = 1;
+    private final int DURATION = 2;
+
     private int firstMinuteHour = 0;
     private int firstMinuteMinute = 0;
     private int durationHour = 0;

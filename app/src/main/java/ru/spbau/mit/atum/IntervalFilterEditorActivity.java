@@ -17,11 +17,10 @@ import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
 public class IntervalFilterEditorActivity extends AppCompatActivity {
-    private int START_DATE = 1;
-    private int START_TIME = 2;
-    private int END_DATE = 3;
-    private int END_TIME = 4;
-
+    private final int START_DATE = 1;
+    private final int START_TIME = 2;
+    private final int END_DATE = 3;
+    private final int END_TIME = 4;
 
     private int startYear = 2016;
     private int startMonth = 1;
