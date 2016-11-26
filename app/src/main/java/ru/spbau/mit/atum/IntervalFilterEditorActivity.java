@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -142,7 +143,17 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
             return;
         }
 
-        TimeFilter timeFilter = new IntervalFilter(startTime, endTime, isExclusionary.isChecked());
+        TimeFilter.ExclusionType exclusionType;
+        if (isExclusionary.isChecked()) {
+            exclusionType = TimeFilter.ExclusionType.EXCLUSIONARY;
+        } else {
+            exclusionType = TimeFilter.ExclusionType.COMMON;
+        }
+
+        EditText description = (EditText) findViewById(R.id.interval_filter_name);
+
+        TimeFilter timeFilter = new IntervalFilter(description.getText().toString(),
+                    startTime, endTime, exclusionType);
 
         intent.putExtra("filter", timeFilter);
 

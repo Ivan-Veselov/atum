@@ -11,29 +11,6 @@
     tools:context="ru.spbau.mit.atum.WeekFilterEditorActivity">
 
     <CheckBox
-        android:text="Exclusionary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:id="@+id/isExclusionary"
-        android:checked="false"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Expected Duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/duration"
-        android:layout_marginTop="23dp"
-        android:layout_below="@+id/first_minute"
-        android:layout_alignParentStart="true"
-        android:clickable="true"
-        android:onClick="onDutationClick"
-        android:textSize ="15dp"
-        android:layout_alignParentEnd="true" />
-
-    <CheckBox
         android:text="Monday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,25 +76,60 @@
         android:id="@+id/week_filter_editor_OK"
         android:onClick="onButtonOKClick" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:id="@+id/week_filter_name"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:text="Exclusionary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/isExclusionary"
+        android:checked="false"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/week_filter_name"
+        android:layout_alignParentStart="true" />
+
     <TextView
         android:text="First minute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="11dp"
         android:id="@+id/first_minute"
         android:clickable="true"
         android:onClick="onFirstMinuteClick"
         android:textSize ="15dp"
-        android:layout_below="@+id/isFreeTime"
+        android:layout_below="@+id/isExclusionary"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Select days of week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="22dp"
         android:id="@+id/days_of_week"
         android:layout_below="@+id/duration"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Expected Duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/duration"
+        android:layout_marginTop="17dp"
+        android:clickable="true"
+        android:onClick="onDurationClick"
+        android:textSize ="15dp"
+        android:layout_below="@+id/first_minute"
+        android:layout_alignStart="@+id/first_minute"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

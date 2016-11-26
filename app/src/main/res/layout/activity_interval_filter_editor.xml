@@ -19,27 +19,6 @@
         android:onClick="onButtonOKClick"
         android:id="@+id/interval_filter_editor_OK" />
 
-    <CheckBox
-        android:text="Exclusionary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:id="@+id/isExclusionary"
-        android:checked="false"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Interval starts:"
-        android:textSize="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/isExclusionary"
-        android:layout_marginTop="51dp"
-        android:id="@+id/interval_start"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
 
     <TextView
         android:text="Time"
@@ -103,5 +82,36 @@
         android:layout_below="@+id/interval_start_time"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/interval_filter_editor_OK"
+        android:id="@+id/interval_filter_name"
+        android:layout_alignParentEnd="true"
+        android:hint="enter filter name" />
+
+    <CheckBox
+        android:text="Exclusionary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/isExclusionary"
+        android:checked="false"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/interval_filter_name"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Interval starts:"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:id="@+id/interval_start"
+        android:layout_below="@+id/isExclusionary"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

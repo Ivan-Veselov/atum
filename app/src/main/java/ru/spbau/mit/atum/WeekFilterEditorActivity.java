@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -53,7 +54,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         showDialog(FIRST_MINUTE);
     }
 
-    public void onDutationClick(View view) {
+    public void onDurationClick(View view) {
         showDialog(DURATION);
     }
 
@@ -102,9 +103,18 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
             }
         }
 
-        TimeFilter timeFilter = new WeekFilter(firstMinuteHour * 60 + firstMinuteMinute,
-                                               durationHour * 60 + durationMinute,
-                                               new WeekMask(resList), isExclusionary.isChecked());
+        TimeFilter.ExclusionType exclusionType;
+        if (isExclusionary.isChecked()) {
+            exclusionType = TimeFilter.ExclusionType.EXCLUSIONARY;
+        } else {
+            exclusionType = TimeFilter.ExclusionType.COMMON;
+        }
+
+        EditText description = (EditText) findViewById(R.id.week_filter_name);
+
+        TimeFilter timeFilter = new WeekFilter(description.getText().toString(),
+                firstMinuteHour * 60 + firstMinuteMinute, durationHour * 60 + durationMinute,
+                new WeekMask(resList), exclusionType);
 
         intent.putExtra("filter", timeFilter);
 
