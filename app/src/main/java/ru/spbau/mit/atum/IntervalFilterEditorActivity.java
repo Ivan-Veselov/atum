@@ -17,19 +17,6 @@ import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
 public class IntervalFilterEditorActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interval_filter_editor);
-
-        isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
-        tvStartDate = (TextView) findViewById(R.id.interval_start_date);
-        tvStartTime = (TextView) findViewById(R.id.interval_start_time);
-        tvEndDate = (TextView) findViewById(R.id.interval_end_date);
-        tvEndTime = (TextView) findViewById(R.id.interval_end_time);
-    }
-
     private int START_DATE = 1;
     private int START_TIME = 2;
     private int END_DATE = 3;
@@ -55,6 +42,17 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
     private CheckBox isExclusionary;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_interval_filter_editor);
+
+        isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
+        tvStartDate = (TextView) findViewById(R.id.interval_start_date);
+        tvStartTime = (TextView) findViewById(R.id.interval_start_time);
+        tvEndDate = (TextView) findViewById(R.id.interval_end_date);
+        tvEndTime = (TextView) findViewById(R.id.interval_end_time);
+    }
 
     public void onStartIntervalDateClick(View view) {
         showDialog(START_DATE);

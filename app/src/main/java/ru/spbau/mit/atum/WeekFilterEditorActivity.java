@@ -3,14 +3,28 @@ package ru.spbau.mit.atum;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class WeekFilterEditorActivity extends AppCompatActivity {
+    private int FIRST_MINUTE = 1;
+    private int DURATION = 2;
+    private int firstMinuteHour = 0;
+    private int firstMinuteMinute = 0;
+    private int durationHour = 0;
+    private int durationMinute = 0;
+
+    private CheckBox isExclusionary;
+
+    private TextView tvFirstMinute;
+    private TextView tvDuration;
+
+    private final int DAYS_IN_WEEK = 7;
+    private CheckBox [] checkBoxList = new CheckBox[DAYS_IN_WEEK];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +47,6 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
         isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
     }
-
-    private int FIRST_MINUTE = 1;
-    private int DURATION = 2;
-    private int firstMinuteHour = 0;
-    private int firstMinuteMinute = 0;
-    private int durationHour = 0;
-    private int durationMinute = 0;
-
-    private CheckBox isExclusionary;
-
-    private TextView tvFirstMinute;
-    private TextView tvDuration;
-
-    private final int DAYS_IN_WEEK = 7;
-    private CheckBox [] checkBoxList = new CheckBox[DAYS_IN_WEEK];
 
     public void onFirstMinuteClick(View view) {
         showDialog(FIRST_MINUTE);
