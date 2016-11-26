@@ -1,5 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -31,6 +34,16 @@ public class IntervalFilter extends TimeFilter {
 
         this.filterInitialMoment = filterInitialMoment;
         this.filterFinalMoment = filterFinalMoment;
+    }
+
+    /**
+     * Возвращает описание типа фильтра в заданном контексте.
+     *
+     * @param context контекст приложения.
+     * @return описание типа фильтра.
+     */
+    public @NonNull String getTypeDescription(Context context) {
+        return context.getString(R.string.interval_filter);
     }
 
     /**

@@ -1,5 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +18,8 @@ import org.joda.time.ReadableDateTime;
 public abstract class TimeFilter implements Serializable {
     protected static final String FINAL_LESS_THAN_INIT_MSG = "Final moment is less than initial.";
 
+    private final String description;
+
     private final boolean exclusiveFlag;
 
     /**
@@ -23,7 +28,23 @@ public abstract class TimeFilter implements Serializable {
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
     public TimeFilter(boolean exclusiveFlag) {
+        this.description = "Filter";
         this.exclusiveFlag = exclusiveFlag;
+    }
+
+    /**
+     * Возвращает описание типа фильтра в заданном контексте.
+     *
+     * @param context контекст приложения.
+     * @return описание типа фильтра.
+     */
+    public abstract @NonNull String getTypeDescription(Context context);
+
+    /**
+     * Возвращает описание фильтра.
+     */
+    public @NonNull String getDescription() {
+        return description;
     }
 
     /**

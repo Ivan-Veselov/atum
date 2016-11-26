@@ -1,5 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -44,6 +47,16 @@ public class WeekFilter extends TimeFilter {
         this.firstMinute = firstMinute;
         this.duration = duration;
         this.mask = mask;
+    }
+
+    /**
+     * Возвращает описание типа фильтра в заданном контексте.
+     *
+     * @param context контекст приложения.
+     * @return описание типа фильтра.
+     */
+    public @NonNull String getTypeDescription(Context context) {
+        return context.getString(R.string.week_filter);
     }
 
     /**
