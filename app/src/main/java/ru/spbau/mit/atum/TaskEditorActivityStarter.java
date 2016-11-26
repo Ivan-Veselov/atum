@@ -3,12 +3,16 @@ package ru.spbau.mit.atum;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Самопальный запускатель TaskEditorActivity для тестирования.
+ */
 public class TaskEditorActivityStarter extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,18 +20,32 @@ public class TaskEditorActivityStarter extends Activity {
 
         Intent intent = new Intent(this, TaskEditorActivity.class);
 
-        intent.putExtra(TaskEditorActivity.EXTRA_TASK,
+        intent.putExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER,
                         new UserDefinedTask("TaskName",
                                             "TaskDescription",
                                             new ArrayList<>(Arrays.asList(new TimeFilter[] {
-                                                    new IntervalFilter(new DateTime(2000, 1, 1, 0, 10, 0),
+                                                    new IntervalFilter("First filter",
+                                                                       new DateTime(2000, 1, 1, 0, 10, 0),
                                                                        new DateTime(2000, 1, 1, 0, 55, 0),
-                                                                       false),
-                                                    new IntervalFilter(new DateTime(2000, 1, 1, 12, 0, 0),
+                                                                       TimeFilter.ExclusionType.COMMON),
+                                                    new IntervalFilter("Second Filter",
+                                                                       new DateTime(2000, 1, 1, 12, 0, 0),
                                                                        new DateTime(2000, 1, 1, 17, 0, 0),
-                                                                       false)
+                                                                       TimeFilter.ExclusionType.COMMON)
                                             })),
                                             42));
-        startActivity(intent);
+
+        startActivityForResult(intent, 0);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                UserDefinedTask task =
+                        (UserDefinedTask) data.getSerializableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
+
+                Toast.makeText(this, task.getName() + " " + task.getFilterList().size(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
