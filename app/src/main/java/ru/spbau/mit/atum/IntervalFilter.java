@@ -24,9 +24,32 @@ public class IntervalFilter extends TimeFilter {
      * @param filterFinalMoment конечный момент интервала, который задает фильтр.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
+    @Deprecated
     public IntervalFilter(@NotNull ReadableDateTime filterInitialMoment,
                           @NotNull ReadableDateTime filterFinalMoment, boolean exclusiveFlag) {
-        super(exclusiveFlag);
+        super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
+
+        if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
+            throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
+        }
+
+        this.filterInitialMoment = filterInitialMoment;
+        this.filterFinalMoment = filterFinalMoment;
+    }
+
+    /**
+     * Создает новый фильтр.
+     *
+     * @param description описание фильтра.
+     * @param filterInitialMoment начальный момент интервала, который задает фильтр.
+     * @param filterFinalMoment конечный момент интервала, который задает фильтр.
+     * @param exclusionType тип фильтра (исключающий или нет).
+     */
+    public IntervalFilter(@NonNull String description,
+                          @NonNull ReadableDateTime filterInitialMoment,
+                          @NonNull ReadableDateTime filterFinalMoment,
+                          @NonNull ExclusionType exclusionType) {
+        super(description, exclusionType);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
             throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);

@@ -35,9 +35,37 @@ public class WeekFilter extends TimeFilter {
      *             которые задает фильтр. Неделя начинается с понедельника.
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
+    @Deprecated
     public WeekFilter(int firstMinute, int duration, @NotNull WeekMask mask,
                       boolean exclusiveFlag) {
-        super(exclusiveFlag);
+        super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
+
+        if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
+                || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
+            throw new IllegalArgumentException(INVALID_INTERVAL_MSG);
+        }
+
+        this.firstMinute = firstMinute;
+        this.duration = duration;
+        this.mask = mask;
+    }
+
+    /**
+     * Создает новый фильтр.
+     *
+     * @param description описание фильтра.
+     * @param firstMinute первая минута дня, которую задает фильтр.
+     * @param duration длина одного промежутка. Не должна превышать 24 часа.
+     * @param mask маска, представляющая те дни недели, в которых находятся временные промежутки,
+     *             которые задает фильтр. Неделя начинается с понедельника.
+     * @param exclusionType тип фильтра (исключающий или нет).
+     */
+    public WeekFilter(@NonNull String description,
+                      int firstMinute,
+                      int duration,
+                      @NonNull WeekMask mask,
+                      @NonNull ExclusionType exclusionType) {
+        super(description, exclusionType);
 
         if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
                 || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {

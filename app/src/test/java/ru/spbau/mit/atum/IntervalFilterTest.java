@@ -5,48 +5,59 @@ import org.junit.Test;
 
 import java.util.List;
 
+import ru.spbau.mit.atum.TimeFilter.ExclusionType;
+
 import static org.junit.Assert.assertEquals;
 import static ru.spbau.mit.atum.TestUtilities.theFirstOfJan;
+import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
+import static ru.spbau.mit.atum.TimeFilter.ExclusionType.EXCLUSIONARY;
 
 public class IntervalFilterTest {
     @Test
     public void testConstructor1() throws Exception {
-        new IntervalFilter(theFirstOfJan(0, 0), theFirstOfJan(12, 0), false);
+        new IntervalFilter("description", theFirstOfJan(0, 0), theFirstOfJan(12, 0), COMMON);
+        new IntervalFilter("description", theFirstOfJan(0, 0), theFirstOfJan(12, 0), EXCLUSIONARY);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor2() throws Exception {
-        new IntervalFilter(theFirstOfJan(12, 0), theFirstOfJan(0, 0), false);
+        new IntervalFilter("desc", theFirstOfJan(12, 0), theFirstOfJan(0, 0), COMMON);
     }
 
     /**
      * Вспомогательный метод, который тестирует методы доступа
      */
-    private void testGettersOn(AbstractDateTime initialMoment,
-                               AbstractDateTime finalMoment, boolean exclusiveFlag) throws Exception {
+    private void testGettersOn(String description,
+                               AbstractDateTime initialMoment,
+                               AbstractDateTime finalMoment,
+                               ExclusionType exclusionType) throws Exception {
 
-        IntervalFilter filter = new IntervalFilter(initialMoment, finalMoment, exclusiveFlag);
+        IntervalFilter filter = new IntervalFilter(description,
+                                                   initialMoment,
+                                                   finalMoment,
+                                                   exclusionType);
 
-        assertEquals(exclusiveFlag, filter.isExclusive());
+        assertEquals(description, filter.getDescription());
+        assertEquals(exclusionType, filter.exclusionType());
         assertEquals(initialMoment, filter.getInitialMoment());
         assertEquals(finalMoment, filter.getFinalMoment());
     }
 
     @Test
     public void testGetters() throws Exception {
-        testGettersOn(theFirstOfJan(0, 0), theFirstOfJan(23, 22), false);
-        testGettersOn(theFirstOfJan(12, 0), theFirstOfJan(22, 23), true);
+        testGettersOn("desc", theFirstOfJan(0, 0), theFirstOfJan(23, 22), COMMON);
+        testGettersOn("", theFirstOfJan(12, 0), theFirstOfJan(22, 23), EXCLUSIONARY);
     }
 
     private void testIntervalRepresentationOn(AbstractDateTime filterInitialMoment,
                                               AbstractDateTime filterFinalMoment,
-                                              boolean exclusiveFlag,
+                                              ExclusionType exclusionType,
                                               AbstractDateTime initialMoment,
                                               AbstractDateTime finalMoment,
                                               int begin,
                                               int end) throws Exception {
-        IntervalFilter filter = new IntervalFilter(filterInitialMoment,
-                                                   filterFinalMoment, exclusiveFlag);
+        IntervalFilter filter = new IntervalFilter("desc", filterInitialMoment,
+                                                   filterFinalMoment, exclusionType);
 
         List<Interval> list = filter.intervalRepresentation(initialMoment, finalMoment);
         assertEquals(1, list.size());
@@ -58,11 +69,11 @@ public class IntervalFilterTest {
 
     private void testIntervalRepresentationOnEmpty(AbstractDateTime filterInitialMoment,
                                                    AbstractDateTime filterFinalMoment,
-                                                   boolean exclusiveFlag,
+                                                   ExclusionType exclusionType,
                                                    AbstractDateTime initialMoment,
                                                    AbstractDateTime finalMoment) throws Exception {
-        IntervalFilter filter = new IntervalFilter(filterInitialMoment,
-                filterFinalMoment, exclusiveFlag);
+        IntervalFilter filter = new IntervalFilter("desc", filterInitialMoment,
+                filterFinalMoment, exclusionType);
 
         List<Interval> list = filter.intervalRepresentation(initialMoment, finalMoment);
         assertEquals(0, list.size());
@@ -73,27 +84,27 @@ public class IntervalFilterTest {
         // Нет пересечения
         testIntervalRepresentationOnEmpty(theFirstOfJan(13, 0),
                                           theFirstOfJan(14, 0),
-                                          false,
+                                          COMMON,
                                           theFirstOfJan(1, 0),
                                           theFirstOfJan(13, 0));
 
         testIntervalRepresentationOnEmpty(theFirstOfJan(1, 0),
                                           theFirstOfJan(2, 0),
-                                          true,
+                                          EXCLUSIONARY,
                                           theFirstOfJan(3, 0),
                                           theFirstOfJan(10, 0));
 
         // Вложение
         testIntervalRepresentationOn(theFirstOfJan(2, 0),
                                      theFirstOfJan(3, 10),
-                                     false,
+                                     COMMON,
                                      theFirstOfJan(1, 0),
                                      theFirstOfJan(4, 0),
                                      60, 130);
 
         testIntervalRepresentationOn(theFirstOfJan(3, 0),
                                      theFirstOfJan(5, 1),
-                                     true,
+                                     EXCLUSIONARY,
                                      theFirstOfJan(3, 0),
                                      theFirstOfJan(12, 0),
                                      0, 121);
@@ -101,14 +112,14 @@ public class IntervalFilterTest {
         // Частичное пересечение
         testIntervalRepresentationOn(theFirstOfJan(2, 0),
                                      theFirstOfJan(2, 20),
-                                     false,
+                                     COMMON,
                                      theFirstOfJan(1, 0),
                                      theFirstOfJan(2, 10),
                                      60, 70);
 
         testIntervalRepresentationOn(theFirstOfJan(2, 0),
                                      theFirstOfJan(3, 20),
-                                     true,
+                                     EXCLUSIONARY,
                                      theFirstOfJan(2, 55),
                                      theFirstOfJan(12, 0),
                                      0, 25);

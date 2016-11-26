@@ -20,16 +20,17 @@ public abstract class TimeFilter implements Serializable {
 
     private final String description;
 
-    private final boolean exclusiveFlag;
+    private final ExclusionType exclusionType;
 
     /**
      * Создает новый фильтр.
      *
-     * @param exclusiveFlag если true, то фильтр будет исключающим.
+     * @param description описание фильтра.
+     * @param exclusionType обозначает является ли фильтр исключающим.
      */
-    public TimeFilter(boolean exclusiveFlag) {
-        this.description = "Filter";
-        this.exclusiveFlag = exclusiveFlag;
+    protected TimeFilter(@NonNull String description, ExclusionType exclusionType) {
+        this.description = description;
+        this.exclusionType = exclusionType;
     }
 
     /**
@@ -50,8 +51,16 @@ public abstract class TimeFilter implements Serializable {
     /**
      * @return true, если фильтр исключающий.
      */
+    @Deprecated
     public boolean isExclusive() {
-        return exclusiveFlag;
+        return exclusionType == ExclusionType.EXCLUSIONARY;
+    }
+
+    /**
+     * Возвращает тип фильтра (исключающий или нет).
+     */
+    public @NonNull ExclusionType exclusionType() {
+        return exclusionType;
     }
 
     /**
@@ -116,4 +125,6 @@ public abstract class TimeFilter implements Serializable {
         return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getMillis())
                       - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
     }
+
+    public enum ExclusionType {COMMON, EXCLUSIONARY};
 }

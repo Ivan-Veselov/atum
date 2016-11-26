@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 import static ru.spbau.mit.atum.TestUtilities.assertIntervalListEquals;
 import static ru.spbau.mit.atum.TestUtilities.theFirstOfJan;
-import static ru.spbau.mit.atum.TestUtilities.theNthOfJan;
+import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
+import static ru.spbau.mit.atum.TimeFilter.ExclusionType.EXCLUSIONARY;
 
 public class UserDefinedTaskTest {
     @Test(expected = IllegalArgumentException.class)
@@ -24,8 +25,10 @@ public class UserDefinedTaskTest {
     public void testIntervalRepresentation() throws Exception {
         UserDefinedTask task = new UserDefinedTask("Name", "Description",
                 Arrays.asList(new TimeFilter[] {
-                        new IntervalFilter(theFirstOfJan(1, 0), theFirstOfJan(3, 0), false),
-                        new IntervalFilter(theFirstOfJan(2, 0), theFirstOfJan(2, 30), true)
+                        new IntervalFilter("desc", theFirstOfJan(1, 0),
+                                           theFirstOfJan(3, 0), COMMON),
+                        new IntervalFilter("desc", theFirstOfJan(2, 0),
+                                           theFirstOfJan(2, 30), EXCLUSIONARY)
                 }), 1);
 
         assertIntervalListEquals(new int[] {0, 60},
