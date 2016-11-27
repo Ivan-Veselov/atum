@@ -2,8 +2,10 @@ package ru.spbau.mit.atum;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +47,8 @@ public class SchedulerViewerActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.scheduled_task_list);
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
+
+   //     Log.i("my_tag", ((Integer)data.size()).toString());
     }
 
     private void addNewTask(UserDefinedTask task) {

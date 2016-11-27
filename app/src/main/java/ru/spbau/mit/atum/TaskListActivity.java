@@ -50,11 +50,9 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_task_list);
-        filtersHolders = (ArrayList<AbstractFiltersHolder>)getIntent().getSerializableExtra("filter holders");
 
-        if (filtersHolders.size() > 0 && filtersHolders.get(0) instanceof UserDefinedTask) {
-            isUserDefinedTask = true;
-        }
+        filtersHolders = (ArrayList<AbstractFiltersHolder>)getIntent().getSerializableExtra("filter holders");
+        isUserDefinedTask = getIntent().getIntExtra("filter holder type", 0) == 0;
 
         data = new ArrayList<>();
         for (AbstractFiltersHolder task: filtersHolders) {

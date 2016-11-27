@@ -32,14 +32,18 @@ public class FilterEditorActivity extends AppCompatActivity {
 
     public void onButtonOKClick(View view) {
         Intent intent = new Intent();
-        intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
-        setResult(RESULT_OK, intent);
+        if (timeFilter != null) {
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_CANCELED, null);
+        setResult(RESULT_CANCELED);
         finish();
     }
 

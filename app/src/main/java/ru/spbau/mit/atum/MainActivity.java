@@ -10,44 +10,15 @@ import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private UserPreferences userPreferences = new UserPreferences();
-    private List<UserDefinedTask> tasks;
-    private List<UserDefinedTimeBlocker> blockers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        WeekFilter weekFilter1 = new WeekFilter(10 * 60, 90, new WeekMask(1, 2, 4), false);
-        WeekFilter weekFilter2 = new WeekFilter(10 * 60, 120, new WeekMask(1, 3, 5), false);
-
-        WeekFilter weekFilter3 = new WeekFilter(10 * 60, 90, new WeekMask(0, 6), false);
-        WeekFilter weekFilter4 = new WeekFilter(10 * 60, 120, new WeekMask(0, 1), false);
-
-        List<TimeFilter> taskFilters = new ArrayList<>();
-        taskFilters.add(weekFilter1);
-        taskFilters.add(weekFilter2);
-
-        List<TimeFilter> blockerFilters = new ArrayList<>();
-        blockerFilters.add(weekFilter3);
-        blockerFilters.add(weekFilter4);
-
-        tasks = userPreferences.getTaskList();
-        blockers = userPreferences.getBlockerList();
-
-        for (int i = 1; i <= 50; i++) {
-            tasks.add(new UserDefinedTask("task #" + i, "", taskFilters, 5 * i));
-        }
-
-        for (int i = 1; i <= 20; i++) {
-            blockers.add(new UserDefinedTimeBlocker("blocker #" + i, "", blockerFilters));
-        }
-
     }
 
     private final int TASK_CODE = 0;
@@ -55,13 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onTaskListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holders", (Serializable)tasks);
+        intent.putExtra("filter holders", (Serializable)userPreferences.getTaskList());
+        intent.putExtra("filter holder type", TASK_CODE);
         startActivityForResult(intent, TASK_CODE);
     }
 
     public void onBlockerListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holders", (Serializable)blockers);
+        intent.putExtra("filter holders", (Serializable)userPreferences.getBlockerList());
+        intent.putExtra("filter holder type", BLOCKER_CODE);
         startActivityForResult(intent, BLOCKER_CODE);
     }
 
@@ -72,17 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void onViewScheduleClick(View view) {
         Intent intent = new Intent(this, SchedulerViewerActivity.class);
-        intent.putExtra("all tasks", (Serializable)tasks);
+        intent.putExtra("all tasks", (Serializable)userPreferences.getTaskList());
         startActivity(intent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TASK_CODE && resultCode == RESULT_OK) {
-            tasks = (ArrayList<UserDefinedTask>)data.getSerializableExtra("filter holders");
+            userPreferences.setTaskList((ArrayList<UserDefinedTask>)data.getSerializableExtra("filter holders"));
         }
         if (requestCode == BLOCKER_CODE && resultCode == RESULT_OK) {
-            blockers = (ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders");
+            userPreferences.setBlockerList((ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders"));
         }
     }
 }
