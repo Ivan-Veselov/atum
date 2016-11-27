@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity
+        <activity
             android:name=".FilterEditorActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -56,7 +56,16 @@
             android:name=".TaskEditorActivityStarter"
             android:exported="true" />
         <activity android:name=".TimeBlockerEditorActivity" />
-        <activity android:name=".TimeBlockerEditorActivityStarter" android:exported="true" />
+        <activity
+            android:name=".TimeBlockerEditorActivityStarter"
+            android:exported="true" />
+        <activity android:name=".SchedulerViewerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

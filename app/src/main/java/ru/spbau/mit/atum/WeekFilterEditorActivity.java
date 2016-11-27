@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.logging.Filter;
-
 public class WeekFilterEditorActivity extends AppCompatActivity {
     private final int FIRST_MINUTE = 1;
     private final int DURATION = 2;

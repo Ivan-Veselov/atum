@@ -23,17 +23,19 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     private final int END_DATE = 3;
     private final int END_TIME = 4;
 
-    private int startYear = 2016;
-    private int startMonth = 1;
-    private int startDay = 1;
-    private int endYear = 2016;
-    private int endMonth = 1;
-    private int endDay = 1;
+    private final DateTime currentDateTime = new DateTime();
 
-    private int startHour = 0;
-    private int startMinute = 0;
-    private int endHour = 0;
-    private int endMinute = 0;
+    private int startYear = currentDateTime.getYear();
+    private int startMonth = currentDateTime.getMonthOfYear();
+    private int startDay = currentDateTime.getDayOfMonth();
+    private int endYear = currentDateTime.getYear();
+    private int endMonth = currentDateTime.getMonthOfYear();
+    private int endDay = currentDateTime.getDayOfMonth();
+
+    private int startHour = currentDateTime.getHourOfDay();
+    private int startMinute = currentDateTime.getMinuteOfHour();
+    private int endHour = currentDateTime.getHourOfDay();
+    private int endMinute = currentDateTime.getMinuteOfHour();
 
     private TextView tvStartDate;
     private TextView tvStartTime;
@@ -68,18 +70,18 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
             startHour = previousFilter.getInitialMoment().getHourOfDay();
             startMinute = previousFilter.getInitialMoment().getMinuteOfHour();
 
-            tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
-            tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
-
             endYear = previousFilter.getFinalMoment().getYear();
             endMonth = previousFilter.getFinalMoment().getMonthOfYear();
             endDay = previousFilter.getFinalMoment().getDayOfMonth();
             endHour = previousFilter.getFinalMoment().getHourOfDay();
             endMinute = previousFilter.getFinalMoment().getMinuteOfHour();
-
-            tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
-            tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
         }
+        tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
+        tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
+
+        tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
+        tvEndTime.setText(endHour + " hours " + endMinute + " minutes");
+
     }
 
     public void onStartIntervalDateClick(View view) {
@@ -101,7 +103,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == START_DATE) {
             DatePickerDialog tpd = new DatePickerDialog(this, callBackStartIntervalDate,
-                    startYear, startMonth, startDay);
+                    startYear, startMonth - 1, startDay);
             return tpd;
         }
         if (id == START_TIME) {
@@ -110,11 +112,11 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
         if (id == END_DATE) {
             DatePickerDialog tpd = new DatePickerDialog(this, callBackEndIntervalDate,
-                    startYear, startMonth, startDay);
+                    endYear, endMonth - 1, endDay);
             return tpd;
         }
         if (id == END_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, callBackEndIntevalTime, startHour, startMinute, true);
+            TimePickerDialog tpd = new TimePickerDialog(this, callBackEndIntevalTime, endHour, endMinute, true);
             return tpd;
         }
         return super.onCreateDialog(id);
@@ -125,7 +127,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             startYear = year;
-            startMonth = monthOfYear;
+            startMonth = monthOfYear + 1;
             startDay = dayOfMonth;
             tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
         }
@@ -136,7 +138,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             endYear = year;
-            endMonth = monthOfYear;
+            endMonth = monthOfYear + 1;
             endDay = dayOfMonth;
             tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
         }
