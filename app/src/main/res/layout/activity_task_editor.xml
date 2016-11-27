@@ -56,16 +56,6 @@
         android:id="@+id/task_editor_apply_button"
         android:onClick="onClickApplyButton" />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/task_editor_filter_list"
-        android:headerDividersEnabled="false"
-        android:footerDividersEnabled="false"
-        android:layout_above="@+id/task_editor_apply_button"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/task_editor_duration_field" />
-
     <Button
         android:text="Add filter"
         android:layout_width="wrap_content"
@@ -74,4 +64,23 @@
         android:layout_toStartOf="@+id/task_editor_apply_button"
         android:id="@+id/task_editor_add_filter_button"
         android:onClick="onClickAddFilterButton" />
+
+    <Button
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/task_editor_location_button"
+        android:layout_below="@+id/task_editor_duration_field"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/task_editor_filter_list"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/task_editor_location_button"
+        android:layout_above="@+id/task_editor_apply_button" />
 </RelativeLayout>
