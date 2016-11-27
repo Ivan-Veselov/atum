@@ -20,7 +20,7 @@
         android:id="@+id/schedule_title" />
 
     <ListView
-        android:layout_height="456dp"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/scheduled_task_list"
         android:divider="@android:color/transparent"
