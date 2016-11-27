@@ -15,7 +15,7 @@ public class UserPreferences {
     private List<UserDefinedTimeBlocker> blockerList;
 
     /**
-     * Создает новые предпочтения с пкстыми списками.
+     * Создает новые предпочтения с пустыми списками.
      */
     public UserPreferences() {
         taskList = new ArrayList<>();

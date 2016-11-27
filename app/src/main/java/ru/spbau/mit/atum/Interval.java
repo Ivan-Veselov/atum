@@ -91,6 +91,16 @@ public class Interval {
         return new Interval(begin, end);
     }
 
+    public boolean isIntersectionWithListOfIntervals(@NotNull List<Interval> others) {
+        for (Interval other: others) {
+            Interval intersection = intersection(other);
+            if (intersection.left < intersection.right) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Преобразует набор интервалов в набор концов этих интервалов.
      *
