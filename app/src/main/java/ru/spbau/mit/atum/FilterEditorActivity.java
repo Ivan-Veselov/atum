@@ -50,7 +50,10 @@ public class FilterEditorActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            timeFilter = (TimeFilter) data.getSerializableExtra("filter");
+            Intent intent = new Intent();
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, data.getSerializableExtra("filter"));
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 }
