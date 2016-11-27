@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TaskListActivity extends AppCompatActivity {
 
@@ -114,11 +115,22 @@ public class TaskListActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
         if (requestCode == EDIT_TASK_CODE && resultCode == RESULT_OK) {
-            filtersHolders.set((int)data.getSerializableExtra
-                    (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER),
-                        (AbstractFiltersHolder)data.getSerializableExtra
-                            (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER));
+            int position = data.getIntExtra
+                    (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION, -1);
+            AbstractFiltersHolder filtersHolder = (AbstractFiltersHolder)data.getSerializableExtra
+                    (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
+            filtersHolders.set(position, filtersHolder);
 
+            Map<String, Object> m = this.data.get(position);
+            m.put(TASK_NAME, filtersHolder.getName());
+            if (isUserDefinedTask) {
+                UserDefinedTask userDefinedTask = (UserDefinedTask)filtersHolder;
+                if (userDefinedTask.getScheduledTime() == null) {
+                    m.put(IS_SCHEDULED, "not scheduled");
+                } else {
+                    m.put(IS_SCHEDULED, "OK");
+                }
+            }
 
             adapter.notifyDataSetChanged();
         }

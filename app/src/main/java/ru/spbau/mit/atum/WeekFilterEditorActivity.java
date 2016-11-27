@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.logging.Filter;
+
 public class WeekFilterEditorActivity extends AppCompatActivity {
     private final int FIRST_MINUTE = 1;
     private final int DURATION = 2;
@@ -24,20 +26,17 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
     private TextView tvFirstMinute;
     private TextView tvDuration;
+    private EditText description;
 
     private final int DAYS_IN_WEEK = 7;
     private CheckBox [] checkBoxList = new CheckBox[DAYS_IN_WEEK];
+
+    private WeekFilter previousFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_filter_editor);
-
-        tvFirstMinute = (TextView) findViewById(R.id.first_minute);
-        tvFirstMinute.setText("First minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
-
-        tvDuration = (TextView) findViewById(R.id.duration);
-        tvDuration.setText("Expected duration: " + durationHour + " hours " + durationMinute + " minutes");
 
         checkBoxList[0] = (CheckBox) findViewById(R.id.checkBoxMonday);
         checkBoxList[1] = (CheckBox) findViewById(R.id.checkBoxTuesday);
@@ -47,7 +46,29 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         checkBoxList[5] = (CheckBox) findViewById(R.id.checkBoxSaturday);
         checkBoxList[6] = (CheckBox) findViewById(R.id.checkBoxSunday);
 
+        description = (EditText) findViewById(R.id.week_filter_name);
         isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
+
+        previousFilter = (WeekFilter) getIntent().getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+        if (previousFilter != null) {
+            isExclusionary.setChecked(previousFilter.isExclusive());
+            description.setText(previousFilter.getDescription());
+
+            firstMinuteHour = previousFilter.getFirstMinute() / 60;
+            firstMinuteMinute = previousFilter.getFirstMinute() % 60;
+            durationHour = previousFilter.getDuration() / 60;
+            durationMinute = previousFilter.getDuration() % 60;
+
+            for (int i = 0; i < 7; i++) {
+                checkBoxList[i].setChecked(previousFilter.getWeekMask().isSet(i));
+            }
+        }
+
+        tvFirstMinute = (TextView) findViewById(R.id.first_minute);
+        tvFirstMinute.setText("First minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+
+        tvDuration = (TextView) findViewById(R.id.duration);
+        tvDuration.setText("Expected duration: " + durationHour + " hours " + durationMinute + " minutes");
     }
 
     public void onFirstMinuteClick(View view) {
@@ -110,13 +131,17 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
             exclusionType = TimeFilter.ExclusionType.COMMON;
         }
 
-        EditText description = (EditText) findViewById(R.id.week_filter_name);
-
         TimeFilter timeFilter = new WeekFilter(description.getText().toString(),
                 firstMinuteHour * 60 + firstMinuteMinute, durationHour * 60 + durationMinute,
                 new WeekMask(resList), exclusionType);
 
-        intent.putExtra("filter", timeFilter);
+        if (previousFilter == null) {
+            intent.putExtra("filter", timeFilter);
+        } else {
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION,
+                    getIntent().getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, -1));
+        }
 
         setResult(RESULT_OK, intent);
         finish();
