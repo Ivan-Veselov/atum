@@ -17,8 +17,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
     private int firstMinuteHour = 0;
     private int firstMinuteMinute = 0;
-    private int durationHour = 0;
-    private int durationMinute = 0;
+    private int minuteAfterLastHour = 0;
+    private int minuteAfterLastMinute = 0;
 
     private CheckBox isExclusionary;
 
@@ -54,8 +54,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
             firstMinuteHour = previousFilter.getFirstMinute() / 60;
             firstMinuteMinute = previousFilter.getFirstMinute() % 60;
-            durationHour = previousFilter.getDuration() / 60;
-            durationMinute = previousFilter.getDuration() % 60;
+            minuteAfterLastHour = previousFilter.getMinuteAfterLast() / 60;
+            minuteAfterLastMinute = previousFilter.getMinuteAfterLast() % 60;
 
             for (int i = 0; i < 7; i++) {
                 checkBoxList[i].setChecked(previousFilter.getWeekMask().isSet(i));
@@ -63,10 +63,10 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
 
         tvFirstMinute = (TextView) findViewById(R.id.first_minute);
-        tvFirstMinute.setText("First minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+        tvFirstMinute.setText("Begin: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
 
         tvDuration = (TextView) findViewById(R.id.duration);
-        tvDuration.setText("Expected duration: " + durationHour + " hours " + durationMinute + " minutes");
+        tvDuration.setText("End: " + minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
     }
 
     public void onFirstMinuteClick(View view) {
@@ -83,7 +83,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
             return tpd;
         }
         if (id == DURATION) {
-            TimePickerDialog tpd = new TimePickerDialog(this, CallBackForDuration, durationHour, durationMinute, true);
+            TimePickerDialog tpd = new TimePickerDialog(this, CallBackForDuration, minuteAfterLastHour, minuteAfterLastMinute, true);
             return tpd;
         }
         return super.onCreateDialog(id);
@@ -93,15 +93,15 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             firstMinuteHour = hourOfDay;
             firstMinuteMinute = minute;
-            tvFirstMinute.setText("First minute: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+            tvFirstMinute.setText("Begin: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
         }
     };
 
     private TimePickerDialog.OnTimeSetListener CallBackForDuration = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            durationHour = hourOfDay;
-            durationMinute = minute;
-            tvDuration.setText("Expected duration: " + durationHour + " hours " + durationMinute + " minutes");
+            minuteAfterLastHour = hourOfDay;
+            minuteAfterLastMinute = minute;
+            tvDuration.setText("End: " + minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
         }
     };
 
@@ -129,8 +129,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
             exclusionType = TimeFilter.ExclusionType.COMMON;
         }
 
-        TimeFilter timeFilter = new WeekFilter(description.getText().toString(),
-                firstMinuteHour * 60 + firstMinuteMinute, durationHour * 60 + durationMinute,
+        TimeFilter timeFilter = WeekFilter.newWeekFilterFromMinutesInterval(description.getText().toString(),
+                firstMinuteHour * 60 + firstMinuteMinute, minuteAfterLastHour * 60 + minuteAfterLastMinute,
                 new WeekMask(resList), exclusionType);
 
         if (previousFilter == null) {
