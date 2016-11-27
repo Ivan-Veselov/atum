@@ -1,5 +1,7 @@
 package ru.spbau.mit.atum;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.ReadableDateTime;
 
@@ -13,6 +15,8 @@ public class SchedulePlanner {
         TimeLineTaskGroup timeLineTaskGroup = new TimeLineTaskGroup(preferences.getTaskList(),
                                                                     preferences.getBlockerList(),
                                                                     initialMoment, finalMoment);
+        Log.i("my_tag", initialMoment.toString());
+        Log.i("my_tag", finalMoment.toString());
         planSchedule(timeLineTaskGroup, initialMoment);
     }
 
@@ -20,6 +24,7 @@ public class SchedulePlanner {
                                      @NotNull ReadableDateTime initialMoment) {
         List<Interval> resultIntervals = new ArrayList<>();
         for (TimeLineTask task: tasks.getTaskList()) {
+            Log.i("my_tag", "yaaaay");
             for (Interval interval: task.getTimeIntervals()) {
                 if (!interval.isIntersectionWithListOfIntervals(resultIntervals)) {
                     resultIntervals.add(interval);

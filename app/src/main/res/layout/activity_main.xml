@@ -33,4 +33,14 @@
         android:onClick="onBlockerListClick"
         />
 
+    <Button
+        android:text="plan schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="88dp"
+        android:id="@+id/schedule_planner"
+        android:onClick="onSchedulePlannerClick" />
+
 </RelativeLayout>
