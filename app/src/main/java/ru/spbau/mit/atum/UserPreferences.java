@@ -1,5 +1,7 @@
 package ru.spbau.mit.atum;
 
+import android.support.annotation.NonNull;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -34,5 +36,23 @@ public class UserPreferences {
      */
     public @NotNull List<UserDefinedTimeBlocker> getBlockerList() {
         return blockerList;
+    }
+
+    /**
+     * Меняет список задач на переданный в качестве аргумента.
+     *
+     * @param taskList новый список задач.
+     */
+    public void setTaskList(@NonNull List<UserDefinedTask> taskList) {
+        this.taskList = taskList;
+    }
+
+    /**
+     * Меняет список блокировщиков на переданный в качестве аргумента.
+     *
+     * @param blockerList новый список блокировщиков.
+     */
+    public void setBlockerList(@NonNull List<UserDefinedTimeBlocker> blockerList) {
+        this.blockerList = blockerList;
     }
 }
