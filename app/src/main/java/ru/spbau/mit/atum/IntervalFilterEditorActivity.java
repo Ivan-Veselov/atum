@@ -39,8 +39,11 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     private TextView tvStartTime;
     private TextView tvEndDate;
     private TextView tvEndTime;
+    private EditText description;
 
     private CheckBox isExclusionary;
+
+    private IntervalFilter previousFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,31 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         tvStartTime = (TextView) findViewById(R.id.interval_start_time);
         tvEndDate = (TextView) findViewById(R.id.interval_end_date);
         tvEndTime = (TextView) findViewById(R.id.interval_end_time);
+        description = (EditText) findViewById(R.id.interval_filter_name);
+
+        previousFilter = (IntervalFilter) getIntent().getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+        if (previousFilter != null) {
+            isExclusionary.setChecked(previousFilter.isExclusive());
+            description.setText(previousFilter.getDescription());
+
+            startYear = previousFilter.getInitialMoment().getYear();
+            startMonth = previousFilter.getInitialMoment().getMonthOfYear();
+            startDay = previousFilter.getInitialMoment().getDayOfMonth();
+            startHour = previousFilter.getInitialMoment().getHourOfDay();
+            startMinute = previousFilter.getInitialMoment().getMinuteOfHour();
+
+            tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
+            tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
+
+            endYear = previousFilter.getFinalMoment().getYear();
+            endMonth = previousFilter.getFinalMoment().getMonthOfYear();
+            endDay = previousFilter.getFinalMoment().getDayOfMonth();
+            endHour = previousFilter.getFinalMoment().getHourOfDay();
+            endMinute = previousFilter.getFinalMoment().getMinuteOfHour();
+
+            tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
+            tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
+        }
     }
 
     public void onStartIntervalDateClick(View view) {
@@ -150,12 +178,16 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
             exclusionType = TimeFilter.ExclusionType.COMMON;
         }
 
-        EditText description = (EditText) findViewById(R.id.interval_filter_name);
-
         TimeFilter timeFilter = new IntervalFilter(description.getText().toString(),
                     startTime, endTime, exclusionType);
 
-        intent.putExtra("filter", timeFilter);
+        if (previousFilter == null) {
+            intent.putExtra("filter", timeFilter);
+        } else {
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION,
+                    getIntent().getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, -1));
+        }
 
         setResult(RESULT_OK, intent);
         finish();

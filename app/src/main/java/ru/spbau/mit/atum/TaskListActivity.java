@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TaskListActivity extends AppCompatActivity {
 
@@ -79,8 +80,12 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     public void onNewTaskClick(View view) {
-        Intent intent = new Intent(this, TaskEditorActivity.class);
-        intent.putExtra("edit task", "null");
+        Intent intent;
+        if (isUserDefinedTask) {
+            intent = new Intent(this, TaskEditorActivity.class);
+        } else {
+            intent = new Intent(this, TimeBlockerEditorActivity.class);
+        }
         startActivityForResult(intent, NEW_TASK_CODE);
     }
 
@@ -103,9 +108,30 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NEW_TASK_CODE && resultCode == RESULT_OK) {
-            UserDefinedTask newTask = (UserDefinedTask)data.getSerializableExtra("edit task");
+            AbstractFiltersHolder newTask = (AbstractFiltersHolder)data
+                    .getSerializableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
             addNewTask(newTask);
+            adapter.notifyDataSetChanged();
+        }
+        if (requestCode == EDIT_TASK_CODE && resultCode == RESULT_OK) {
+            int position = data.getIntExtra
+                    (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION, -1);
+            AbstractFiltersHolder filtersHolder = (AbstractFiltersHolder)data.getSerializableExtra
+                    (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
+            filtersHolders.set(position, filtersHolder);
+
+            Map<String, Object> m = this.data.get(position);
+            m.put(TASK_NAME, filtersHolder.getName());
+            if (isUserDefinedTask) {
+                UserDefinedTask userDefinedTask = (UserDefinedTask)filtersHolder;
+                if (userDefinedTask.getScheduledTime() == null) {
+                    m.put(IS_SCHEDULED, "not scheduled");
+                } else {
+                    m.put(IS_SCHEDULED, "OK");
+                }
+            }
+
             adapter.notifyDataSetChanged();
         }
     }
@@ -129,10 +155,22 @@ public class TaskListActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == EDIT_ID) {
-            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo
+                    = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-            Intent intent = new Intent(this, TaskEditorActivity.class);
-            intent.putExtra("edit task", filtersHolders.get(adapterContextMenuInfo.position));
+            Intent intent;
+            if (isUserDefinedTask) {
+                intent = new Intent(this, TaskEditorActivity.class);
+            } else {
+                intent = new Intent(this, TimeBlockerEditorActivity.class);
+            }
+
+            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER,
+                    filtersHolders.get(adapterContextMenuInfo.position));
+
+            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION,
+                    adapterContextMenuInfo.position);
+
             startActivityForResult(intent, EDIT_TASK_CODE);
 
             adapter.notifyDataSetChanged();

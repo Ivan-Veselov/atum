@@ -196,7 +196,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
         finish();
     }
 
-    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ADD_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
@@ -225,6 +225,6 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             default:
                 break;
         }
-    }*/
+    }
 }
 
