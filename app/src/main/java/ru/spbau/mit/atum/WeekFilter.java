@@ -81,6 +81,30 @@ public class WeekFilter extends TimeFilter {
     }
 
     /**
+     * Создает новый фильтр. Вместо длины промедутка принимает минуту, которая идет после последней.
+     *
+     * @param description описание фильтра.
+     * @param firstMinute первая минута дня, которую задает фильтр.
+     * @param minuteAfterLast минута, которая идет после последней минуты промежутка.
+     * @param mask маска, представляющая те дни недели, в которых находятся временные промежутки,
+     *             которые задает фильтр. Неделя начинается с понедельника.
+     * @param exclusionType тип фильтра (исключающий или нет).
+     * @return новый фильтр.
+     */
+    public static WeekFilter newWeekFilterFromMinutesInterval(@NonNull String description,
+                                                              int firstMinute,
+                                                              int minuteAfterLast,
+                                                              @NonNull WeekMask mask,
+                                                              @NonNull ExclusionType exclusionType) {
+        int duration = minuteAfterLast - firstMinute;
+        if (duration <= 0) {
+            duration += DateTimeConstants.MINUTES_PER_DAY;
+        }
+
+        return new WeekFilter(description, firstMinute, duration, mask, exclusionType);
+    }
+
+    /**
      * Возвращает описание типа фильтра в заданном контексте.
      *
      * @param context контекст приложения.
@@ -102,6 +126,14 @@ public class WeekFilter extends TimeFilter {
      */
     public int getDuration() {
         return duration;
+    }
+
+    /**
+     * Возвращает минуту, котороя идет после последней минуты промежутка дня, который задает фильтр.
+     * Возможно, что эта минута принадлежит уже следующему дню.
+     */
+    public int getMinuteAfterLast() {
+        return (firstMinute + duration) % DateTimeConstants.MINUTES_PER_DAY;
     }
 
     /**
