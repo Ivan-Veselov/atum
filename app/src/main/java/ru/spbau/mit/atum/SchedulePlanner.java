@@ -24,7 +24,6 @@ public class SchedulePlanner {
                                      @NotNull ReadableDateTime initialMoment) {
         List<Interval> resultIntervals = new ArrayList<>();
         for (TimeLineTask task: tasks.getTaskList()) {
-            Log.i("my_tag", "yaaaay");
             for (Interval interval: task.getTimeIntervals()) {
                 if (!interval.isIntersectionWithListOfIntervals(resultIntervals)) {
                     resultIntervals.add(interval);

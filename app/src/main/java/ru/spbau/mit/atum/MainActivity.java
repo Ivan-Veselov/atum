@@ -66,17 +66,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSchedulePlannerClick(View view) {
-        SchedulePlanner.planSchedule(userPreferences, new DateTime(), new DateTime().plus(100L * 365 * 60 * 60 * 1000));
-
+        SchedulePlanner.planSchedule(userPreferences, new DateTime(), new DateTime().plus(365L * 24 * 60 * 60 * 1000));
         Toast.makeText(getApplicationContext(), "SCHEDULE PLANNED", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onViewScheduleClick(View view) {
+        Intent intent = new Intent(this, SchedulerViewerActivity.class);
+        intent.putExtra("all tasks", (Serializable)tasks);
+        startActivity(intent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0 && resultCode == RESULT_OK) {
+        if (requestCode == TASK_CODE && resultCode == RESULT_OK) {
             tasks = (ArrayList<UserDefinedTask>)data.getSerializableExtra("filter holders");
         }
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == BLOCKER_CODE && resultCode == RESULT_OK) {
             blockers = (ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders");
         }
     }
