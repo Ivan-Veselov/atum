@@ -19,13 +19,15 @@ import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.THURSDAY;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.TUESDAY;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.WEDNESDAY;
 
+import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
+
 public class SchedulePlannerTest {
     @Test
     public void planScheduleTest() throws Exception {
         UserPreferences userPreferences = new UserPreferences();
         List<UserDefinedTask> tasks = userPreferences.getTaskList();
-        WeekFilter weekFilter1 = new WeekFilter(10 * 60, 90, EnumSet.of(TUESDAY, WEDNESDAY, FRIDAY), false);
-        WeekFilter weekFilter2 = new WeekFilter(10 * 60, 120, EnumSet.of(TUESDAY, THURSDAY, SATURDAY), false);
+        WeekFilter weekFilter1 = new WeekFilter("", 10 * 60, 90, EnumSet.of(TUESDAY, WEDNESDAY, FRIDAY), COMMON);
+        WeekFilter weekFilter2 = new WeekFilter("", 10 * 60, 120, EnumSet.of(TUESDAY, THURSDAY, SATURDAY), COMMON);
         List<TimeFilter> filters = new ArrayList<>();
         filters.add(weekFilter1);
         filters.add(weekFilter2);

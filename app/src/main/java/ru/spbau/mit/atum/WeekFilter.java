@@ -30,30 +30,6 @@ public class WeekFilter extends TimeFilter {
     /**
      * Создает новый фильтр.
      *
-     * @param firstMinute первая минута дня, которую задает фильтр.
-     * @param duration длина одного промежутка. Не должна превышать 24 часа.
-     * @param mask маска, представляющая те дни недели, в которых находятся временные промежутки,
-     *             которые задает фильтр. Неделя начинается с понедельника.
-     * @param exclusiveFlag если true, то фильтр будет исключающим.
-     */
-    @Deprecated
-    public WeekFilter(int firstMinute, int duration, @NonNull EnumSet<DaysOfWeek> mask,
-                      boolean exclusiveFlag) {
-        super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
-
-        if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
-                || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
-            throw new IllegalArgumentException("Invalid time interval for week filter.");
-        }
-
-        this.firstMinute = firstMinute;
-        this.duration = duration;
-        this.mask = mask;
-    }
-
-    /**
-     * Создает новый фильтр.
-     *
      * @param description описание фильтра.
      * @param firstMinute первая минута дня, которую задает фильтр.
      * @param duration длина одного промежутка. Не должна превышать 24 часа.
