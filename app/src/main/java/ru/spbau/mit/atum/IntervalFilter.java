@@ -22,27 +22,6 @@ public class IntervalFilter extends TimeFilter {
     /**
      * Создает новый фильтр.
      *
-     * @param filterInitialMoment начальный момент интервала, который задает фильтр.
-     * @param filterFinalMoment конечный момент интервала, который задает фильтр.
-     * @param exclusiveFlag если true, то фильтр будет исключающим.
-     */
-    @Deprecated
-    public IntervalFilter(@NonNull ReadableDateTime filterInitialMoment,
-                          @NonNull ReadableDateTime filterFinalMoment, boolean exclusiveFlag) {
-        super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
-
-        if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
-            throw new IllegalArgumentException(
-              "In arguments of IntervalFilter constructor: final moment is less than initial.");
-        }
-
-        this.filterInitialMoment = filterInitialMoment;
-        this.filterFinalMoment = filterFinalMoment;
-    }
-
-    /**
-     * Создает новый фильтр.
-     *
      * @param description описание фильтра.
      * @param filterInitialMoment начальный момент интервала, который задает фильтр.
      * @param filterFinalMoment конечный момент интервала, который задает фильтр.
