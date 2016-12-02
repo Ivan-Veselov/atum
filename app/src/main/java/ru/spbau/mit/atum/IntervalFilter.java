@@ -32,7 +32,8 @@ public class IntervalFilter extends TimeFilter {
         super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
-            throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
+            throw new IllegalArgumentException(
+              "In arguments of IntervalFilter constructor: final moment is less than initial.");
         }
 
         this.filterInitialMoment = filterInitialMoment;
@@ -54,7 +55,8 @@ public class IntervalFilter extends TimeFilter {
         super(description, exclusionType);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
-            throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
+            throw new IllegalArgumentException(
+              "In arguments of IntervalFilter constructor: final moment is less than initial.");
         }
 
         this.filterInitialMoment = filterInitialMoment;

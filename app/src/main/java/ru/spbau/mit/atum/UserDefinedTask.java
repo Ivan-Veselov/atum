@@ -14,8 +14,6 @@ import java.util.List;
  * выполнения.
  */
 public class UserDefinedTask extends AbstractFiltersHolder {
-    private static final String NON_POS_DURATION_MSG = "Duration of task is non positive.";
-
     private final int duration;
 
     private ReadableDateTime scheduledTime = null;
@@ -34,7 +32,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         super(name, description, filterList);
 
         if (duration <= 0) {
-            throw new IllegalArgumentException(NON_POS_DURATION_MSG);
+            throw new IllegalArgumentException("Duration of task is non positive.");
         }
 
         this.duration = duration;

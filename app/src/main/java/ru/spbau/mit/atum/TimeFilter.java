@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit;
  * промежутки времени, которые он задает.
  */
 public abstract class TimeFilter implements Serializable {
-    protected static final String FINAL_LESS_THAN_INIT_MSG = "Final moment is less than initial.";
-
     private final String description;
 
     private final ExclusionType exclusionType;
@@ -82,7 +80,8 @@ public abstract class TimeFilter implements Serializable {
     public @NonNull List<Interval> intervalRepresentation(@NonNull ReadableDateTime initialMoment,
                                                           @NonNull ReadableDateTime finalMoment) {
         if (!checkOrderOfMoments(initialMoment, finalMoment)) {
-            throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
+            throw new IllegalArgumentException(
+              "In arguments of intervalRepresentation method: final moment is less than initial.");
         }
 
         return intervalRepresentationImpl(initialMoment,

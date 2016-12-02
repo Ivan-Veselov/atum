@@ -20,8 +20,6 @@ import java.util.List;
  * Для этого потребуется усложнить алгоритм преобразования в список отрезков.
  */
 public class WeekFilter extends TimeFilter {
-    private static final String INVALID_INTERVAL_MSG = "Invalid time interval for week filter.";
-
     private final int firstMinute;
 
     private final int duration;
@@ -44,7 +42,7 @@ public class WeekFilter extends TimeFilter {
 
         if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
                 || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
-            throw new IllegalArgumentException(INVALID_INTERVAL_MSG);
+            throw new IllegalArgumentException("Invalid time interval for week filter.");
         }
 
         this.firstMinute = firstMinute;
@@ -71,7 +69,7 @@ public class WeekFilter extends TimeFilter {
 
         if (firstMinute < 0 || firstMinute >= DateTimeConstants.MINUTES_PER_DAY
                 || duration < 0 || duration > DateTimeConstants.MINUTES_PER_DAY) {
-            throw new IllegalArgumentException(INVALID_INTERVAL_MSG);
+            throw new IllegalArgumentException("Invalid time interval for week filter.");
         }
 
         this.firstMinute = firstMinute;

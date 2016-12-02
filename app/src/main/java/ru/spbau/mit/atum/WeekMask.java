@@ -8,8 +8,6 @@ import java.io.Serializable;
  * Класс представляющий произвольный набор дней недели.
  */
 public class WeekMask implements Serializable {
-    private static final String DAY_OUT_OF_RANGE_MSG = "Day of week number is out of range [0, 6].";
-
     private final int mask;
 
     /**
@@ -23,7 +21,7 @@ public class WeekMask implements Serializable {
         int maskBuilder = 0;
         for (int dayNumber : daysList) {
             if (!checkDayNumber(dayNumber)) {
-                throw new IllegalArgumentException(DAY_OUT_OF_RANGE_MSG);
+                throw new IllegalArgumentException("Day of week number is out of range [0, 6].");
             }
 
             maskBuilder |= 1 << dayNumber;
@@ -41,7 +39,7 @@ public class WeekMask implements Serializable {
      */
     public boolean isSet(int dayNumber) {
         if (!checkDayNumber(dayNumber)) {
-            throw new IllegalArgumentException(DAY_OUT_OF_RANGE_MSG);
+            throw new IllegalArgumentException("Day of week number is out of range [0, 6].");
         }
 
         return (mask & (1 << dayNumber)) != 0;

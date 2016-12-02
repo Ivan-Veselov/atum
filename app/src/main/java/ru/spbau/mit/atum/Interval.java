@@ -14,9 +14,6 @@ import java.util.List;
  * началом и концом. Начало всегда не превосходит конца.
  */
 public class Interval {
-    private static final String RIGHT_LESS_THAN_LEFT =
-            "Right end of the Interval is less than left end.";
-
     private final int left;
 
     private final int right;
@@ -30,7 +27,7 @@ public class Interval {
      */
     public Interval(int left, int right) {
         if (right < left) {
-            throw new IllegalArgumentException(RIGHT_LESS_THAN_LEFT);
+            throw new IllegalArgumentException("Right end of the Interval is less than left end.");
         }
 
         this.left = left;
