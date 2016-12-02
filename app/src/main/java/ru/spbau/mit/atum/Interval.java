@@ -13,7 +13,7 @@ import java.util.List;
  * Полуинтервал на прямой (левая граница включена), который представляется двумя числами -
  * началом и концом. Начало всегда не превосходит конца.
  */
-public class Interval {
+public final class Interval {
     private final int left;
 
     private final int right;
@@ -106,8 +106,7 @@ public class Interval {
      * @param intervalsSet список интервалов.
      * @return список концов каждого интервала из исходного набора.
      */
-    public static @NonNull List<EndPoint> endPoints(
-                                            @NonNull List<? extends Interval> intervalsSet) {
+    public static @NonNull List<EndPoint> endPoints(@NonNull List<Interval> intervalsSet) {
         List<EndPoint> result = new ArrayList<>(2 * intervalsSet.size());
 
         for (Interval interval : intervalsSet) {
@@ -126,8 +125,7 @@ public class Interval {
      * @param intervalsSet список интервалов, которые нужно привести в нормализованный вид.
      * @return результирующий нормальный вид.
      */
-    public static @NonNull List<Interval> normalize(
-                                            @NonNull List<? extends Interval> intervalsSet) {
+    public static @NonNull List<Interval> normalize(@NonNull List<Interval> intervalsSet) {
         List<EndPoint> endPoints = endPoints(intervalsSet);
         Collections.sort(endPoints);
 
@@ -163,8 +161,8 @@ public class Interval {
      * @return результат операции в виде набора интервалов в нормализованном виде.
      */
     public static @NonNull List<Interval> difference(
-                                                @NonNull List<? extends Interval> minuend,
-                                                @NonNull List<? extends Interval> subtrahend) {
+                                                @NonNull List<Interval> minuend,
+                                                @NonNull List<Interval> subtrahend) {
         minuend = normalize(minuend);
         subtrahend = normalize(subtrahend);
 
