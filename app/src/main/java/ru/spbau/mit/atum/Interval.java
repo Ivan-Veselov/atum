@@ -64,14 +64,14 @@ public class Interval {
      * @return объект класса EndPoint, представляющий левый конец интервала.
      */
     public @NonNull EndPoint leftEndPoint() {
-        return new EndPoint(left, false);
+        return new EndPoint(left, EndPoint.Type.LEFT);
     }
 
     /**
      * @return объект класса EndPoint, представляющий правый конец интервала.
      */
     public @NonNull EndPoint rightEndPoint() {
-        return new EndPoint(right, true);
+        return new EndPoint(right, EndPoint.Type.RIGHT);
     }
 
     /**
@@ -141,7 +141,7 @@ public class Interval {
         int leastCoveredPoint = 0;
 
         for (EndPoint point : endPoints) {
-            if (!point.isRight()) {
+            if (point.getType() == EndPoint.Type.LEFT) {
                 openedIntervalsNumber++;
                 if (openedIntervalsNumber == 1) {
                     leastCoveredPoint = point.getCoordinate();
@@ -226,17 +226,17 @@ public class Interval {
     public static class EndPoint implements Comparable<EndPoint> {
         private final int coordinate;
 
-        private final boolean rightFlag;
+        private final Type type;
 
         /**
          * Создает новую концевую точку.
          *
          * @param coordinate координата точки.
-         * @param rightFlag если true, то точка является правой границей.
+         * @param type тип концевой точки.
          */
-        public EndPoint(int coordinate, boolean rightFlag) {
+        public EndPoint(int coordinate, @NonNull Type type) {
             this.coordinate = coordinate;
-            this.rightFlag = rightFlag;
+            this.type = type;
         }
 
         /**
@@ -247,10 +247,10 @@ public class Interval {
         }
 
         /**
-         * @return true, если точка является правой границей интервала.
+         * Возвращает тип концевой точки.
          */
-        public boolean isRight() {
-            return rightFlag;
+        public Type getType() {
+            return type;
         }
 
         /**
@@ -270,7 +270,7 @@ public class Interval {
 
             EndPoint other = (EndPoint) object;
 
-            return coordinate == other.coordinate && rightFlag == other.rightFlag;
+            return coordinate == other.coordinate && type == other.type;
         }
 
         /**
@@ -278,7 +278,7 @@ public class Interval {
          */
         @Override
         public int hashCode() {
-            return Arrays.hashCode(new Object[] {coordinate, rightFlag});
+            return Arrays.hashCode(new Object[] {coordinate, type});
         }
 
         /**
@@ -296,15 +296,17 @@ public class Interval {
                 return comparisonResult;
             }
 
-            if (rightFlag == other.rightFlag) {
+            if (type == other.type) {
                 return 0;
             }
 
-            if (rightFlag) {
+            if (type == Type.RIGHT) {
                 return 1;
             } else {
                 return -1;
             }
         }
+
+        public enum Type {LEFT, RIGHT};
     }
 }

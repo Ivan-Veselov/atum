@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import ru.spbau.mit.atum.Interval.EndPoint.Type;
 
 import static org.junit.Assert.assertEquals;
 import static ru.spbau.mit.atum.TestUtilities.assertIntervalEquals;
 import static ru.spbau.mit.atum.TestUtilities.assertIntervalListEquals;
+
+import static ru.spbau.mit.atum.Interval.EndPoint.Type.LEFT;
+import static ru.spbau.mit.atum.Interval.EndPoint.Type.RIGHT;
 
 public class IntervalTest {
     @Test
@@ -43,11 +47,11 @@ public class IntervalTest {
 
         Interval.EndPoint left = interval.leftEndPoint();
         assertEquals(-42, left.getCoordinate());
-        assertEquals(false, left.isRight());
+        assertEquals(LEFT, left.getType());
 
         Interval.EndPoint right = interval.rightEndPoint();
         assertEquals(-10, right.getCoordinate());
-        assertEquals(true, right.isRight());
+        assertEquals(RIGHT, right.getType());
     }
 
     /**
@@ -100,29 +104,29 @@ public class IntervalTest {
     }
 
     private void assertEndPoint(int coordinate,
-                                boolean rightFlag,
+                                Type type,
                                 Interval.EndPoint endPoint) throws Exception{
         assertEquals(coordinate, endPoint.getCoordinate());
-        assertEquals(rightFlag, endPoint.isRight());
+        assertEquals(type, endPoint.getType());
     }
 
-    private void assertEndPointList(int[] coordinates, boolean[] rightFlags,
+    private void assertEndPointList(int[] coordinates, Type[] types,
                                     List<Interval.EndPoint> list) throws Exception {
-        if (coordinates.length != rightFlags.length) {
+        if (coordinates.length != types.length) {
             throw new TestUtilities.InvalidTestException();
         }
 
         assertEquals(coordinates.length, list.size());
 
         for (int i = 0; i < list.size(); ++i) {
-            assertEndPoint(coordinates[i], rightFlags[i], list.get(i));
+            assertEndPoint(coordinates[i], types[i], list.get(i));
         }
     }
 
     @Test
     public void testEndPoints1() throws Exception {
         List<Interval.EndPoint> list = Interval.endPoints(new ArrayList<Interval>());
-        assertEndPointList(new int[] {}, new boolean[] {}, list);
+        assertEndPointList(new int[] {}, new Type[] {}, list);
     }
 
     @Test
@@ -133,7 +137,7 @@ public class IntervalTest {
 
         Collections.sort(list);
         assertEndPointList(new int[] {-10, -8, -7, -6, 10, 20},
-                           new boolean[] {false, false, false, true, true, true},
+                           new Type[] {LEFT, LEFT, LEFT, RIGHT, RIGHT, RIGHT},
                            list);
         }
 
@@ -146,7 +150,7 @@ public class IntervalTest {
 
         Collections.sort(list);
         assertEndPointList(new int[] {-1, -1, 5, 5},
-                           new boolean [] {false, false, true, true},
+                           new Type[] {LEFT, LEFT, RIGHT, RIGHT},
                            list);
     }
 
@@ -159,7 +163,7 @@ public class IntervalTest {
 
         Collections.sort(list);
         assertEndPointList(new int[] {-1, 5, 5, 10},
-                           new boolean[] {false, false, true, true}, list);
+                           new Type[] {LEFT, LEFT, RIGHT, RIGHT}, list);
     }
 
     @Test
