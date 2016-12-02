@@ -52,7 +52,6 @@ public abstract class TimeFilter implements Serializable {
     /**
      * @return true, если фильтр исключающий.
      */
-    @Deprecated
     public boolean isExclusive() {
         return exclusionType == ExclusionType.EXCLUSIONARY;
     }
