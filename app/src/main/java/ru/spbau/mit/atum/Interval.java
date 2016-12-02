@@ -1,8 +1,10 @@
 package ru.spbau.mit.atum;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -249,6 +251,34 @@ public class Interval {
          */
         public boolean isRight() {
             return rightFlag;
+        }
+
+        /**
+         * Сравнивает данный конец интервала с другим объектом. Если объект не является концом
+         * интервала, то есть представителем этого класса, то результат отрицательный. В противном
+         * случае концевые точки считаются равными, если у них совпадют координаты и тип (левый или
+         * правый конец).
+         *
+         * @param object объект, с которым нужно сравниться.
+         * @return результат сравнения.
+         */
+        @Override
+        public boolean equals(@Nullable Object object) {
+            if (object == null || !(object instanceof EndPoint)) {
+                return false;
+            }
+
+            EndPoint other = (EndPoint) object;
+
+            return coordinate == other.coordinate && rightFlag == other.rightFlag;
+        }
+
+        /**
+         * Возвращает хеш объекта.
+         */
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(new Object[] {coordinate, rightFlag});
         }
 
         /**
