@@ -4,19 +4,28 @@ import org.joda.time.ReadableDateTime;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static ru.spbau.mit.atum.TestUtilities.theNthOfJan;
 
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.FRIDAY;
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.MONDAY;
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.SATURDAY;
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.SUNDAY;
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.THURSDAY;
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.TUESDAY;
+import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.WEDNESDAY;
+
 public class SchedulePlannerTest {
     @Test
     public void planScheduleTest() throws Exception {
         UserPreferences userPreferences = new UserPreferences();
         List<UserDefinedTask> tasks = userPreferences.getTaskList();
-        WeekFilter weekFilter1 = new WeekFilter(10 * 60, 90, new WeekMask(1, 2, 4), false);
-        WeekFilter weekFilter2 = new WeekFilter(10 * 60, 120, new WeekMask(1, 3, 5), false);
+        WeekFilter weekFilter1 = new WeekFilter(10 * 60, 90, EnumSet.of(TUESDAY, WEDNESDAY, FRIDAY), false);
+        WeekFilter weekFilter2 = new WeekFilter(10 * 60, 120, EnumSet.of(TUESDAY, THURSDAY, SATURDAY), false);
         List<TimeFilter> filters = new ArrayList<>();
         filters.add(weekFilter1);
         filters.add(weekFilter2);

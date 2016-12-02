@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.EnumSet;
+
 public class WeekFilterEditorActivity extends AppCompatActivity {
     private final int FIRST_MINUTE = 1;
     private final int DURATION = 2;
@@ -58,7 +60,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
             minuteAfterLastMinute = previousFilter.getMinuteAfterLast() % 60;
 
             for (int i = 0; i < 7; i++) {
-                checkBoxList[i].setChecked(previousFilter.getWeekMask().isSet(i));
+                checkBoxList[i].setChecked(
+                        previousFilter.getWeekMask().contains(WeekFilter.DaysOfWeek.values()[i]));
             }
         }
 
@@ -107,18 +110,10 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
     public void onButtonOKClick(View view) {
         Intent intent = new Intent();
-        int resSize = 0;
+        EnumSet<WeekFilter.DaysOfWeek> mask = EnumSet.noneOf(WeekFilter.DaysOfWeek.class);
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
             if (checkBoxList[i].isChecked()) {
-                resSize++;
-            }
-        }
-        int [] resList = new int[resSize];
-        int cur = 0;
-        for (int i = 0; i < 7; i++) {
-            if (checkBoxList[i].isChecked()) {
-                resList[cur] = i;
-                cur++;
+                mask.add(WeekFilter.DaysOfWeek.values()[i]);
             }
         }
 
@@ -131,7 +126,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
         TimeFilter timeFilter = WeekFilter.newWeekFilterFromMinutesInterval(description.getText().toString(),
                 firstMinuteHour * 60 + firstMinuteMinute, minuteAfterLastHour * 60 + minuteAfterLastMinute,
-                new WeekMask(resList), exclusionType);
+                mask, exclusionType);
 
         if (previousFilter == null) {
             intent.putExtra("filter", timeFilter);

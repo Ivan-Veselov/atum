@@ -3,6 +3,7 @@ package ru.spbau.mit.atum;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class WeekFilter extends TimeFilter {
 
     private final int duration;
 
-    private final WeekMask mask;
+    private final EnumSet<DaysOfWeek> mask;
 
     /**
      * Создает новый фильтр.
@@ -36,7 +37,7 @@ public class WeekFilter extends TimeFilter {
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
     @Deprecated
-    public WeekFilter(int firstMinute, int duration, @NonNull WeekMask mask,
+    public WeekFilter(int firstMinute, int duration, @NonNull EnumSet<DaysOfWeek> mask,
                       boolean exclusiveFlag) {
         super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
 
@@ -63,7 +64,7 @@ public class WeekFilter extends TimeFilter {
     public WeekFilter(@NonNull String description,
                       int firstMinute,
                       int duration,
-                      @NonNull WeekMask mask,
+                      @NonNull EnumSet<DaysOfWeek> mask,
                       @NonNull ExclusionType exclusionType) {
         super(description, exclusionType);
 
@@ -91,7 +92,7 @@ public class WeekFilter extends TimeFilter {
     public static WeekFilter newWeekFilterFromMinutesInterval(@NonNull String description,
                                                               int firstMinute,
                                                               int minuteAfterLast,
-                                                              @NonNull WeekMask mask,
+                                                              @NonNull EnumSet<DaysOfWeek> mask,
                                                               @NonNull ExclusionType exclusionType) {
         int duration = minuteAfterLast - firstMinute;
         if (duration <= 0) {
@@ -136,7 +137,7 @@ public class WeekFilter extends TimeFilter {
     /**
      * @return маска дней недели, которые задает фильтр.
      */
-    public @NonNull WeekMask getWeekMask() {
+    public @NonNull EnumSet<DaysOfWeek> getWeekMask() {
         return mask;
     }
 
@@ -160,7 +161,7 @@ public class WeekFilter extends TimeFilter {
         List<Interval> intervalList = new ArrayList<>();
 
         while (currentIntervalBeginning < globalInterval.right()) {
-            if (mask.isSet(dayOfWeek)) {
+            if (mask.contains(DaysOfWeek.values()[dayOfWeek])) {
                 Interval interval = new Interval(currentIntervalBeginning,
                                                  currentIntervalBeginning + duration);
 
@@ -176,4 +177,6 @@ public class WeekFilter extends TimeFilter {
 
         return intervalList;
     }
+
+    public enum DaysOfWeek {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
 }
