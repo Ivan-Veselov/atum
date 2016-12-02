@@ -1,8 +1,8 @@
 package ru.spbau.mit.atum;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.List;
 
 public class SchedulePlanner {
     public static void planSchedule(UserPreferences preferences,
-                                    @NotNull ReadableDateTime initialMoment,
-                                    @NotNull ReadableDateTime finalMoment) {
+                                    @NonNull ReadableDateTime initialMoment,
+                                    @NonNull ReadableDateTime finalMoment) {
         TimeLineTaskGroup timeLineTaskGroup = new TimeLineTaskGroup(preferences.getTaskList(),
                                                                     preferences.getBlockerList(),
                                                                     initialMoment, finalMoment);
@@ -21,7 +21,7 @@ public class SchedulePlanner {
     }
 
     private static void planSchedule(TimeLineTaskGroup tasks,
-                                     @NotNull ReadableDateTime initialMoment) {
+                                     @NonNull ReadableDateTime initialMoment) {
         List<Interval> resultIntervals = new ArrayList<>();
         for (TimeLineTask task: tasks.getTaskList()) {
             for (Interval interval: task.getTimeIntervals()) {

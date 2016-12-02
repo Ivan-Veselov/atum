@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
@@ -28,8 +27,8 @@ public class IntervalFilter extends TimeFilter {
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
     @Deprecated
-    public IntervalFilter(@NotNull ReadableDateTime filterInitialMoment,
-                          @NotNull ReadableDateTime filterFinalMoment, boolean exclusiveFlag) {
+    public IntervalFilter(@NonNull ReadableDateTime filterInitialMoment,
+                          @NonNull ReadableDateTime filterFinalMoment, boolean exclusiveFlag) {
         super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
 
         if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
@@ -68,21 +67,21 @@ public class IntervalFilter extends TimeFilter {
      * @param context контекст приложения.
      * @return описание типа фильтра.
      */
-    public @NonNull String getTypeDescription(Context context) {
+    public @NonNull String getTypeDescription(@NonNull Context context) {
         return context.getString(R.string.interval_filter);
     }
 
     /**
      * @return начальный момент интервала, который задает фильтр.
      */
-    public @NotNull ReadableDateTime getInitialMoment() {
+    public @NonNull ReadableDateTime getInitialMoment() {
         return filterInitialMoment;
     }
 
     /**
      * @return конечный момент интервала, который задает фильтр.
      */
-    public @NotNull ReadableDateTime getFinalMoment() {
+    public @NonNull ReadableDateTime getFinalMoment() {
         return filterFinalMoment;
     }
 
@@ -93,9 +92,9 @@ public class IntervalFilter extends TimeFilter {
      *         задает фильтр, в отсортированном порядке.
      */
     @Override
-    protected @NotNull List<Interval> intervalRepresentationImpl(
-                                                @NotNull ReadableDateTime initialMoment,
-                                                @NotNull Interval globalInterval) {
+    protected @NonNull List<Interval> intervalRepresentationImpl(
+                                                @NonNull ReadableDateTime initialMoment,
+                                                @NonNull Interval globalInterval) {
         Interval filterInterval = new Interval(
                                         convertToPointRelative(initialMoment, filterInitialMoment),
                                         convertToPointRelative(initialMoment, filterFinalMoment));

@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.ReadableDateTime;
 
 import java.io.Serializable;
@@ -80,8 +79,8 @@ public abstract class TimeFilter implements Serializable {
      * @return набор непересекающихся интервалов, представляющий временные промежутки, которые
      *         задает фильтр, в отсортированном порядке.
      */
-    public @NotNull List<Interval> intervalRepresentation(@NotNull ReadableDateTime initialMoment,
-                                                          @NotNull ReadableDateTime finalMoment) {
+    public @NonNull List<Interval> intervalRepresentation(@NonNull ReadableDateTime initialMoment,
+                                                          @NonNull ReadableDateTime finalMoment) {
         if (!checkOrderOfMoments(initialMoment, finalMoment)) {
             throw new IllegalArgumentException(FINAL_LESS_THAN_INIT_MSG);
         }
@@ -110,8 +109,8 @@ public abstract class TimeFilter implements Serializable {
      * @param finalMoment второй момент времени.
      * @return true, если проверка успешна.
      */
-    protected static boolean checkOrderOfMoments(@NotNull ReadableDateTime initialMoment,
-                                                 @NotNull ReadableDateTime finalMoment) {
+    protected static boolean checkOrderOfMoments(@NonNull ReadableDateTime initialMoment,
+                                                 @NonNull ReadableDateTime finalMoment) {
         return initialMoment.compareTo(finalMoment) <= 0;
     }
 
@@ -124,8 +123,8 @@ public abstract class TimeFilter implements Serializable {
      * @param moment момент времени, который нужно перевести в число.
      * @return численное представление момента времени.
      */
-    protected static int convertToPointRelative(@NotNull ReadableDateTime initialMoment,
-                                                @NotNull ReadableDateTime moment) {
+    protected static int convertToPointRelative(@NonNull ReadableDateTime initialMoment,
+                                                @NonNull ReadableDateTime moment) {
         return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getMillis())
                       - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
     }

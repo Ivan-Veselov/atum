@@ -1,6 +1,7 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
+
 import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public class TimeLineTask {
     private UserDefinedTask holder;
 
     public TimeLineTask(UserDefinedTask holder,
-                        @NotNull ReadableDateTime initialMoment,
-                        @NotNull ReadableDateTime finalMoment,
+                        @NonNull ReadableDateTime initialMoment,
+                        @NonNull ReadableDateTime finalMoment,
                         List<Interval> blockerIntervalList) {
         List<Interval> intervals = Interval.difference(holder.intervalRepresentation(initialMoment, finalMoment),
                                             blockerIntervalList);

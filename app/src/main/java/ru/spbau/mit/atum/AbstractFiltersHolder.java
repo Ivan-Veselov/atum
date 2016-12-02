@@ -1,6 +1,7 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
+
 import org.joda.time.ReadableDateTime;
 
 import java.io.Serializable;
@@ -29,8 +30,8 @@ public abstract class AbstractFiltersHolder implements Serializable {
      * @param description описание объекта.
      * @param filterList набор фильтров.
      */
-    public AbstractFiltersHolder(@NotNull String name, @NotNull String description,
-                                 @NotNull List<TimeFilter> filterList) {
+    public AbstractFiltersHolder(@NonNull String name, @NonNull String description,
+                                 @NonNull List<TimeFilter> filterList) {
         this.name = name;
         this.description = description;
         this.filterList = Collections.unmodifiableList(filterList);
@@ -39,21 +40,21 @@ public abstract class AbstractFiltersHolder implements Serializable {
     /**
      * @return имя объекта.
      */
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return name;
     }
 
     /**
      * @return описание объекта.
      */
-    public @NotNull String getDescription() {
+    public @NonNull String getDescription() {
         return description;
     }
 
     /**
      * @return неизменяемый набор фильтров.
      */
-    public @NotNull List<TimeFilter> getFilterList() {
+    public @NonNull List<TimeFilter> getFilterList() {
         return filterList;
     }
 
@@ -71,8 +72,8 @@ public abstract class AbstractFiltersHolder implements Serializable {
      * @return набор непересекающихся интервалов, представляющий подмножество временной прямой,
      *         которое задает набор фильтров, в отсортированном порядке.
      */
-    public @NotNull List<Interval> intervalRepresentation(@NotNull ReadableDateTime initialMoment,
-                                                          @NotNull ReadableDateTime finalMoment) {
+    public @NonNull List<Interval> intervalRepresentation(@NonNull ReadableDateTime initialMoment,
+                                                          @NonNull ReadableDateTime finalMoment) {
         List<Interval> commonFiltersRepresentation = new ArrayList<>();
         List<Interval> exclusiveFiltersRepresentation = new ArrayList<>();
 

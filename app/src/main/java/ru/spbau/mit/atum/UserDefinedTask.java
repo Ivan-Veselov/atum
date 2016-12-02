@@ -1,7 +1,8 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import org.joda.time.ReadableDateTime;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      *                   можно выполнять.
      * @param duration продолжительность выполнения задания.
      */
-    public UserDefinedTask(@NotNull String name, @NotNull String description,
-                           @NotNull List<TimeFilter> filterList, int duration) {
+    public UserDefinedTask(@NonNull String name, @NonNull String description,
+                           @NonNull List<TimeFilter> filterList, int duration) {
         super(name, description, filterList);
 
         if (duration <= 0) {

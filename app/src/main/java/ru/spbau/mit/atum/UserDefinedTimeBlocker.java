@@ -1,6 +1,6 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class UserDefinedTimeBlocker extends AbstractFiltersHolder {
      * @param description описание объекта.
      * @param filterList набор фильтров.
      */
-    public UserDefinedTimeBlocker(@NotNull String name,
-                                  @NotNull String description,
-                                  @NotNull List<TimeFilter> filterList) {
+    public UserDefinedTimeBlocker(@NonNull String name,
+                                  @NonNull String description,
+                                  @NonNull List<TimeFilter> filterList) {
         super(name, description, filterList);
     }
 }

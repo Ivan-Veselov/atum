@@ -1,6 +1,7 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
+
 import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ public class TimeLineTaskGroup {
 
     public TimeLineTaskGroup(List<UserDefinedTask> taskList,
                              List<UserDefinedTimeBlocker> blockerList,
-                             @NotNull ReadableDateTime initialMoment,
-                             @NotNull ReadableDateTime finalMoment) {
+                             @NonNull ReadableDateTime initialMoment,
+                             @NonNull ReadableDateTime finalMoment) {
         List<Interval> blockerIntervalList = new ArrayList<>();
         for (AbstractFiltersHolder blocker: blockerList) {
             blockerIntervalList.addAll(blocker.intervalRepresentation(initialMoment, finalMoment));

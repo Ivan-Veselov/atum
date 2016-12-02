@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.ReadableDateTime;
 
@@ -39,7 +38,7 @@ public class WeekFilter extends TimeFilter {
      * @param exclusiveFlag если true, то фильтр будет исключающим.
      */
     @Deprecated
-    public WeekFilter(int firstMinute, int duration, @NotNull WeekMask mask,
+    public WeekFilter(int firstMinute, int duration, @NonNull WeekMask mask,
                       boolean exclusiveFlag) {
         super("Filter", exclusiveFlag ? ExclusionType.EXCLUSIONARY : ExclusionType.COMMON);
 
@@ -139,7 +138,7 @@ public class WeekFilter extends TimeFilter {
     /**
      * @return маска дней недели, которые задает фильтр.
      */
-    public @NotNull WeekMask getWeekMask() {
+    public @NonNull WeekMask getWeekMask() {
         return mask;
     }
 
@@ -150,8 +149,8 @@ public class WeekFilter extends TimeFilter {
      *         задает фильтр, в отсортированном порядке.
      */
     @Override
-    protected List<Interval> intervalRepresentationImpl(@NotNull ReadableDateTime initialMoment,
-                                                        @NotNull Interval globalInterval) {
+    protected List<Interval> intervalRepresentationImpl(@NonNull ReadableDateTime initialMoment,
+                                                        @NonNull Interval globalInterval) {
         int minuteOffset = initialMoment.getHourOfDay() * DateTimeConstants.MINUTES_PER_HOUR
                          + initialMoment.getMinuteOfHour();
 

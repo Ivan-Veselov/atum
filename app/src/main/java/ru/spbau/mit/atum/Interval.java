@@ -1,6 +1,6 @@
 package ru.spbau.mit.atum;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,14 +61,14 @@ public class Interval {
     /**
      * @return объект класса EndPoint, представляющий левый конец интервала.
      */
-    public @NotNull EndPoint leftEndPoint() {
+    public @NonNull EndPoint leftEndPoint() {
         return new EndPoint(left, false);
     }
 
     /**
      * @return объект класса EndPoint, представляющий правый конец интервала.
      */
-    public @NotNull EndPoint rightEndPoint() {
+    public @NonNull EndPoint rightEndPoint() {
         return new EndPoint(right, true);
     }
 
@@ -80,7 +80,7 @@ public class Interval {
      * @param other интервал, с которым нужно найти пересечение.
      * @return новый интервал, который является пересечением текущего интервала и аргумента.
      */
-    public @NotNull Interval intersection(@NotNull Interval other) {
+    public @NonNull Interval intersection(@NonNull Interval other) {
         int begin = Math.max(this.left, other.left);
         int end = Math.min(this.right, other.right);
 
@@ -91,7 +91,7 @@ public class Interval {
         return new Interval(begin, end);
     }
 
-    public boolean isIntersectionWithListOfIntervals(@NotNull List<Interval> others) {
+    public boolean isIntersectionWithListOfIntervals(@NonNull List<Interval> others) {
         for (Interval other: others) {
             Interval intersection = intersection(other);
             if (intersection.left < intersection.right) {
@@ -107,8 +107,8 @@ public class Interval {
      * @param intervalsSet список интервалов.
      * @return список концов каждого интервала из исходного набора.
      */
-    public static @NotNull List<EndPoint> endPoints(
-                                            @NotNull List<? extends Interval> intervalsSet) {
+    public static @NonNull List<EndPoint> endPoints(
+                                            @NonNull List<? extends Interval> intervalsSet) {
         List<EndPoint> result = new ArrayList<>(2 * intervalsSet.size());
 
         for (Interval interval : intervalsSet) {
@@ -127,8 +127,8 @@ public class Interval {
      * @param intervalsSet список интервалов, которые нужно привести в нормализованный вид.
      * @return результирующий нормальный вид.
      */
-    public static @NotNull List<Interval> normalize(
-                                            @NotNull List<? extends Interval> intervalsSet) {
+    public static @NonNull List<Interval> normalize(
+                                            @NonNull List<? extends Interval> intervalsSet) {
         List<EndPoint> endPoints = endPoints(intervalsSet);
         Collections.sort(endPoints);
 
@@ -163,9 +163,9 @@ public class Interval {
      * @param subtrahend вычитаемое. Множество, которое вычитают.
      * @return результат операции в виде набора интервалов в нормализованном виде.
      */
-    public static @NotNull List<Interval> difference(
-                                                @NotNull List<? extends Interval> minuend,
-                                                @NotNull List<? extends Interval> subtrahend) {
+    public static @NonNull List<Interval> difference(
+                                                @NonNull List<? extends Interval> minuend,
+                                                @NonNull List<? extends Interval> subtrahend) {
         minuend = normalize(minuend);
         subtrahend = normalize(subtrahend);
 
@@ -259,7 +259,7 @@ public class Interval {
          * @return результат сравнения.
          */
         @Override
-        public int compareTo(@NotNull EndPoint other) {
+        public int compareTo(@NonNull EndPoint other) {
             int comparisonResult = Integer.compare(coordinate, other.coordinate);
 
             if (comparisonResult != 0) {
