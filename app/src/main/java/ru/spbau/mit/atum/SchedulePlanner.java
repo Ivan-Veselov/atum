@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SchedulePlanner {
-    public static void planSchedule(UserPreferences preferences,
+    public static void planSchedule(UserData preferences,
                                     @NonNull ReadableDateTime initialMoment,
                                     @NonNull ReadableDateTime finalMoment) {
-        TimeLineTaskGroup timeLineTaskGroup = new TimeLineTaskGroup(preferences.getTaskList(),
-                                                                    preferences.getBlockerList(),
+        TimeLineTaskGroup timeLineTaskGroup = new TimeLineTaskGroup(preferences.getTasks(),
+                                                                    preferences.getBlockers(),
                                                                     initialMoment, finalMoment);
         Log.i("my_tag", initialMoment.toString());
         Log.i("my_tag", finalMoment.toString());
