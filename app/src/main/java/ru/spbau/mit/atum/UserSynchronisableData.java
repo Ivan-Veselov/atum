@@ -14,8 +14,6 @@ import java.util.List;
  * Даные пользователя, которые могут быть сохранены на диск и прочитаны с него обратно.
  */
 public class UserSynchronisableData extends UserData {
-    private final Context context;
-
     private final String fileName;
 
     /**
@@ -27,7 +25,6 @@ public class UserSynchronisableData extends UserData {
      */
     public UserSynchronisableData(@NonNull Context context, @NonNull String fileName)
             throws IOException, ClassNotFoundException {
-        this.context = context;
         this.fileName = fileName;
 
         File file = new File(context.getFilesDir(), fileName);
@@ -46,10 +43,11 @@ public class UserSynchronisableData extends UserData {
     /**
      * Сохраняет данные в файл, который был привязан к данному объекту при конструировании.
      *
+     * @param context контекст приложения.
      * @throws IOException любое исключение ввода-вывода, которое может произойти во время
      * сериализации объектов в файл.
      */
-    public void saveData() throws IOException {
+    public void saveData(@NonNull Context context) throws IOException {
         ObjectOutputStream outputStream = new ObjectOutputStream(
                 context.openFileOutput(fileName, Context.MODE_PRIVATE));
 

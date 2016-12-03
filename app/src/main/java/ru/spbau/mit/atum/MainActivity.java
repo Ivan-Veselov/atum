@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         try {
-            userSynchronisableData.saveData();
+            userSynchronisableData.saveData(this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
