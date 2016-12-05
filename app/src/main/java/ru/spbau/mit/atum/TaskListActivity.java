@@ -39,8 +39,6 @@ public class TaskListActivity extends AppCompatActivity {
 
     private ArrayList<Map<String, Object>> data;
 
-    private Map<String, Object> m;
-
     private boolean isUserDefinedTask = false;
 
     private TextView title;
@@ -78,17 +76,14 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     public void onNewTaskClick(View view) {
-        Intent intent;
-        if (isUserDefinedTask) {
-            intent = new Intent(this, TaskEditorActivity.class);
-        } else {
-            intent = new Intent(this, TimeBlockerEditorActivity.class);
-        }
+        Intent intent = isUserDefinedTask
+            ? new Intent(this, TaskEditorActivity.class)
+            : new Intent(this, TimeBlockerEditorActivity.class);
         startActivityForResult(intent, NEW_TASK_CODE);
     }
 
     private void addNewTask(AbstractFiltersHolder task) {
-        m = new HashMap<>();
+        Map<String, Object> m = new HashMap<>();
         m.put(TASK_NAME, task.getName());
 
         if (isUserDefinedTask) {

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeLineTaskGroup {
-    ReadableDateTime initial_moment;
-    ReadableDateTime final_moment;
+    private final ReadableDateTime initialMoment;
+
+    private final ReadableDateTime finalMoment;
+
     private List<TimeLineTask> taskList = new ArrayList<>();
 
     public TimeLineTaskGroup(List<UserDefinedTask> taskList,
@@ -20,13 +22,15 @@ public class TimeLineTaskGroup {
         for (AbstractFiltersHolder blocker: blockerList) {
             blockerIntervalList.addAll(blocker.intervalRepresentation(initialMoment, finalMoment));
         }
-        Interval.normalize(blockerIntervalList);
+
+        blockerIntervalList = Interval.normalize(blockerIntervalList);
 
         for (UserDefinedTask task: taskList) {
             this.taskList.add(new TimeLineTask(task, initialMoment, finalMoment, blockerIntervalList));
         }
-        this.initial_moment = initialMoment;
-        this.final_moment = finalMoment;
+
+        this.initialMoment = initialMoment;
+        this.finalMoment = finalMoment;
     }
 
     public List<TimeLineTask> getTaskList() {
