@@ -1,36 +1,51 @@
 package ru.spbau.mit.atum;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
+
 import org.joda.time.DateTime;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.concurrent.RunnableFuture;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity
+                          implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private UserSynchronisableData userSynchronisableData;
+
+    private GoogleApiClient mGoogleApiClient;
+
+    private boolean loadOnConnection = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            userSynchronisableData = new UserSynchronisableData(this, "atum");
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                                              .addApi(Drive.API)
+                                              .addScope(Drive.SCOPE_FILE)
+                                              .addScope(Drive.SCOPE_APPFOLDER)
+                                              .addConnectionCallbacks(this)
+                                              .addOnConnectionFailedListener(this)
+                                              .build();
+
+        userSynchronisableData = new UserSynchronisableData("atum");
     }
 
     private final int TASK_CODE = 0;
     private final int BLOCKER_CODE = 1;
+    private static final int RESOLVE_CONNECTION_REQUEST_CODE = 2;
 
     public void onTaskListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
@@ -57,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onLoadClick(View view) {
+        loadOnConnection = true;
+        mGoogleApiClient.connect();
+    }
+
+    public void onSaveClick(View view) {
+        loadOnConnection = false;
+        mGoogleApiClient.connect();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TASK_CODE && resultCode == RESULT_OK) {
@@ -65,16 +90,43 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == BLOCKER_CODE && resultCode == RESULT_OK) {
             userSynchronisableData.setBlockers((ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders"));
         }
+        if (requestCode == RESOLVE_CONNECTION_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+                Toast.makeText(this, "Connection to Google API failed. Check your internet connection.",
+                                     Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onConnected(@Nullable Bundle bundle) {
+        Toast.makeText(this, "Connected to Google API", Toast.LENGTH_LONG).show();
 
-        try {
-            userSynchronisableData.saveData(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (loadOnConnection) {
+            userSynchronisableData.loadData(this, mGoogleApiClient);
+        } else {
+            userSynchronisableData.saveData(this, mGoogleApiClient);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this, "Connection suspended", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        if (connectionResult.hasResolution()) {
+            try {
+                connectionResult.startResolutionForResult(this, RESOLVE_CONNECTION_REQUEST_CODE);
+            } catch (IntentSender.SendIntentException e) {
+                Toast.makeText(this, "Unable to resolve connection with Google API",
+                               Toast.LENGTH_LONG).show();
+            }
+        } else {
+            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
         }
     }
 }
