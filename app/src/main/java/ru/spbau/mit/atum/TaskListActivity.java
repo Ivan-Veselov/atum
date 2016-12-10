@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -51,8 +52,12 @@ public class TaskListActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_task_list);
 
-        filtersHolders = (ArrayList<AbstractFiltersHolder>)getIntent().getSerializableExtra("filter holders");
         isUserDefinedTask = getIntent().getIntExtra("filter holder type", 0) == 0;
+        if (isUserDefinedTask) {
+            filtersHolders = (ArrayList<AbstractFiltersHolder>) (List) UserSynchronisableData.getInstance().getTasks();
+        } else {
+            filtersHolders = (ArrayList<AbstractFiltersHolder>) (List) UserSynchronisableData.getInstance().getBlockers();
+        }
 
         data = new ArrayList<>();
         for (AbstractFiltersHolder task: filtersHolders) {
@@ -176,14 +181,5 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
         return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("filter holders", filtersHolders);
-
-        setResult(RESULT_OK, intent);
-        finish();
     }
 }

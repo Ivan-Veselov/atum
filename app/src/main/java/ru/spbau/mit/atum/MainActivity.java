@@ -45,16 +45,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onTaskListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holders", (Serializable) UserSynchronisableData.getInstance().getTasks());
         intent.putExtra("filter holder type", TASK_CODE);
-        startActivityForResult(intent, TASK_CODE);
+        startActivity(intent);
     }
 
     public void onBlockerListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holders", (Serializable) UserSynchronisableData.getInstance().getBlockers());
         intent.putExtra("filter holder type", BLOCKER_CODE);
-        startActivityForResult(intent, BLOCKER_CODE);
+        startActivity(intent);
     }
 
     public void onSchedulePlannerClick(View view) {
@@ -80,12 +78,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == TASK_CODE && resultCode == RESULT_OK) {
-            UserSynchronisableData.getInstance().setTasks((ArrayList<UserDefinedTask>)data.getSerializableExtra("filter holders"));
-        }
-        if (requestCode == BLOCKER_CODE && resultCode == RESULT_OK) {
-            UserSynchronisableData.getInstance().setBlockers((ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders"));
-        }
         if (requestCode == RESOLVE_CONNECTION_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 mGoogleApiClient.connect();

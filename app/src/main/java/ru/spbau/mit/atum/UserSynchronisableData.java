@@ -30,6 +30,7 @@ import java.util.List;
  *
  * TODO: сделать интерфейс с callback методом
  * TODO: javadocs
+ * TODO: Internal data leak within a DataBuffer object detected!
  */
 public class UserSynchronisableData extends UserData {
     private static UserSynchronisableData instance = null;
