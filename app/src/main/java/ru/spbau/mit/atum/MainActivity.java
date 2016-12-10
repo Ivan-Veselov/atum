@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
                           implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private UserSynchronisableData userSynchronisableData;
-
     private GoogleApiClient mGoogleApiClient;
 
     private boolean loadOnConnection = true;
@@ -39,8 +37,6 @@ public class MainActivity extends AppCompatActivity
                                               .addConnectionCallbacks(this)
                                               .addOnConnectionFailedListener(this)
                                               .build();
-
-        userSynchronisableData = new UserSynchronisableData("atum");
     }
 
     private final int TASK_CODE = 0;
@@ -49,26 +45,26 @@ public class MainActivity extends AppCompatActivity
 
     public void onTaskListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holders", (Serializable) userSynchronisableData.getTasks());
+        intent.putExtra("filter holders", (Serializable) UserSynchronisableData.getInstance().getTasks());
         intent.putExtra("filter holder type", TASK_CODE);
         startActivityForResult(intent, TASK_CODE);
     }
 
     public void onBlockerListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holders", (Serializable) userSynchronisableData.getBlockers());
+        intent.putExtra("filter holders", (Serializable) UserSynchronisableData.getInstance().getBlockers());
         intent.putExtra("filter holder type", BLOCKER_CODE);
         startActivityForResult(intent, BLOCKER_CODE);
     }
 
     public void onSchedulePlannerClick(View view) {
-        SchedulePlanner.planSchedule(userSynchronisableData, new DateTime(), new DateTime().plus(365L * 24 * 60 * 60 * 1000));
+        SchedulePlanner.planSchedule(UserSynchronisableData.getInstance(), new DateTime(), new DateTime().plus(365L * 24 * 60 * 60 * 1000));
         Toast.makeText(getApplicationContext(), "SCHEDULE PLANNED", Toast.LENGTH_SHORT).show();
     }
 
     public void onViewScheduleClick(View view) {
         Intent intent = new Intent(this, SchedulerViewerActivity.class);
-        intent.putExtra("all tasks", (Serializable) userSynchronisableData.getTasks());
+        intent.putExtra("all tasks", (Serializable) UserSynchronisableData.getInstance().getTasks());
         startActivity(intent);
     }
 
@@ -85,10 +81,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TASK_CODE && resultCode == RESULT_OK) {
-            userSynchronisableData.setTasks((ArrayList<UserDefinedTask>)data.getSerializableExtra("filter holders"));
+            UserSynchronisableData.getInstance().setTasks((ArrayList<UserDefinedTask>)data.getSerializableExtra("filter holders"));
         }
         if (requestCode == BLOCKER_CODE && resultCode == RESULT_OK) {
-            userSynchronisableData.setBlockers((ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders"));
+            UserSynchronisableData.getInstance().setBlockers((ArrayList<UserDefinedTimeBlocker>)data.getSerializableExtra("filter holders"));
         }
         if (requestCode == RESOLVE_CONNECTION_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -105,9 +101,9 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "Connected to Google API", Toast.LENGTH_LONG).show();
 
         if (loadOnConnection) {
-            userSynchronisableData.loadData(this, mGoogleApiClient);
+            UserSynchronisableData.getInstance().loadData(this, mGoogleApiClient);
         } else {
-            userSynchronisableData.saveData(this, mGoogleApiClient);
+            UserSynchronisableData.getInstance().saveData(this, mGoogleApiClient);
         }
     }
 

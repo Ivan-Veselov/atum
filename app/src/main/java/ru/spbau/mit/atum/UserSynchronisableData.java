@@ -32,10 +32,20 @@ import java.util.List;
  * TODO: javadocs
  */
 public class UserSynchronisableData extends UserData {
-    private final String fileName;
+    private static UserSynchronisableData instance = null;
 
-    public UserSynchronisableData(@NonNull String fileName) {
-        this.fileName = fileName;
+    private final String fileName = "atum";
+
+    public static boolean isInstantiated() {
+        return instance != null;
+    }
+
+    public static UserSynchronisableData getInstance() {
+        if (instance == null) {
+            instance = new UserSynchronisableData();
+        }
+
+        return instance;
     }
 
     public void saveData(@NonNull final Context context,
@@ -207,6 +217,9 @@ public class UserSynchronisableData extends UserData {
                 }
             }
         );
+    }
+
+    private UserSynchronisableData() {
     }
 
     private interface FileHandler {
