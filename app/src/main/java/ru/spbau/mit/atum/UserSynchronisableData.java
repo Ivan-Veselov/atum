@@ -28,7 +28,6 @@ import java.util.List;
 /**
  * Даные пользователя, которые могут быть сохранены на Google Drive и прочитаны с него обратно.
  *
- * TODO: сделать интерфейс с callback методом
  * TODO: javadocs
  * TODO: Internal data leak within a DataBuffer object detected!
  */
@@ -50,28 +49,32 @@ public class UserSynchronisableData extends UserData {
     }
 
     public void saveData(@NonNull final Context context,
-                         @NonNull final GoogleApiClient googleApiClient) {
-        runHandler(context, googleApiClient,
+                         @NonNull final GoogleApiClient googleApiClient,
+                         @NonNull final Callback callback) {
+        runHandler(context, googleApiClient, callback,
             new FileHandler() {
                 @Override
                 public void handle(@NonNull Context context,
                                    @NonNull GoogleApiClient googleApiClient,
-                                   @NonNull DriveFile file) {
-                    save(context, googleApiClient, file);
+                                   @NonNull DriveFile file,
+                                   @NonNull Callback callback) {
+                    save(context, googleApiClient, file, callback);
                 }
             }
         );
     }
 
     public void loadData(@NonNull final Context context,
-                         @NonNull final GoogleApiClient googleApiClient) {
-        runHandler(context, googleApiClient,
+                         @NonNull final GoogleApiClient googleApiClient,
+                         @NonNull final Callback callback) {
+        runHandler(context, googleApiClient, callback,
             new FileHandler() {
                 @Override
                 public void handle(@NonNull Context context,
                                    @NonNull GoogleApiClient googleApiClient,
-                                   @NonNull DriveFile file) {
-                    load(context, googleApiClient, file);
+                                   @NonNull DriveFile file,
+                                   @NonNull Callback callback) {
+                    load(context, googleApiClient, file, callback);
                 }
             }
         );
@@ -79,6 +82,7 @@ public class UserSynchronisableData extends UserData {
 
     private void runHandler(@NonNull final Context context,
                             @NonNull final GoogleApiClient googleApiClient,
+                            @NonNull final Callback callback,
                             @NonNull final FileHandler handler) {
         final DriveFolder appFolder = Drive.DriveApi.getAppFolder(googleApiClient);
 
@@ -91,7 +95,7 @@ public class UserSynchronisableData extends UserData {
                             return;
                         }
 
-                        save(context, googleApiClient, result.getDriveFile());
+                        save(context, googleApiClient, result.getDriveFile(), callback);
                     }
                 };
 
@@ -134,7 +138,8 @@ public class UserSynchronisableData extends UserData {
                              // TODO: Handle ambiguity
                              handler.handle(context,
                                             googleApiClient,
-                                            mdResultSet.get(0).getDriveId().asDriveFile());
+                                            mdResultSet.get(0).getDriveId().asDriveFile(),
+                                            callback);
 
                          }
                      }
@@ -157,7 +162,8 @@ public class UserSynchronisableData extends UserData {
 
     private void save(@NonNull final Context context,
                       @NonNull final GoogleApiClient googleApiClient,
-                      @NonNull DriveFile file) {
+                      @NonNull DriveFile file,
+                      @NonNull final Callback callback) {
         file.open(googleApiClient, DriveFile.MODE_WRITE_ONLY, null).setResultCallback(
             new ResultCallback<DriveApi.DriveContentsResult>() {
                 @Override
@@ -179,11 +185,7 @@ public class UserSynchronisableData extends UserData {
                         new ResultCallback<Status>() {
                             @Override
                             public void onResult(Status result) {
-                                Toast.makeText(context,
-                                        "Data uploaded",
-                                        Toast.LENGTH_LONG).show();
-
-                                googleApiClient.disconnect();
+                                callback.call();
                             }
                         }
                     );
@@ -194,7 +196,8 @@ public class UserSynchronisableData extends UserData {
 
     private void load(@NonNull final Context context,
                       @NonNull final GoogleApiClient googleApiClient,
-                      @NonNull DriveFile file) {
+                      @NonNull DriveFile file,
+                      @NonNull final Callback callback) {
         file.open(googleApiClient, DriveFile.MODE_READ_ONLY, null).setResultCallback(
             new ResultCallback<DriveApi.DriveContentsResult>() {
                 @Override
@@ -213,8 +216,7 @@ public class UserSynchronisableData extends UserData {
                     }
 
                     contents.discard(googleApiClient);
-                    Toast.makeText(context, "Data downloaded", Toast.LENGTH_LONG).show();
-                    googleApiClient.disconnect();
+                    callback.call();
                 }
             }
         );
@@ -223,9 +225,14 @@ public class UserSynchronisableData extends UserData {
     private UserSynchronisableData() {
     }
 
+    public interface Callback {
+        void call();
+    }
+
     private interface FileHandler {
         void handle(@NonNull final Context context,
                     @NonNull final GoogleApiClient googleApiClient,
-                    @NonNull DriveFile file);
+                    @NonNull DriveFile file,
+                    @NonNull final Callback callback);
     }
 }

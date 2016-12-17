@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -60,15 +61,31 @@ public abstract class UserDataEditorActivity extends AppCompatActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "Connected to Google API", Toast.LENGTH_LONG).show();
+        disableActions();
 
         switch (reason) {
             case LOAD:
-                UserSynchronisableData.getInstance().loadData(this, mGoogleApiClient);
+                UserSynchronisableData.getInstance().loadData(this, mGoogleApiClient,
+                    new UserSynchronisableData.Callback() {
+                        @Override
+                        public void call() {
+                            mGoogleApiClient.disconnect();
+                            enableActions();
+                        }
+                    }
+                );
                 break;
 
             case SAVE:
-                UserSynchronisableData.getInstance().saveData(this, mGoogleApiClient);
+                UserSynchronisableData.getInstance().saveData(this, mGoogleApiClient,
+                    new UserSynchronisableData.Callback() {
+                        @Override
+                        public void call() {
+                            mGoogleApiClient.disconnect();
+                            enableActions();
+                        }
+                    }
+                );
                 break;
         }
     }
@@ -90,6 +107,15 @@ public abstract class UserDataEditorActivity extends AppCompatActivity
         } else {
             GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
         }
+    }
+
+    private void disableActions() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    private void enableActions() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     private enum ConnectionReason { LOAD, SAVE };
