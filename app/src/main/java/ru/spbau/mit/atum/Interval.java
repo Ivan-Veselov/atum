@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.lang.Math.min;
+
 /**
  * Полуинтервал на прямой (левая граница включена), который представляется двумя числами -
  * началом и концом. Начало всегда не превосходит конца.
@@ -17,6 +19,8 @@ public final class Interval {
     private final int left;
 
     private final int right;
+
+    public static Interval empty = new Interval(0, 0);
 
     /**
      * Создает новый интервал с заданными концами. В случае некорректных аргументов выбрасывается
@@ -81,7 +85,7 @@ public final class Interval {
      */
     public @NonNull Interval intersection(@NonNull Interval other) {
         int begin = Math.max(this.left, other.left);
-        int end = Math.min(this.right, other.right);
+        int end = min(this.right, other.right);
 
         if (end < begin) {
             end = begin;
@@ -98,6 +102,35 @@ public final class Interval {
             }
         }
         return false;
+    }
+
+    public int length() {
+        return right - left;
+    }
+
+    public Interval getMaxIntersectionWithListOfIntervals(@NonNull List<Interval> others) {
+        Interval ans = empty;
+        for (Interval other: others) {
+            Interval intersection = intersection(other);
+            if (intersection.length() > ans.length()) {
+                ans = intersection;
+            }
+        }
+        return ans;
+    }
+
+    public Interval withDuration(int duration) {
+        return new Interval(left, min(right, left + duration));
+    }
+
+    public static Interval getMaxInterval(List<Interval> intervals) {
+        Interval ans = empty;
+        for (Interval interval: intervals) {
+            if (interval.length() > ans.length()) {
+                ans = interval;
+            }
+        }
+        return ans;
     }
 
     /**

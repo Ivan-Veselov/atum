@@ -1,7 +1,5 @@
 package ru.spbau.mit.atum;
 
-import android.test.mock.MockContext;
-
 import org.joda.time.ReadableDateTime;
 import org.junit.Test;
 
@@ -12,14 +10,12 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static ru.spbau.mit.atum.TestUtilities.theNthOfJan;
-
+import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.FRIDAY;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.SATURDAY;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.THURSDAY;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.TUESDAY;
 import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.WEDNESDAY;
-
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
 
 public class SchedulePlannerTest {
     @Test

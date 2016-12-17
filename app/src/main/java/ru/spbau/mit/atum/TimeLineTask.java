@@ -32,4 +32,8 @@ public class TimeLineTask {
     public UserDefinedTask getHolder() {
         return holder;
     }
+
+    public int getDuration() {
+        return holder.getDuration();
+    }
 }
