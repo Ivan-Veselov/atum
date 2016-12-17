@@ -34,7 +34,7 @@ public class MainActivity extends UserDataEditorActivity {
     }
 
     public void onSchedulePlannerClick(View view) {
-        SchedulePlanner.planSchedule(UserSynchronisableData.getInstance(), new DateTime(), new DateTime().plus(365L * 24 * 60 * 60 * 1000));
+        SchedulePlanner.planSchedule(UserSynchronisableData.getInstance(), new DateTime(), new DateTime().plusYears(5));
         Toast.makeText(getApplicationContext(), "SCHEDULE PLANNED", Toast.LENGTH_SHORT).show();
     }
 

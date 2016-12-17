@@ -8,7 +8,10 @@ import org.joda.time.ReadableDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchedulePlanner {
+public final class SchedulePlanner {
+
+    private SchedulePlanner() {}
+
     public static void planSchedule(UserData preferences,
                                     @NonNull ReadableDateTime initialMoment,
                                     @NonNull ReadableDateTime finalMoment) {
