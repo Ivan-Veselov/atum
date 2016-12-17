@@ -23,13 +23,13 @@ public class MainActivity extends UserDataEditorActivity {
 
     public void onTaskListClick(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holder type", TASK_CODE);
+        //intent.putExtra("filter holder type", TASK_CODE);
         startActivity(intent);
     }
 
     public void onBlockerListClick(View view) {
-        Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("filter holder type", BLOCKER_CODE);
+        Intent intent = new Intent(this, TimeBlockerListActivity.class);
+        //intent.putExtra("filter holder type", BLOCKER_CODE);
         startActivity(intent);
     }
 
