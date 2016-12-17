@@ -14,6 +14,8 @@ public class MainActivity extends UserDataEditorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        loadUserData();
     }
 
     private final int TASK_CODE = 0;
@@ -40,13 +42,5 @@ public class MainActivity extends UserDataEditorActivity {
         Intent intent = new Intent(this, SchedulerViewerActivity.class);
         intent.putExtra("all tasks", (Serializable) UserSynchronisableData.getInstance().getTasks());
         startActivity(intent);
-    }
-
-    public void onLoadClick(View view) {
-        loadUserData();
-    }
-
-    public void onSaveClick(View view) {
-        saveUserData();
     }
 }
