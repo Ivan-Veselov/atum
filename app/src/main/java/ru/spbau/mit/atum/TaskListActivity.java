@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class TaskListActivity extends AppCompatActivity {
+public class TaskListActivity extends UserDataEditorActivity {
 
     private static final String TASK_NAME = "task_name";
 
@@ -115,7 +115,9 @@ public class TaskListActivity extends AppCompatActivity {
                     .getSerializableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
             addNewTask(newTask);
+
             adapter.notifyDataSetChanged();
+            saveUserData();
         }
         if (requestCode == EDIT_TASK_CODE && resultCode == RESULT_OK) {
             int position = data.getIntExtra
@@ -136,6 +138,7 @@ public class TaskListActivity extends AppCompatActivity {
             }
 
             adapter.notifyDataSetChanged();
+            saveUserData();
         }
     }
 
@@ -155,6 +158,7 @@ public class TaskListActivity extends AppCompatActivity {
             data.remove(adapterContextMenuInfo.position);
             Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_LONG).show();
             adapter.notifyDataSetChanged();
+            saveUserData();
             return true;
         }
         if (item.getItemId() == EDIT_ID) {
