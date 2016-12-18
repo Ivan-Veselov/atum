@@ -46,10 +46,6 @@ public class MainActivity extends UserDataEditorActivity {
     }
 
     public void onExportToGoogleCalendarClick(View view) {
-        calendarExporter.clearCalendar();
-        List<UserDefinedTask> tasks = UserSynchronisableData.getInstance().getTasks();
-        for (UserDefinedTask task: tasks) {
-            calendarExporter.addTaskToCalendar(task);
-        }
+        calendarExporter.addTasks(UserSynchronisableData.getInstance().getTasks());
     }
 }

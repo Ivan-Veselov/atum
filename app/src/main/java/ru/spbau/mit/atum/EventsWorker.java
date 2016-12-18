@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 
@@ -75,9 +76,9 @@ public class EventsWorker {
 
     }
 
-    public long addTask(UserDefinedTask task) {
+    public void addTask(UserDefinedTask task) {
         if (task.getScheduledTime() == null) {
-            return -1;
+            return;
         }
         long startMillis = task.getScheduledTime().getMillis();
         long endMillis = task.getScheduledTime().toDateTime().plusMinutes(task.getDuration()).getMillis();
@@ -100,8 +101,20 @@ public class EventsWorker {
 
         Log.i("myLog", "Yaaay!!!");
 
-        return Long.parseLong(uri.getLastPathSegment());
+        addReminder(Long.parseLong(uri.getLastPathSegment()));
 
+    }
+
+    public void addReminder(long eventId) {
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Reminders.MINUTES, 15);
+        values.put(CalendarContract.Reminders.EVENT_ID, eventId);
+        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        try {
+            contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, values);
+        } catch (SecurityException e) {
+            throw e;
+        }
     }
 
     public void deleteEventById(long eventID) {
