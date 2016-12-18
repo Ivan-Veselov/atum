@@ -72,7 +72,8 @@
         android:id="@+id/task_editor_location_button"
         android:layout_below="@+id/task_editor_duration_field"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="onClickLocationButton" />
 
     <ListView
         android:layout_width="match_parent"
