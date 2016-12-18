@@ -75,6 +75,35 @@ public class EventsWorker {
 
     }
 
+    public long addTask(UserDefinedTask task) {
+        if (task.getScheduledTime() == null) {
+            return -1;
+        }
+        long startMillis = task.getScheduledTime().getMillis();
+        long endMillis = task.getScheduledTime().toDateTime().plusMinutes(task.getDuration()).getMillis();
+
+        ContentValues values = new ContentValues();
+        values.put(Events.CALENDAR_ID, calID);
+        values.put(Events.DTSTART, startMillis);
+        values.put(Events.DTEND, endMillis);
+        values.put(Events.TITLE, task.getName());
+        values.put(Events.DESCRIPTION, task.getDescription());
+        values.put(Events.EVENT_TIMEZONE, "UTC+03:00");
+        Uri uri;
+
+        try {
+            uri = contentResolver.insert(Events.CONTENT_URI, values);
+        } catch (SecurityException e) {
+            Log.i("myLog", e.toString());
+            throw e;
+        }
+
+        Log.i("myLog", "Yaaay!!!");
+
+        return Long.parseLong(uri.getLastPathSegment());
+
+    }
+
     public void deleteEventById(long eventID) {
         contentResolver.delete(ContentUris.withAppendedId(Events.CONTENT_URI, eventID), null, null);
     }
@@ -82,6 +111,15 @@ public class EventsWorker {
     public void deleteEventByTitle(String title) {
         try {
             contentResolver.delete(Events.CONTENT_URI, "(" + Events.TITLE + " = ?)", new String[]{title});
+        } catch (SecurityException e) {
+            throw e;
+        }
+    }
+
+    public void deleteAll() {
+        try {
+            contentResolver.delete(Events.CONTENT_URI, "(" + Events.CALENDAR_ID + " = ?)",
+                    new String[]{((Long)calID).toString()});
         } catch (SecurityException e) {
             throw e;
         }

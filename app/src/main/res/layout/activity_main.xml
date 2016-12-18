@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_schedule_button"
         android:id="@+id/button2"
+        android:onClick="onExportToGoogleCalendarClick"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
