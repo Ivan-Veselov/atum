@@ -16,6 +16,7 @@ import org.joda.time.DateTime;
 public class EventsWorker {
 
     private ContentResolver contentResolver;
+
     private long calID;
 
     private static final String[] EVENT_PROJECTION = new String[] {

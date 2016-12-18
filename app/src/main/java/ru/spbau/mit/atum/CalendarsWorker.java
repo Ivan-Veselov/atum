@@ -103,7 +103,7 @@ public class CalendarsWorker {
         }
     }
 
-    public Uri addNewCalendar(Uri uri, String accountName, String displayName) {
+    private Uri addNewCalendar(Uri uri, String accountName, String displayName) {
         Uri hzUri = asSyncAdapter(uri, accountName, ACCOUNT_TYPE_LOCAL);
 
         ContentValues mNewValues = new ContentValues();

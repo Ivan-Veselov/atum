@@ -7,8 +7,11 @@ import java.util.List;
 public class CalendarExporter {
 
     private final String defaultAccountName = "ATUM";
+
     private final String defaultDisplayName = "ATUM";
+
     private CalendarsWorker calendarsWorker;
+
     private EventsWorker eventsWorker;
 
     public CalendarExporter(Context context) {
