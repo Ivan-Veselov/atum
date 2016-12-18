@@ -2,11 +2,16 @@ package ru.spbau.mit.atum;
 
 import android.content.Context;
 
+import java.util.List;
+
 public class CalendarExporter {
 
     private final String defaultAccountName = "ATUM";
+
     private final String defaultDisplayName = "ATUM";
+
     private CalendarsWorker calendarsWorker;
+
     private EventsWorker eventsWorker;
 
     public CalendarExporter(Context context) {
@@ -19,12 +24,11 @@ public class CalendarExporter {
 
     }
 
-    public void clearCalendar() {
+    public void addTasks(List<UserDefinedTask> tasks) {
         eventsWorker.deleteAll();
-    }
-
-    public void addTaskToCalendar(UserDefinedTask task) {
-        eventsWorker.addTask(task);
+        for (UserDefinedTask task: tasks) {
+            eventsWorker.addTask(task);
+        }
     }
 
 }

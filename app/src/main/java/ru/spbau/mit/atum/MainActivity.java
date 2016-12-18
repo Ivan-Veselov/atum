@@ -2,16 +2,15 @@ package ru.spbau.mit.atum;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class MainActivity extends UserDataEditorActivity {
+
     private CalendarExporter calendarExporter;
 
     @Override
@@ -46,10 +45,6 @@ public class MainActivity extends UserDataEditorActivity {
     }
 
     public void onExportToGoogleCalendarClick(View view) {
-        calendarExporter.clearCalendar();
-        List<UserDefinedTask> tasks = UserSynchronisableData.getInstance().getTasks();
-        for (UserDefinedTask task: tasks) {
-            calendarExporter.addTaskToCalendar(task);
-        }
+        calendarExporter.addTasks(UserSynchronisableData.getInstance().getTasks());
     }
 }
