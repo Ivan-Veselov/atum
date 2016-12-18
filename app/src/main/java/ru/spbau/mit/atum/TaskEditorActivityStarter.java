@@ -33,7 +33,7 @@ public class TaskEditorActivityStarter extends Activity {
                                                                        new DateTime(2000, 1, 1, 17, 0, 0),
                                                                        TimeFilter.ExclusionType.COMMON)
                                             })),
-                                            42));
+                                            42, null));
 
         startActivityForResult(intent, 0);
     }

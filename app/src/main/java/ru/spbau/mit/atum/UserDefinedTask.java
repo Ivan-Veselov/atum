@@ -3,6 +3,8 @@ package ru.spbau.mit.atum;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.location.places.Place;
+
 import org.joda.time.ReadableDateTime;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 public class UserDefinedTask extends AbstractFiltersHolder {
     private final int duration;
 
+    private final Place place;
+
     private ReadableDateTime scheduledTime = null;
 
     /**
@@ -26,9 +30,11 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      * @param filterList временные фильтры задания, которые задают время, в которое это задание
      *                   можно выполнять.
      * @param duration продолжительность выполнения задания.
+     * @param place место, в котором нужно выполнять задание.
      */
     public UserDefinedTask(@NonNull String name, @NonNull String description,
-                           @NonNull List<TimeFilter> filterList, int duration) {
+                           @NonNull List<TimeFilter> filterList,
+                           int duration, @Nullable Place place) {
         super(name, description, filterList);
 
         if (duration <= 0) {
@@ -36,6 +42,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         }
 
         this.duration = duration;
+        this.place = place;
     }
 
     /**
@@ -43,6 +50,13 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      */
     public int getDuration() {
         return duration;
+    }
+
+    /**
+     * Место, в котором нужно выполнять задание.
+     */
+    public Place getPlace() {
+        return place;
     }
 
     /**

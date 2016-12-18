@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 /**
@@ -17,6 +19,10 @@ import com.google.android.gms.location.places.ui.PlacePicker;
  */
 public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
     private EditText durationField;
+
+    private TextView placeTextView;
+
+    private Place chosenPlace = null;
 
     private static final int PLACE_PICKER_REQUEST = 10;
 
@@ -28,6 +34,7 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         descriptionField = (EditText) findViewById(R.id.task_editor_description_field);
         durationField = (EditText) findViewById(R.id.task_editor_duration_field);
         timeFilterListView = (ListView) findViewById(R.id.task_editor_filter_list);
+        placeTextView = (TextView) findViewById(R.id.task_editor_location_text);
     }
 
     @Override
@@ -59,7 +66,8 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         return new UserDefinedTask(nameField.getText().toString(),
                                    descriptionField.getText().toString(),
                                    timeFilters,
-                                   duration);
+                                   duration,
+                                   chosenPlace);
     }
 
     public void onClickLocationButton(View view) {
@@ -70,6 +78,24 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         } catch (GooglePlayServicesNotAvailableException |
                  GooglePlayServicesRepairableException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case PLACE_PICKER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    chosenPlace = PlacePicker.getPlace(this, data);
+                    placeTextView.setText(chosenPlace.getAddress());
+                }
+
+                break;
+
+            default:
+                break;
         }
     }
 }
