@@ -1,7 +1,6 @@
 package ru.spbau.mit.atum;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.joda.time.ReadableDateTime;
 
@@ -18,12 +17,26 @@ public final class SchedulePlanner {
         TimeLineTaskGroup timeLineTaskGroup = new TimeLineTaskGroup(preferences.getTasks(),
                                                                     preferences.getBlockers(),
                                                                     initialMoment, finalMoment);
-        Log.i("my_tag", initialMoment.toString());
-        Log.i("my_tag", finalMoment.toString());
-        planSchedule(timeLineTaskGroup, initialMoment);
+    //    Log.i("my_tag", initialMoment.toString());
+    //    Log.i("my_tag", finalMoment.toString());
+        PlanScheduleAlgorithm(timeLineTaskGroup, initialMoment);
     }
 
-    private static void planSchedule(TimeLineTaskGroup tasks,
+    private static void PlanScheduleAlgorithm(TimeLineTaskGroup tasks,
+                                                     @NonNull ReadableDateTime initialMoment) {
+        List<Interval> resultIntervals = new ArrayList<>();
+        for (TimeLineTask task: tasks.getTaskList()) {
+            List<Interval> possibleIntervals = Interval.difference(task.getTimeIntervals(), resultIntervals);
+            Interval interval = Interval.getMaxInterval(possibleIntervals);
+            if (interval.length() >= task.getDuration()) {
+                resultIntervals.add(interval.withDuration(task.getDuration()));
+                task.getHolder().setScheduledTime(initialMoment.toDateTime().plusMinutes(interval.left()));
+            }
+        }
+
+    }
+
+    private static void SuperSimplePlanScheduleAlgorithm(TimeLineTaskGroup tasks,
                                      @NonNull ReadableDateTime initialMoment) {
         List<Interval> resultIntervals = new ArrayList<>();
         for (TimeLineTask task: tasks.getTaskList()) {
