@@ -14,6 +14,8 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
  * Activity, в которой пользователь редактирует или создает объект типа UserDefinedTask.
@@ -85,6 +87,16 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
 
     public void onClickLocationButton(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        if (chosenPlace != null) {
+            final double radius = 0.001;
+
+            double latitude = chosenPlace.getLatLng().latitude;
+            double longitude = chosenPlace.getLatLng().longitude;
+            builder.setLatLngBounds(
+                    new LatLngBounds(new LatLng(latitude - radius, longitude),
+                                     new LatLng(latitude + radius, longitude)));
+        }
 
         try {
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
