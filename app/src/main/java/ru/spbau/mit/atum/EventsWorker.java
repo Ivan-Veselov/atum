@@ -91,6 +91,7 @@ public class EventsWorker {
         values.put(Events.TITLE, task.getName());
         values.put(Events.DESCRIPTION, task.getDescription());
         values.put(Events.EVENT_TIMEZONE, "UTC+03:00");
+        values.put(Events.EVENT_LOCATION, task.getPlace().getAddress().toString());
         Uri uri;
 
         try {
