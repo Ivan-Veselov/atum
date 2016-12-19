@@ -1,9 +1,12 @@
 package ru.spbau.mit.atum;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,10 +21,21 @@ import java.util.concurrent.TimeUnit;
  * обычным, а может быть "исключающим". Исключающий фильтр, в отличие от обычного, исключает
  * промежутки времени, которые он задает.
  */
-public abstract class TimeFilter implements Serializable {
+public abstract class TimeFilter implements Serializable, Parcelable {
     private final String description;
 
     private final ExclusionType exclusionType;
+
+    public static final Parcelable.Creator<TimeFilter> CREATOR
+            = new Parcelable.Creator<TimeFilter>() {
+        public TimeFilter createFromParcel(Parcel in) {
+            return (TimeFilter) in.readSerializable();
+        }
+
+        public TimeFilter[] newArray(int size) {
+            return new TimeFilter[size];
+        }
+    };
 
     /**
      * Создает новый фильтр.
@@ -87,6 +101,16 @@ public abstract class TimeFilter implements Serializable {
                 new Interval(0, convertToPointRelative(initialMoment, finalMoment)));
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeSerializable(this);
+    }
+
     /**
      * Вспомогательный метод, который должны перегружать производные классы, в то время как
      * intervalRepresentation выполняет общую работу и вызывает этот метод.
@@ -127,5 +151,5 @@ public abstract class TimeFilter implements Serializable {
                       - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
     }
 
-    public enum ExclusionType {COMMON, EXCLUSIONARY};
+    public enum ExclusionType { COMMON, EXCLUSIONARY }
 }

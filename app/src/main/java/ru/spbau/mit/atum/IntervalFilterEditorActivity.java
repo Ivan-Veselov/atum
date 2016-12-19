@@ -17,6 +17,8 @@ import android.widget.Toast;
 import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
+import java.io.Serializable;
+
 public class IntervalFilterEditorActivity extends AppCompatActivity {
     private final int START_DATE = 1;
     private final int START_TIME = 2;
@@ -184,9 +186,9 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
                     startTime, endTime, exclusionType);
 
         if (previousFilter == null) {
-            intent.putExtra("filter", timeFilter);
+            intent.putExtra("filter", (Serializable) timeFilter);
         } else {
-            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, (Serializable) timeFilter);
             intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION,
                     getIntent().getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, -1));
         }

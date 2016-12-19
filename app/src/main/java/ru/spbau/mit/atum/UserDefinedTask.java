@@ -1,5 +1,7 @@
 package ru.spbau.mit.atum;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -7,6 +9,8 @@ import com.google.android.gms.location.places.Place;
 
 import org.joda.time.ReadableDateTime;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +25,17 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     private final Place place;
 
     private ReadableDateTime scheduledTime = null;
+
+    public static final Parcelable.Creator<UserDefinedTask> CREATOR
+            = new Parcelable.Creator<UserDefinedTask>() {
+        public UserDefinedTask createFromParcel(Parcel in) {
+            return new UserDefinedTask(in);
+        }
+
+        public UserDefinedTask[] newArray(int size) {
+            return new UserDefinedTask[size];
+        }
+    };
 
     /**
      * Создает новое задание.
@@ -73,5 +88,22 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      */
     public void setScheduledTime(@Nullable ReadableDateTime scheduledTime) {
         this.scheduledTime = scheduledTime;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+
+        out.writeInt(duration);
+        out.writeParcelable((Parcelable) place, flags);
+        out.writeSerializable((Serializable) scheduledTime);
+    }
+
+    protected UserDefinedTask(Parcel in) {
+        super(in);
+
+        duration = in.readInt();
+        place = in.readParcelable(getClass().getClassLoader());
+        scheduledTime = (ReadableDateTime) in.readSerializable();
     }
 }

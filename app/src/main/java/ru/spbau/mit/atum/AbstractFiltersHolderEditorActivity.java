@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -68,8 +69,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
 
         initializeLayout();
 
-        AbstractFiltersHolder holderToEdit =
-                (AbstractFiltersHolder) getIntent().getSerializableExtra(EXTRA_FILTER_HOLDER);
+        AbstractFiltersHolder holderToEdit = getIntent().getParcelableExtra(EXTRA_FILTER_HOLDER);
 
         if (savedInstanceState != null) {
             timeFilters =
@@ -139,7 +139,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
                     return super.onContextItemSelected(item);
                 }
 
-                intent.putExtra(FilterEditorActivity.EXTRA_FILTER, filter);
+                intent.putExtra(FilterEditorActivity.EXTRA_FILTER, (Serializable) filter);
                 intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, info.position);
                 startActivityForResult(intent, EDIT_FILTER_REQUEST);
 

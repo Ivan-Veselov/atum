@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 
 public class WeekFilterEditorActivity extends AppCompatActivity {
@@ -129,9 +130,9 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
                 mask, exclusionType);
 
         if (previousFilter == null) {
-            intent.putExtra("filter", timeFilter);
+            intent.putExtra("filter", (Serializable) timeFilter);
         } else {
-            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, (Serializable) timeFilter);
             intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION,
                     getIntent().getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, -1));
         }

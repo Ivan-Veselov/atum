@@ -2,6 +2,7 @@ package ru.spbau.mit.atum;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
  * Activity, в которой пользователь редактирует или создает объект типа UserDefinedTask.
  */
 public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
+    private static final String STATE_CHOSEN_PLACE = "CHOSEN_PLACE";
+
     private EditText durationField;
 
     private TextView placeTextView;
@@ -41,12 +44,22 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserDefinedTask taskToEdit =
-                (UserDefinedTask) getIntent().getSerializableExtra(EXTRA_FILTER_HOLDER);
+        UserDefinedTask taskToEdit = getIntent().getParcelableExtra(EXTRA_FILTER_HOLDER);
 
-        if (savedInstanceState == null && taskToEdit != null) {
+        if (savedInstanceState != null) {
+            chosenPlace = savedInstanceState.getParcelable(STATE_CHOSEN_PLACE);
+        } else if (taskToEdit != null) {
             durationField.setText(Integer.toString(taskToEdit.getDuration()));
+
+            chosenPlace = taskToEdit.getPlace();
+            placeTextView.setText(chosenPlace.getAddress());
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(STATE_CHOSEN_PLACE, (Parcelable) chosenPlace);
     }
 
     @Override

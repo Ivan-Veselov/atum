@@ -1,6 +1,8 @@
 package ru.spbau.mit.atum;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -147,17 +150,31 @@ public class UserSynchronisableData extends UserData {
     }
 
     private void saveToOutputStream(@NonNull OutputStream stream) throws IOException {
-        ObjectOutputStream outputStream = new ObjectOutputStream(stream);
+        Parcel parcel = Parcel.obtain();
 
-        outputStream.writeObject(tasks);
-        outputStream.writeObject(blockers);
+        parcel.writeList(tasks);
+        parcel.writeList(blockers);
+
+        stream.write(parcel.marshall());
+        parcel.recycle();
     }
 
     private void loadFromInputStream(@NonNull InputStream stream)
             throws IOException, ClassNotFoundException {
-        ObjectInputStream inputStream = new ObjectInputStream(stream);
-        tasks = (List<UserDefinedTask>) inputStream.readObject();
-        blockers = (List<UserDefinedTimeBlocker>) inputStream.readObject();
+        byte[] data = new byte[stream.available()];
+        stream.read(data);
+
+        Parcel parcel = Parcel.obtain();
+        parcel.unmarshall(data, 0, data.length);
+        parcel.setDataPosition(0);
+
+        tasks = new ArrayList<> ();
+        blockers = new ArrayList<> ();
+
+        parcel.readList(tasks, UserDefinedTask.class.getClassLoader());
+        parcel.readList(blockers, UserDefinedTimeBlocker.class.getClassLoader());
+
+        parcel.recycle();
     }
 
     private void save(@NonNull final Context context,

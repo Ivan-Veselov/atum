@@ -1,5 +1,7 @@
 package ru.spbau.mit.atum;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.joda.time.ReadableDateTime;
@@ -16,7 +18,7 @@ import java.util.List;
  * фильтров дает некоторое подмножество прямой. Если из этого объединения вычесть объединение
  * исключающих фильтров, то получится подмножество временной прямой, которое задает набор фильтров.
  */
-public abstract class AbstractFiltersHolder implements Serializable {
+public abstract class AbstractFiltersHolder implements Parcelable {
     private final String name;
 
     private final String description;
@@ -88,5 +90,25 @@ public abstract class AbstractFiltersHolder implements Serializable {
         }
 
         return Interval.difference(commonFiltersRepresentation, exclusiveFiltersRepresentation);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(name);
+        out.writeString(description);
+        out.writeList(filterList);
+    }
+
+    protected AbstractFiltersHolder(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+
+        filterList = new ArrayList<>();
+        in.readList(filterList, null);
     }
 }

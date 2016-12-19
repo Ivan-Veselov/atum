@@ -106,8 +106,8 @@ public class TaskListActivity extends UserDataEditorActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NEW_TASK_CODE && resultCode == RESULT_OK) {
-            AbstractFiltersHolder newTask = (AbstractFiltersHolder)data
-                    .getSerializableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
+            AbstractFiltersHolder newTask = data
+                    .getParcelableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
             addNewTask(newTask);
 
@@ -117,7 +117,7 @@ public class TaskListActivity extends UserDataEditorActivity {
         if (requestCode == EDIT_TASK_CODE && resultCode == RESULT_OK) {
             int position = data.getIntExtra
                     (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION, -1);
-            AbstractFiltersHolder filtersHolder = (AbstractFiltersHolder)data.getSerializableExtra
+            AbstractFiltersHolder filtersHolder = data.getParcelableExtra
                     (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.set(position, filtersHolder);
 
