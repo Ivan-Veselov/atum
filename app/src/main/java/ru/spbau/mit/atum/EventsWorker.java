@@ -19,6 +19,10 @@ public class EventsWorker {
 
     private long calID;
 
+    private static final int PURPLE = 0xAB47BC;
+    private static final int RED = 0xF44336;
+    private static final int BLUE = 0x1976D2;
+
     private static final String[] EVENT_PROJECTION = new String[] {
             Events._ID,                           // 0
             Events.TITLE                          // 1
@@ -92,6 +96,7 @@ public class EventsWorker {
         values.put(Events.DESCRIPTION, task.getDescription());
         values.put(Events.EVENT_TIMEZONE, "UTC+03:00");
         values.put(Events.EVENT_LOCATION, task.getPlace().getAddress().toString());
+        values.put(Events.EVENT_COLOR, PURPLE);
         Uri uri;
 
         try {
