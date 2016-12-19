@@ -2,7 +2,6 @@ package ru.spbau.mit.atum;
 
 import android.support.annotation.NonNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * Объект этого класса содержит данные пользователя о том, как он хочет выполнять задания.
  * Данные представляют собой список задач и список блокировщиков.
  */
-public class UserData implements Serializable {
+public class UserData {
     protected List<UserDefinedTask> tasks;
 
     protected List<UserDefinedTimeBlocker> blockers;

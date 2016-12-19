@@ -65,15 +65,6 @@
         android:id="@+id/task_editor_add_filter_button"
         android:onClick="onClickAddFilterButton" />
 
-    <Button
-        android:text="Location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/task_editor_location_button"
-        android:layout_below="@+id/task_editor_duration_field"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,6 +72,17 @@
         android:headerDividersEnabled="false"
         android:footerDividersEnabled="false"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/task_editor_location_button"
-        android:layout_above="@+id/task_editor_apply_button" />
+        android:layout_above="@+id/task_editor_apply_button"
+        android:layout_below="@+id/task_editor_location_text" />
+
+    <TextView
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/task_editor_location_text"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:onClick="onClickLocationButton"
+        android:layout_below="@+id/task_editor_duration_field" />
 </RelativeLayout>

@@ -1,8 +1,11 @@
 package ru.spbau.mit.atum;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -18,6 +21,17 @@ public class IntervalFilter extends TimeFilter {
     private final ReadableDateTime filterInitialMoment;
 
     private final ReadableDateTime filterFinalMoment;
+
+    public static final Parcelable.Creator<IntervalFilter> CREATOR
+            = new Parcelable.Creator<IntervalFilter>() {
+        public IntervalFilter createFromParcel(Parcel in) {
+            return new IntervalFilter(in);
+        }
+
+        public IntervalFilter[] newArray(int size) {
+            return new IntervalFilter[size];
+        }
+    };
 
     /**
      * Создает новый фильтр.
@@ -66,6 +80,14 @@ public class IntervalFilter extends TimeFilter {
         return filterFinalMoment;
     }
 
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+
+        out.writeSerializable((Serializable) filterInitialMoment);
+        out.writeSerializable((Serializable) filterFinalMoment);
+    }
+
     /**
      * @param initialMoment точка отсчета и нижняя граница времени.
      * @param globalInterval целочисленный интервал всего доступного времени.
@@ -89,5 +111,12 @@ public class IntervalFilter extends TimeFilter {
         }
 
         return intervalList;
+    }
+
+    private IntervalFilter(Parcel in) {
+        super(in);
+
+        filterInitialMoment = (ReadableDateTime) in.readSerializable();
+        filterFinalMoment = (ReadableDateTime) in.readSerializable();
     }
 }

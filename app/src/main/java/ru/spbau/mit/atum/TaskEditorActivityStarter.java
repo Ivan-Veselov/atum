@@ -33,7 +33,7 @@ public class TaskEditorActivityStarter extends Activity {
                                                                        new DateTime(2000, 1, 1, 17, 0, 0),
                                                                        TimeFilter.ExclusionType.COMMON)
                                             })),
-                                            42));
+                                            42, null));
 
         startActivityForResult(intent, 0);
     }
@@ -42,7 +42,7 @@ public class TaskEditorActivityStarter extends Activity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 UserDefinedTask task =
-                        (UserDefinedTask) data.getSerializableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
+                        (UserDefinedTask) data.getParcelableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
 
                 Toast.makeText(this, task.getName() + " " + task.getFilterList().size(), Toast.LENGTH_LONG).show();
             }

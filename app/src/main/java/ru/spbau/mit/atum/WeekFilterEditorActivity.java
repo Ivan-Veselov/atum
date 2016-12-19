@@ -49,7 +49,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         description = (EditText) findViewById(R.id.week_filter_name);
         isExclusionary = (CheckBox) findViewById(R.id.isExclusionary);
 
-        previousFilter = (WeekFilter) getIntent().getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+        previousFilter = getIntent().getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
         if (previousFilter != null) {
             isExclusionary.setChecked(previousFilter.isExclusive());
             description.setText(previousFilter.getDescription());

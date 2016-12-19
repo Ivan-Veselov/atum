@@ -1,6 +1,8 @@
 package ru.spbau.mit.atum;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.util.EnumSet;
@@ -26,6 +28,17 @@ public class WeekFilter extends TimeFilter {
     private final int duration;
 
     private final EnumSet<DaysOfWeek> mask;
+
+    public static final Parcelable.Creator<WeekFilter> CREATOR
+            = new Parcelable.Creator<WeekFilter>() {
+        public WeekFilter createFromParcel(Parcel in) {
+            return new WeekFilter(in);
+        }
+
+        public WeekFilter[] newArray(int size) {
+            return new WeekFilter[size];
+        }
+    };
 
     /**
      * Создает новый фильтр.
@@ -117,6 +130,15 @@ public class WeekFilter extends TimeFilter {
         return mask;
     }
 
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+
+        out.writeInt(firstMinute);
+        out.writeInt(duration);
+        out.writeSerializable(mask);
+    }
+
     /**
      * @param initialMoment точка отсчета и нижняя граница времени.
      * @param globalInterval целочисленный интервал всего доступного времени.
@@ -152,6 +174,14 @@ public class WeekFilter extends TimeFilter {
         }
 
         return intervalList;
+    }
+
+    protected WeekFilter(Parcel in) {
+        super(in);
+
+        firstMinute = in.readInt();
+        duration = in.readInt();
+        mask = (EnumSet<DaysOfWeek>) in.readSerializable();
     }
 
     public enum DaysOfWeek {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};

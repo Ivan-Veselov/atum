@@ -51,7 +51,7 @@ public class FilterEditorActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Intent intent = new Intent();
-            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, data.getSerializableExtra("filter"));
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, data.getParcelableExtra("filter"));
             setResult(RESULT_OK, intent);
             finish();
         }

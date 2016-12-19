@@ -1,7 +1,10 @@
 package ru.spbau.mit.atum;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,5 +22,20 @@ public class UserDefinedTimeBlocker extends AbstractFiltersHolder {
                                   @NonNull String description,
                                   @NonNull List<TimeFilter> filterList) {
         super(name, description, filterList);
+    }
+
+    public static final Parcelable.Creator<UserDefinedTimeBlocker> CREATOR
+            = new Parcelable.Creator<UserDefinedTimeBlocker>() {
+        public UserDefinedTimeBlocker createFromParcel(Parcel in) {
+            return new UserDefinedTimeBlocker(in);
+        }
+
+        public UserDefinedTimeBlocker[] newArray(int size) {
+            return new UserDefinedTimeBlocker[size];
+        }
+    };
+
+    protected UserDefinedTimeBlocker(Parcel in) {
+        super(in);
     }
 }
