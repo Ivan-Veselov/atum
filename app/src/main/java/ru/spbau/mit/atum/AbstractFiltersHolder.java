@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 
 import org.joda.time.ReadableDateTime;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -109,6 +108,6 @@ public abstract class AbstractFiltersHolder implements Parcelable {
         description = in.readString();
 
         filterList = new ArrayList<>();
-        in.readList(filterList, null);
+        in.readList(filterList, getClass().getClassLoader());
     }
 }

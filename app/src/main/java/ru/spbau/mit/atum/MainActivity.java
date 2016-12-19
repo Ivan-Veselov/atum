@@ -2,12 +2,13 @@ package ru.spbau.mit.atum;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MainActivity extends UserDataEditorActivity {
     @Override
@@ -40,7 +41,8 @@ public class MainActivity extends UserDataEditorActivity {
 
     public void onViewScheduleClick(View view) {
         Intent intent = new Intent(this, SchedulerViewerActivity.class);
-        intent.putExtra("all tasks", (Serializable) UserSynchronisableData.getInstance().getTasks());
+        intent.putParcelableArrayListExtra("all tasks", (ArrayList<? extends Parcelable>)
+                UserSynchronisableData.getInstance().getTasks());
         startActivity(intent);
     }
 }

@@ -33,7 +33,7 @@ public class SchedulerViewerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduler_viewer);
 
-        tasks = (ArrayList<UserDefinedTask>)getIntent().getSerializableExtra("all tasks");
+        tasks = getIntent().getParcelableArrayListExtra("all tasks");
         for (UserDefinedTask task: tasks) {
             if (task.getScheduledTime() != null) {
                 addNewTask(task);

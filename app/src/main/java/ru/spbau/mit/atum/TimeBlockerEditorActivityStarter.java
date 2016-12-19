@@ -40,8 +40,7 @@ public class TimeBlockerEditorActivityStarter extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                UserDefinedTimeBlocker task =
-                        (UserDefinedTimeBlocker) data.getSerializableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
+                UserDefinedTimeBlocker task = data.getParcelableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
 
                 Toast.makeText(this, task.getName() + " " + task.getFilterList().size(), Toast.LENGTH_LONG).show();
             }

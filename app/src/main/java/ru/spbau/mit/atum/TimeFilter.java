@@ -5,14 +5,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.joda.time.ReadableDateTime;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,21 +19,10 @@ import java.util.concurrent.TimeUnit;
  * обычным, а может быть "исключающим". Исключающий фильтр, в отличие от обычного, исключает
  * промежутки времени, которые он задает.
  */
-public abstract class TimeFilter implements Serializable, Parcelable {
+public abstract class TimeFilter implements Parcelable {
     private final String description;
 
     private final ExclusionType exclusionType;
-
-    public static final Parcelable.Creator<TimeFilter> CREATOR
-            = new Parcelable.Creator<TimeFilter>() {
-        public TimeFilter createFromParcel(Parcel in) {
-            return (TimeFilter) in.readSerializable();
-        }
-
-        public TimeFilter[] newArray(int size) {
-            return new TimeFilter[size];
-        }
-    };
 
     /**
      * Создает новый фильтр.
@@ -108,7 +95,8 @@ public abstract class TimeFilter implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeSerializable(this);
+        out.writeString(description);
+        out.writeSerializable(exclusionType);
     }
 
     /**
@@ -149,6 +137,11 @@ public abstract class TimeFilter implements Serializable, Parcelable {
                                                 @NonNull ReadableDateTime moment) {
         return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getMillis())
                       - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
+    }
+
+    protected TimeFilter(Parcel in) {
+        description = in.readString();
+        exclusionType = (ExclusionType) in.readSerializable();
     }
 
     public enum ExclusionType { COMMON, EXCLUSIONARY }

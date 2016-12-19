@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.io.Serializable;
-
 public class FilterEditorActivity extends AppCompatActivity {
     public static final String EXTRA_FILTER =
             "ru.spbau.mit.atum.FilterEditorActivity.EXTRA_FILTER";
@@ -35,7 +33,7 @@ public class FilterEditorActivity extends AppCompatActivity {
     public void onButtonOKClick(View view) {
         Intent intent = new Intent();
         if (timeFilter != null) {
-            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, (Serializable) timeFilter);
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, timeFilter);
             setResult(RESULT_OK, intent);
         } else {
             setResult(RESULT_CANCELED);
@@ -53,7 +51,7 @@ public class FilterEditorActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Intent intent = new Intent();
-            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, data.getSerializableExtra("filter"));
+            intent.putExtra(FilterEditorActivity.EXTRA_FILTER, data.getParcelableExtra("filter"));
             setResult(RESULT_OK, intent);
             finish();
         }

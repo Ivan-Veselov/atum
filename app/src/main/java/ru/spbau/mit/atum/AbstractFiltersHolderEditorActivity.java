@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -72,8 +71,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
         AbstractFiltersHolder holderToEdit = getIntent().getParcelableExtra(EXTRA_FILTER_HOLDER);
 
         if (savedInstanceState != null) {
-            timeFilters =
-                    (ArrayList<TimeFilter>) savedInstanceState.getSerializable(STATE_TIME_FILTERS);
+            timeFilters = savedInstanceState.getParcelableArrayList(STATE_TIME_FILTERS);
         } else if (holderToEdit == null) {
             timeFilters = new ArrayList<>();
         } else {
@@ -139,7 +137,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
                     return super.onContextItemSelected(item);
                 }
 
-                intent.putExtra(FilterEditorActivity.EXTRA_FILTER, (Serializable) filter);
+                intent.putExtra(FilterEditorActivity.EXTRA_FILTER, filter);
                 intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, info.position);
                 startActivityForResult(intent, EDIT_FILTER_REQUEST);
 
@@ -168,7 +166,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(STATE_TIME_FILTERS, timeFilters);
+        outState.putParcelableArrayList(STATE_TIME_FILTERS, timeFilters);
     }
 
     /**
@@ -201,7 +199,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             case ADD_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
                     TimeFilter filter =
-                        (TimeFilter) data.getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+                        (TimeFilter) data.getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
 
                     timeFilters.add(filter);
                     timeFilterListViewAdapter.notifyDataSetChanged();
@@ -212,7 +210,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             case EDIT_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
                     TimeFilter filter =
-                        (TimeFilter) data.getSerializableExtra(FilterEditorActivity.EXTRA_FILTER);
+                        (TimeFilter) data.getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
 
                     int position = data.getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, 0);
 
