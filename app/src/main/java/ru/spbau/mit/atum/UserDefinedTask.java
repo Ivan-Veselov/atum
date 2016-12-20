@@ -22,6 +22,8 @@ import java.util.List;
 public class UserDefinedTask extends AbstractFiltersHolder {
     private final int duration;
 
+    private int restDuration = 10;
+
     private final Place place;
 
     private ReadableDateTime scheduledTime = null;
@@ -58,6 +60,14 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
         this.duration = duration;
         this.place = place;
+    }
+
+    public void setRestDuration(int restDuration) {
+        this.restDuration = restDuration;
+    }
+
+    public int getRestDuration() {
+        return restDuration;
     }
 
     /**
