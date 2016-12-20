@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ public class MainActivity extends UserDataEditorActivity {
                                                 },
                                    PERMISSIONS_REQUEST_CALENDAR);
             }
+        } else {
+            calendarExporter = new CalendarExporter(getApplicationContext());
         }
 
         loadUserData();
