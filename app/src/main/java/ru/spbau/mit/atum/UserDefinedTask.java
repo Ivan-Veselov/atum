@@ -24,6 +24,8 @@ import java.util.List;
  * выполнения.
  */
 public class UserDefinedTask extends AbstractFiltersHolder {
+    public static final int DEFAULT_REST_DURATION = 10;
+
     private final Type type;
 
     private final int duration;

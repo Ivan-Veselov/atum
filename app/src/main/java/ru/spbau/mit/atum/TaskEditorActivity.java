@@ -17,6 +17,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;
+
 /**
  * Activity, в которой пользователь редактирует или создает объект типа UserDefinedTask.
  */
@@ -31,6 +33,8 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
 
     private static final int PLACE_PICKER_REQUEST = 10;
 
+    private EditText restDuration;
+
     @Override
     protected void initializeLayout() {
         setContentView(R.layout.activity_task_editor);
@@ -40,6 +44,9 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         durationField = (EditText) findViewById(R.id.task_editor_duration_field);
         timeFilterListView = (ListView) findViewById(R.id.task_editor_filter_list);
         placeTextView = (TextView) findViewById(R.id.task_editor_location_text);
+        restDuration = (EditText) findViewById(R.id.task_editor_rest_duration);
+
+        restDuration.setHint(((Integer)DEFAULT_REST_DURATION).toString());
     }
 
     @Override
@@ -52,6 +59,7 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             chosenPlace = savedInstanceState.getParcelable(STATE_CHOSEN_PLACE);
         } else if (taskToEdit != null) {
             durationField.setText(Integer.toString(taskToEdit.getDuration()));
+            restDuration.setText(((Integer)taskToEdit.getRestDuration()).toString());
 
             chosenPlace = taskToEdit.getPlace();
 
@@ -81,11 +89,19 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             return null;
         }
 
-        return new UserDefinedTask(nameField.getText().toString(),
-                                   descriptionField.getText().toString(),
-                                   timeFilters,
-                                   duration,
-                                   chosenPlace);
+        UserDefinedTask task = new UserDefinedTask(nameField.getText().toString(),
+                descriptionField.getText().toString(),
+                timeFilters,
+                duration,
+                chosenPlace);
+
+        if (!restDuration.getText().toString().isEmpty()) {
+            task.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
+        } else {
+            task.setRestDuration(DEFAULT_REST_DURATION);
+        }
+
+        return task;
     }
 
     public void onClickLocationButton(View view) {

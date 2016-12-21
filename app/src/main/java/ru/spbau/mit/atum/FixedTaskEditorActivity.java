@@ -19,6 +19,7 @@ import org.joda.time.ReadableDateTime;
 
 import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER;
 import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION;
+import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;
 
 public class FixedTaskEditorActivity extends AppCompatActivity {
 
@@ -48,8 +49,6 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
     private EditText name;
     private EditText description;
     private EditText restDuration;
-
-    private final int DEFAULT_REST_DURATION = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
