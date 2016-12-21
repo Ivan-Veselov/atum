@@ -39,28 +39,73 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.11" />
 
-        <TextView
-            android:text="Starts at"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_starts"
-            android:layout_weight="0.13" />
+            android:layout_height="78dp"
+            android:weightSum="1">
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_start_date"
-            android:onClick="onStartIntervalDateClick"
-            android:layout_weight="0.07" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="185dp"
+                android:layout_height="match_parent"
+                android:focusable="true">
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_start_time"
-            android:onClick="onStartIntervalTimeClick"
-            android:layout_weight="0.07" />
+                <TextView
+                    android:text="Starts at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fixed_task_starts"
+                    android:layout_weight="0.13" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fixed_task_start_date"
+                    android:onClick="onStartIntervalDateClick"
+                    android:layout_weight="0.07" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fixed_task_start_time"
+                    android:onClick="onStartIntervalTimeClick"
+                    android:layout_weight="0.07" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Ends at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView14"
+                    android:layout_weight="0.14" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fixed_task_end_date"
+                    android:onClick="onEndIntervalDateClick"
+                    android:layout_weight="0.07" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fixed_task_end_time"
+                    android:onClick="onEndIntervalTimeClick"
+                    android:layout_weight="0.07" />
+
+            </LinearLayout>
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -68,27 +113,19 @@
             android:layout_weight="0.11" />
 
         <TextView
-            android:text="Ends at"
+            android:text="Rest duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView14"
-            android:layout_weight="0.14" />
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_end_date"
+            android:id="@+id/textView11"
             android:onClick="onEndIntervalDateClick"
             android:layout_weight="0.07" />
 
-        <TextView
-            android:text="TextView"
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_end_time"
-            android:onClick="onEndIntervalTimeClick"
-            android:layout_weight="0.07" />
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/fixed_task_rest_duration" />
 
         <Space
             android:layout_width="match_parent"

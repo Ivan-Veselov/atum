@@ -25,11 +25,11 @@
             android:onClick="onFixedTaskButtonClick"/>
 
         <Button
-            android:text="Normal Task"
+            android:text="General Task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/normal_task_button"
-            android:onClick="onNormalTaskButtonClick"/>
+            android:onClick="onGeneralTaskButtonClick"/>
 
         <Button
             android:text="Additional Task"

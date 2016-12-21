@@ -24,6 +24,8 @@ import java.util.List;
  * выполнения.
  */
 public class UserDefinedTask extends AbstractFiltersHolder {
+    public static final int DEFAULT_REST_DURATION = 10;
+
     private final Type type;
 
     private final int duration;
@@ -165,6 +167,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
         out.writeSerializable(type);
         out.writeInt(duration);
+        out.writeInt(restDuration);
         out.writeParcelable((Parcelable) place, flags);
         out.writeSerializable((Serializable) scheduledTime);
     }
@@ -174,6 +177,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
         type = (Type) in.readSerializable();
         duration = in.readInt();
+        restDuration = in.readInt();
         place = in.readParcelable(getClass().getClassLoader());
         scheduledTime = (ReadableDateTime) in.readSerializable();
     }

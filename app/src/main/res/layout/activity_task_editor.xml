@@ -67,13 +67,13 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/task_editor_filter_list"
         android:headerDividersEnabled="false"
         android:footerDividersEnabled="false"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/task_editor_apply_button"
-        android:layout_below="@+id/task_editor_location_text" />
+        android:layout_below="@+id/task_editor_rest_duration"
+        android:layout_height="match_parent" />
 
     <TextView
         android:text="Location"
@@ -85,4 +85,15 @@
         android:clickable="true"
         android:onClick="onClickLocationButton"
         android:layout_below="@+id/task_editor_duration_field" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:layout_below="@+id/task_editor_location_text"
+        android:id="@+id/task_editor_rest_duration"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
