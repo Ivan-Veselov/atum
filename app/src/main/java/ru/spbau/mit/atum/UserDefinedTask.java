@@ -28,6 +28,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
     private final int duration;
 
+    private int restDuration = 0;
+
     private final Place place;
 
     private ReadableDateTime scheduledTime = null;
@@ -117,6 +119,14 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      */
     public Type getType() {
         return type;
+    }
+
+    public void setRestDuration(int restDuration) {
+        this.restDuration = restDuration;
+    }
+
+    public int getRestDuration() {
+        return restDuration;
     }
 
     /**

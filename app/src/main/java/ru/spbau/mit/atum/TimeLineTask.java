@@ -33,7 +33,11 @@ public class TimeLineTask {
         return holder;
     }
 
+    public UserDefinedTask.Type getType() {
+        return holder.getType();
+    }
+
     public int getDuration() {
-        return holder.getDuration();
+        return holder.getDuration() + holder.getRestDuration();
     }
 }
