@@ -17,6 +17,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import static ru.spbau.mit.atum.PlacesUtils.setBuilderPositionNearPlace;
 import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;
 
 /**
@@ -108,13 +109,7 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
         if (chosenPlace != null) {
-            final double radius = 0.001;
-
-            double latitude = chosenPlace.getLatLng().latitude;
-            double longitude = chosenPlace.getLatLng().longitude;
-            builder.setLatLngBounds(
-                    new LatLngBounds(new LatLng(latitude - radius, longitude),
-                                     new LatLng(latitude + radius, longitude)));
+            setBuilderPositionNearPlace(builder, chosenPlace);
         }
 
         try {

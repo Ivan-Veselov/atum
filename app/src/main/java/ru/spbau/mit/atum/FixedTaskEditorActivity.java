@@ -14,14 +14,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
 import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
 import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER;
 import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION;
+import static ru.spbau.mit.atum.PlacesUtils.setBuilderPositionNearPlace;
 import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;
 
 public class FixedTaskEditorActivity extends AppCompatActivity {
+    private static final int PLACE_PICKER_REQUEST = 0;
 
     private final int START_DATE = 1;
     private final int START_TIME = 2;
@@ -49,6 +58,9 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
     private EditText name;
     private EditText description;
     private EditText restDuration;
+    private TextView placeTextView;
+
+    private Place chosenPlace = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +74,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.fixed_task_name);
         description = (EditText) findViewById(R.id.fixed_task_description);
         restDuration = (EditText) findViewById(R.id.fixed_task_rest_duration);
+        placeTextView = (TextView) findViewById(R.id.fixed_task_location_text_view);
 
         restDuration.setHint(((Integer)DEFAULT_REST_DURATION).toString());
 
@@ -89,7 +102,8 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
             endHour = end.getHourOfDay();
             endMinute = end.getMinuteOfHour();
 
-
+            chosenPlace = taskToEdit.getPlace();
+            placeTextView.setText(chosenPlace.getAddress());
         }
 
         tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
@@ -190,7 +204,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         }
 
         UserDefinedTask fixedTask = UserDefinedTask.newFixedTask(name.getText().toString(),
-                description.getText().toString(), startTime, endTime, null);
+                description.getText().toString(), startTime, endTime, chosenPlace);
 
         if (!restDuration.getText().toString().isEmpty()) {
             fixedTask.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
@@ -209,9 +223,42 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         finish();
     }
 
+    public void onClickLocationButton(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        if (chosenPlace != null) {
+            setBuilderPositionNearPlace(builder, chosenPlace);
+        }
+
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesNotAvailableException |
+                GooglePlayServicesRepairableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         setResult(RESULT_CANCELED, null);
         finish();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case PLACE_PICKER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    chosenPlace = PlacePicker.getPlace(this, data);
+                    placeTextView.setText(chosenPlace.getAddress());
+                }
+
+                break;
+
+            default:
+                break;
+        }
     }
 }
