@@ -40,12 +40,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.22" />
 
-        <Button
-            android:text="Location"
+        <TextView
+            android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/additional_task_location"
-            android:elevation="0dp" />
+            android:id="@+id/additional_task_location_text_view" />
+
     </LinearLayout>
 
     <Button
