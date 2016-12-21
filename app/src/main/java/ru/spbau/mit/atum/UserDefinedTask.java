@@ -10,7 +10,10 @@ import com.google.android.gms.location.places.Place;
 import org.joda.time.ReadableDateTime;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +43,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     };
 
     /**
+     * TODO: заменить на статический метод
      * Создает новое задание общего типа, без каких либо особенных свойств.
      *
      * @param name имя задания.
@@ -52,15 +56,36 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     public UserDefinedTask(@NonNull String name, @NonNull String description,
                            @NonNull List<TimeFilter> filterList,
                            int duration, @Nullable Place place) {
-        super(name, description, filterList);
+        this(name, description, filterList, Type.GENERAL, duration, place);
+    }
 
-        if (duration <= 0) {
-            throw new IllegalArgumentException("Duration of task is non positive.");
-        }
-
-        this.type = Type.GENERAL;
-        this.duration = duration;
-        this.place = place;
+    /**
+     * Создает новое фиксированное задание. Такое задание фиксировано во времени и время его
+     * выполнения не может быть никуда подвинуто.
+     *
+     * @param name имя задания.
+     * @param description описание задания.
+     * @param initialMoment время начала выполнения задания.
+     * @param finalMoment время окончание выполнения задания.
+     * @param place место, в котором нужно выполнять задание.
+     * @return новое задание фиксированного типа.
+     */
+    public static UserDefinedTask newFixedTask(@NonNull String name, @NonNull String description,
+                                               @NonNull ReadableDateTime initialMoment,
+                                               @NonNull ReadableDateTime finalMoment,
+                                               @Nullable Place place) {
+        return new UserDefinedTask(name,
+                                   description,
+                                   Collections.singletonList(
+                                        (TimeFilter) new IntervalFilter(
+                                            "",
+                                            initialMoment,
+                                            finalMoment,
+                                            TimeFilter.ExclusionType.COMMON)),
+                                   Type.FIXED,
+                                   TimeIntervalUtils.convertToPointRelative(initialMoment,
+                                                                            finalMoment),
+                                   place);
     }
 
     /**
@@ -119,5 +144,20 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         scheduledTime = (ReadableDateTime) in.readSerializable();
     }
 
-    public enum Type { GENERAL };
+    private UserDefinedTask(@NonNull String name, @NonNull String description,
+                            @NonNull List<TimeFilter> filterList,
+                            @NonNull Type type,
+                            int duration, @Nullable Place place) {
+        super(name, description, filterList);
+
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Duration of task is non positive.");
+        }
+
+        this.type = type;
+        this.duration = duration;
+        this.place = place;
+    }
+
+    public enum Type { GENERAL, FIXED };
 }
