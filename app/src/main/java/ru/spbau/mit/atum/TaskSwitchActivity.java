@@ -9,7 +9,7 @@ public class TaskSwitchActivity extends AppCompatActivity {
 
     private int FIXED_TASK_CODE = 0;
 
-    private int NORMAL_TASK_CODE = 1;
+    private int GENERAL_TASK_CODE = 1;
 
     private int ADDITIONAL_TASK_CODE = 2;
 
@@ -19,11 +19,11 @@ public class TaskSwitchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_switch);
     }
 
-    public void onNormalTaskButtonClick(View view) {
+    public void onGeneralTaskButtonClick(View view) {
         Intent intent = new Intent(this, TaskEditorActivity.class);
         if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
 
-        startActivityForResult(intent, NORMAL_TASK_CODE);
+        startActivityForResult(intent, GENERAL_TASK_CODE);
     }
 
     public void onFixedTaskButtonClick(View view) {
