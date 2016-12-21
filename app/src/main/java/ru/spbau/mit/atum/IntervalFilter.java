@@ -47,7 +47,7 @@ public class IntervalFilter extends TimeFilter {
                           @NonNull ExclusionType exclusionType) {
         super(description, exclusionType);
 
-        if (!checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
+        if (!TimeIntervalUtils.checkOrderOfMoments(filterInitialMoment, filterFinalMoment)) {
             throw new IllegalArgumentException(
               "In arguments of IntervalFilter constructor: final moment is less than initial.");
         }
@@ -99,8 +99,8 @@ public class IntervalFilter extends TimeFilter {
                                                 @NonNull ReadableDateTime initialMoment,
                                                 @NonNull Interval globalInterval) {
         Interval filterInterval = new Interval(
-                                        convertToPointRelative(initialMoment, filterInitialMoment),
-                                        convertToPointRelative(initialMoment, filterFinalMoment));
+                    TimeIntervalUtils.convertToPointRelative(initialMoment, filterInitialMoment),
+                    TimeIntervalUtils.convertToPointRelative(initialMoment, filterFinalMoment));
 
         filterInterval = filterInterval.intersection(globalInterval);
 

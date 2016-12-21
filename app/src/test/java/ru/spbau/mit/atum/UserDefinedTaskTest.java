@@ -13,12 +13,12 @@ import static ru.spbau.mit.atum.TimeFilter.ExclusionType.EXCLUSIONARY;
 public class UserDefinedTaskTest {
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor1() throws Exception {
-        new UserDefinedTask("Name", "Description", new ArrayList<TimeFilter>(), 0);
+        new UserDefinedTask("Name", "Description", new ArrayList<TimeFilter>(), 0, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor2() throws Exception {
-        new UserDefinedTask("Name", "Description", new ArrayList<TimeFilter>(), -10);
+        new UserDefinedTask("Name", "Description", new ArrayList<TimeFilter>(), -10, null);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class UserDefinedTaskTest {
                                            theFirstOfJan(3, 0), COMMON),
                         new IntervalFilter("desc", theFirstOfJan(2, 0),
                                            theFirstOfJan(2, 30), EXCLUSIONARY)
-                }), 1);
+                }), 1, null);
 
         assertIntervalListEquals(new int[] {0, 60},
                                  new int[] {30, 90},
