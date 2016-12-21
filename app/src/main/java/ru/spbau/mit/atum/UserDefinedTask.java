@@ -20,6 +20,8 @@ import java.util.List;
  * выполнения.
  */
 public class UserDefinedTask extends AbstractFiltersHolder {
+    private final Type type;
+
     private final int duration;
 
     private final Place place;
@@ -38,7 +40,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     };
 
     /**
-     * Создает новое задание.
+     * Создает новое задание общего типа, без каких либо особенных свойств.
      *
      * @param name имя задания.
      * @param description описание задания.
@@ -56,8 +58,16 @@ public class UserDefinedTask extends AbstractFiltersHolder {
             throw new IllegalArgumentException("Duration of task is non positive.");
         }
 
+        this.type = Type.GENERAL;
         this.duration = duration;
         this.place = place;
+    }
+
+    /**
+     * Возвращает тип задания.
+     */
+    public Type getType() {
+        return type;
     }
 
     /**
@@ -94,6 +104,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
 
+        out.writeSerializable(type);
         out.writeInt(duration);
         out.writeParcelable((Parcelable) place, flags);
         out.writeSerializable((Serializable) scheduledTime);
@@ -102,8 +113,11 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     protected UserDefinedTask(Parcel in) {
         super(in);
 
+        type = (Type) in.readSerializable();
         duration = in.readInt();
         place = in.readParcelable(getClass().getClassLoader());
         scheduledTime = (ReadableDateTime) in.readSerializable();
     }
+
+    public enum Type { GENERAL };
 }
