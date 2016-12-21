@@ -28,8 +28,8 @@ public class SchedulePlannerTest {
         filters.add(weekFilter1);
         filters.add(weekFilter2);
 
-        UserDefinedTask task1 = new UserDefinedTask("first", "", filters, 50);
-        UserDefinedTask task2 = new UserDefinedTask("second", "", filters, 60);
+        UserDefinedTask task1 = new UserDefinedTask("first", "", filters, 50, null);
+        UserDefinedTask task2 = new UserDefinedTask("second", "", filters, 60, null);
 
         tasks.add(task1);
         tasks.add(task2);

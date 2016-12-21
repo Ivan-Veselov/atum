@@ -10,7 +10,11 @@ import com.google.android.gms.location.places.Place;
 import org.joda.time.ReadableDateTime;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -20,6 +24,8 @@ import java.util.List;
  * выполнения.
  */
 public class UserDefinedTask extends AbstractFiltersHolder {
+    private final Type type;
+
     private final int duration;
 
     private final Place place;
@@ -38,7 +44,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     };
 
     /**
-     * Создает новое задание.
+     * TODO: заменить на статический метод
+     * Создает новое задание общего типа, без каких либо особенных свойств.
      *
      * @param name имя задания.
      * @param description описание задания.
@@ -50,14 +57,66 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     public UserDefinedTask(@NonNull String name, @NonNull String description,
                            @NonNull List<TimeFilter> filterList,
                            int duration, @Nullable Place place) {
-        super(name, description, filterList);
+        this(name, description, filterList, Type.GENERAL, duration, place);
+    }
 
-        if (duration <= 0) {
-            throw new IllegalArgumentException("Duration of task is non positive.");
-        }
+    /**
+     * Создает новое фиксированное задание. Такое задание фиксировано во времени и время его
+     * выполнения не может быть никуда подвинуто.
+     *
+     * @param name имя задания.
+     * @param description описание задания.
+     * @param initialMoment время начала выполнения задания.
+     * @param finalMoment время окончание выполнения задания.
+     * @param place место, в котором нужно выполнять задание.
+     * @return новое задание фиксированного типа.
+     */
+    public static UserDefinedTask newFixedTask(@NonNull String name, @NonNull String description,
+                                               @NonNull ReadableDateTime initialMoment,
+                                               @NonNull ReadableDateTime finalMoment,
+                                               @Nullable Place place) {
+        return new UserDefinedTask(name,
+                                   description,
+                                   Collections.singletonList(
+                                        (TimeFilter) new IntervalFilter(
+                                            "",
+                                            initialMoment,
+                                            finalMoment,
+                                            TimeFilter.ExclusionType.COMMON)),
+                                   Type.FIXED,
+                                   TimeIntervalUtils.convertToPointRelative(initialMoment,
+                                                                            finalMoment),
+                                   place);
+    }
 
-        this.duration = duration;
-        this.place = place;
+    /**
+     * Создает новое быстрое задание, которое обязательно привязано к некоторому месту и имеет
+     * нулевую продолжительность выполнения.
+     *
+     * @param name имя задания.
+     * @param description описание задания.
+     * @param place место, в котором нужно выполнять задание.
+     * @return новое быстрое задание.
+     */
+    public static UserDefinedTask newQuickieTask(@NonNull String name, @NonNull String description,
+                                                 @NonNull Place place) {
+        return new UserDefinedTask(name,
+                                   description,
+                                   Collections.singletonList(
+                                        (TimeFilter) WeekFilter.newWeekFilterFromMinutesInterval(
+                                            "", 0, 0,
+                                            EnumSet.allOf(WeekFilter.DaysOfWeek.class),
+                                            TimeFilter.ExclusionType.COMMON)),
+                                   Type.QUICKIE,
+                                   0,
+                                   place);
+    }
+
+    /**
+     * Возвращает тип задания.
+     */
+    public Type getType() {
+        return type;
     }
 
     /**
@@ -94,6 +153,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
 
+        out.writeSerializable(type);
         out.writeInt(duration);
         out.writeParcelable((Parcelable) place, flags);
         out.writeSerializable((Serializable) scheduledTime);
@@ -102,8 +162,26 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     protected UserDefinedTask(Parcel in) {
         super(in);
 
+        type = (Type) in.readSerializable();
         duration = in.readInt();
         place = in.readParcelable(getClass().getClassLoader());
         scheduledTime = (ReadableDateTime) in.readSerializable();
     }
+
+    private UserDefinedTask(@NonNull String name, @NonNull String description,
+                            @NonNull List<TimeFilter> filterList,
+                            @NonNull Type type,
+                            int duration, @Nullable Place place) {
+        super(name, description, filterList);
+
+        if (duration < 0) {
+            throw new IllegalArgumentException("Duration of task is non positive.");
+        }
+
+        this.type = type;
+        this.duration = duration;
+        this.place = place;
+    }
+
+    public enum Type { GENERAL, FIXED, QUICKIE }
 }
