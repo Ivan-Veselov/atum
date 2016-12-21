@@ -21,7 +21,8 @@
             android:text="Fixed Task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_button" />
+            android:id="@+id/fixed_task_button"
+            android:onClick="onFixedTaskButtonClick"/>
 
         <Button
             android:text="Normal Task"

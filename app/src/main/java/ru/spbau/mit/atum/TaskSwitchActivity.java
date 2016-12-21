@@ -3,7 +3,6 @@ package ru.spbau.mit.atum;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 public class TaskSwitchActivity extends AppCompatActivity {
@@ -25,6 +24,13 @@ public class TaskSwitchActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
 
         startActivityForResult(intent, NORMAL_TASK_CODE);
+    }
+
+    public void onFixedTaskButtonClick(View view) {
+        Intent intent = new Intent(this, FixedTaskEditorActivity.class);
+        if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
+
+        startActivityForResult(intent, FIXED_TASK_CODE);
     }
 
     @Override
