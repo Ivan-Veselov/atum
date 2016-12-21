@@ -35,7 +35,7 @@ public class TaskSwitchActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == NORMAL_TASK_CODE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             setResult(RESULT_OK, data);
             finish();
         }

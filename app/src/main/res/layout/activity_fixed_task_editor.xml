@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:weightSum="1"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button5">
+        android:layout_above="@+id/fixed_task_editor_apply_button">
 
         <EditText
             android:layout_width="match_parent"
@@ -109,5 +109,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/button5" />
+        android:onClick="onButtonApplyClick"
+        android:id="@+id/fixed_task_editor_apply_button" />
 </RelativeLayout>

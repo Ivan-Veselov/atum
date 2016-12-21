@@ -3,6 +3,7 @@ package ru.spbau.mit.atum;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,8 +11,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.ReadableDateTime;
+
+import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER;
+import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION;
 
 public class FixedTaskEditorActivity extends AppCompatActivity {
 
@@ -138,6 +144,30 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
     };
 
     public void onButtonApplyClick(View view) {
+        Intent intent = new Intent();
+
+        ReadableDateTime startTime = new DateTime(startYear, startMonth,
+                startDay, startHour, startMinute);
+        ReadableDateTime endTime = new DateTime(endYear, endMonth,
+                endDay, endHour, endMinute);
+
+        if (endTime.compareTo(startTime) < 0) {
+            Toast.makeText(getApplicationContext(), "Invalid time interval", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        UserDefinedTask fixedTask = UserDefinedTask.newFixedTask(name.getText().toString(),
+                description.getText().toString(), startTime, endTime, null);
+
+        intent.putExtra(EXTRA_FILTER_HOLDER, fixedTask);
+
+        int position = getIntent().getIntExtra(EXTRA_FILTER_HOLDER_POSITION, -1);
+        if (position >= 0) {
+            intent.putExtra(EXTRA_FILTER_HOLDER_POSITION, position);
+        }
+
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
