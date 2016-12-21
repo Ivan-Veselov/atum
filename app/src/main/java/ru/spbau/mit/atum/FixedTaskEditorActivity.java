@@ -47,6 +47,9 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
     private TextView tvEndTime;
     private EditText name;
     private EditText description;
+    private EditText restDuration;
+
+    private final int DEFAULT_REST_DURATION = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +62,17 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         tvEndTime = (TextView) findViewById(R.id.fixed_task_end_time);
         name = (EditText) findViewById(R.id.fixed_task_name);
         description = (EditText) findViewById(R.id.fixed_task_description);
+        restDuration = (EditText) findViewById(R.id.fixed_task_rest_duration);
+
+        restDuration.setHint(((Integer)DEFAULT_REST_DURATION).toString());
 
         UserDefinedTask taskToEdit = getIntent().getParcelableExtra(EXTRA_FILTER_HOLDER);
         if (taskToEdit != null) {
 
             name.setText(taskToEdit.getName());
             description.setText(taskToEdit.getDescription());
+
+            restDuration.setText(((Integer)taskToEdit.getRestDuration()).toString());
 
             IntervalFilter filter = (IntervalFilter) taskToEdit.getFilterList().get(0);
             DateTime start = (DateTime)filter.getInitialMoment();
@@ -81,6 +89,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
             endDay = end.getDayOfMonth();
             endHour = end.getHourOfDay();
             endMinute = end.getMinuteOfHour();
+
 
         }
 
@@ -183,6 +192,12 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
         UserDefinedTask fixedTask = UserDefinedTask.newFixedTask(name.getText().toString(),
                 description.getText().toString(), startTime, endTime, null);
+
+        if (!restDuration.getText().toString().isEmpty()) {
+            fixedTask.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
+        } else {
+            fixedTask.setRestDuration(DEFAULT_REST_DURATION);
+        }
 
         intent.putExtra(EXTRA_FILTER_HOLDER, fixedTask);
 

@@ -122,10 +122,15 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText2" />
+            android:id="@+id/fixed_task_rest_duration" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.11" />
 
         <Button
             android:text="Location"
