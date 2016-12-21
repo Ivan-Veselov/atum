@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;
 
+
 /**
  * Activity, в которой пользователь редактирует или создает объект типа UserDefinedTask.
  */
