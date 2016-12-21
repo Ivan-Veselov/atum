@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -58,6 +59,30 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         tvEndTime = (TextView) findViewById(R.id.fixed_task_end_time);
         name = (EditText) findViewById(R.id.fixed_task_name);
         description = (EditText) findViewById(R.id.fixed_task_description);
+
+        UserDefinedTask taskToEdit = getIntent().getParcelableExtra(EXTRA_FILTER_HOLDER);
+        if (taskToEdit != null) {
+
+            name.setText(taskToEdit.getName());
+            description.setText(taskToEdit.getDescription());
+
+            IntervalFilter filter = (IntervalFilter) taskToEdit.getFilterList().get(0);
+            DateTime start = (DateTime)filter.getInitialMoment();
+            DateTime end = (DateTime)filter.getFinalMoment();
+
+            startYear = start.getYear();
+            startMonth = start.getMonthOfYear();
+            startDay = start.getDayOfMonth();
+            startHour = start.getHourOfDay();
+            startMinute = start.getMinuteOfHour();
+
+            endYear = end.getYear();
+            endMonth = end.getMonthOfYear();
+            endDay = end.getDayOfMonth();
+            endHour = end.getHourOfDay();
+            endMinute = end.getMinuteOfHour();
+
+        }
 
         tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
         tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
