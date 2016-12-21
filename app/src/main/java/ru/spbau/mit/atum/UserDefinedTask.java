@@ -28,7 +28,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
     private final int duration;
 
-    private int restDuration = 10;
+    private int restDuration = 0;
 
     private final Place place;
 

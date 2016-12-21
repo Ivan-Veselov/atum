@@ -19,12 +19,25 @@ public final class SchedulePlanner {
                                                                     initialMoment, finalMoment);
     //    Log.i("my_tag", initialMoment.toString());
     //    Log.i("my_tag", finalMoment.toString());
-        PlanScheduleAlgorithm(timeLineTaskGroup, initialMoment);
+        PlanScheduleAlgorithmWithFixedTasks(timeLineTaskGroup, initialMoment);
     }
 
-    private static void PlanScheduleAlgorithm(TimeLineTaskGroup tasks,
-                                                     @NonNull ReadableDateTime initialMoment) {
+    private static void PlanScheduleAlgorithmWithFixedTasks(TimeLineTaskGroup tasks,
+                                                           @NonNull ReadableDateTime initialMoment) {
         List<Interval> resultIntervals = new ArrayList<>();
+        for (TimeLineTask task: tasks.getTaskList()) {
+            if (task.getType() == UserDefinedTask.Type.FIXED) {
+                Interval interval = task.getTimeIntervals().get(0);
+                resultIntervals.add(interval);
+                task.getHolder().setScheduledTime(initialMoment.toDateTime().plusMinutes(interval.left()));
+            }
+        }
+        SimplePlanScheduleAlgorithm(tasks, initialMoment, resultIntervals);
+    }
+
+    private static void SimplePlanScheduleAlgorithm(TimeLineTaskGroup tasks,
+                                                    @NonNull ReadableDateTime initialMoment,
+                                                    List<Interval> resultIntervals) {
         for (TimeLineTask task: tasks.getTaskList()) {
             List<Interval> possibleIntervals = Interval.difference(task.getTimeIntervals(), resultIntervals);
             Interval interval = Interval.getMaxInterval(possibleIntervals);
