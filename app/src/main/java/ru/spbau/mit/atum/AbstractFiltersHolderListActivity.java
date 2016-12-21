@@ -134,7 +134,7 @@ public abstract class AbstractFiltersHolderListActivity extends UserDataEditorAc
             AdapterView.AdapterContextMenuInfo adapterContextMenuInfo
                     = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-            Intent intent = initializeIntent();
+            Intent intent = initializeEditIntent(filtersHolders.get(adapterContextMenuInfo.position));
 
             intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER,
                     filtersHolders.get(adapterContextMenuInfo.position));
@@ -152,5 +152,7 @@ public abstract class AbstractFiltersHolderListActivity extends UserDataEditorAc
     }
 
     protected abstract Intent initializeIntent();
+
+    protected abstract Intent initializeEditIntent(AbstractFiltersHolder holder);
 
 }

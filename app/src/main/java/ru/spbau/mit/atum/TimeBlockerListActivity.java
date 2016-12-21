@@ -25,6 +25,11 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity {
     }
 
     @Override
+    protected Intent initializeEditIntent(AbstractFiltersHolder holder) {
+        return initializeIntent();
+    }
+
+    @Override
     protected void addSchedule(Map<String, Object> m, AbstractFiltersHolder u) {}
 
 }
