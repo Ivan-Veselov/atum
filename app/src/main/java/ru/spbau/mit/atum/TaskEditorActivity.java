@@ -54,7 +54,10 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             durationField.setText(Integer.toString(taskToEdit.getDuration()));
 
             chosenPlace = taskToEdit.getPlace();
-            placeTextView.setText(chosenPlace.getAddress());
+
+            if (chosenPlace != null) {
+                placeTextView.setText(chosenPlace.getAddress());
+            }
         }
     }
 

@@ -29,6 +29,21 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity {
 
     @Override
     protected Intent initializeIntent() {
-        return new Intent(this, TaskEditorActivity.class);
+        return new Intent(this, TaskSwitchActivity.class);
+    }
+
+    @Override
+    protected Intent initializeEditIntent(AbstractFiltersHolder holder) {
+        UserDefinedTask task = (UserDefinedTask)holder;
+        if (task.getType() == UserDefinedTask.Type.FIXED) {
+            return new Intent(this, FixedTaskEditorActivity.class);
+        }
+        if (task.getType() == UserDefinedTask.Type.GENERAL) {
+            return new Intent(this, TaskEditorActivity.class);
+        }
+        if (task.getType() == UserDefinedTask.Type.QUICKIE) {
+            return new Intent(this, AdditionalTaskEditorActivity.class);
+        }
+        return null;
     }
 }

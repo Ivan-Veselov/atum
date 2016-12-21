@@ -79,13 +79,14 @@ public abstract class TimeFilter implements Parcelable {
      */
     public @NonNull List<Interval> intervalRepresentation(@NonNull ReadableDateTime initialMoment,
                                                           @NonNull ReadableDateTime finalMoment) {
-        if (!checkOrderOfMoments(initialMoment, finalMoment)) {
+        if (!TimeIntervalUtils.checkOrderOfMoments(initialMoment, finalMoment)) {
             throw new IllegalArgumentException(
               "In arguments of intervalRepresentation method: final moment is less than initial.");
         }
 
         return intervalRepresentationImpl(initialMoment,
-                new Interval(0, convertToPointRelative(initialMoment, finalMoment)));
+                new Interval(0,
+                             TimeIntervalUtils.convertToPointRelative(initialMoment, finalMoment)));
     }
 
     @Override
@@ -110,34 +111,6 @@ public abstract class TimeFilter implements Parcelable {
      */
     protected abstract List<Interval> intervalRepresentationImpl(ReadableDateTime initialMoment,
                                                                  Interval globalInterval);
-
-    /**
-     * Вспомогательный метод, который проверяет, что переданные моменты времени идут в правильном
-     * порядке: сначала первый, затем второй.
-     *
-     * @param initialMoment первый момент времени.
-     * @param finalMoment второй момент времени.
-     * @return true, если проверка успешна.
-     */
-    protected static boolean checkOrderOfMoments(@NonNull ReadableDateTime initialMoment,
-                                                 @NonNull ReadableDateTime finalMoment) {
-        return initialMoment.compareTo(finalMoment) <= 0;
-    }
-
-    /**
-     * Вспомогательный метод, который переводит момент времени в число, которое является сдвигом
-     * в минутах относительно другого момента времени. Сдвиг высчитывается, отбрасывая более точные
-     * единицы измерения.
-     *
-     * @param initialMoment момент времени, относительно которого считается сдвиг.
-     * @param moment момент времени, который нужно перевести в число.
-     * @return численное представление момента времени.
-     */
-    protected static int convertToPointRelative(@NonNull ReadableDateTime initialMoment,
-                                                @NonNull ReadableDateTime moment) {
-        return (int) (TimeUnit.MILLISECONDS.toMinutes(moment.getMillis())
-                      - TimeUnit.MILLISECONDS.toMinutes(initialMoment.getMillis()));
-    }
 
     protected TimeFilter(Parcel in) {
         description = in.readString();
