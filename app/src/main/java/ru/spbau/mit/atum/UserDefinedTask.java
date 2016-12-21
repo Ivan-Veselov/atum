@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -89,6 +90,29 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     }
 
     /**
+     * Создает новое быстрое задание, которое обязательно привязано к некоторому месту и имеет
+     * нулевую продолжительность выполнения.
+     *
+     * @param name имя задания.
+     * @param description описание задания.
+     * @param place место, в котором нужно выполнять задание.
+     * @return новое быстрое задание.
+     */
+    public static UserDefinedTask newQuickieTask(@NonNull String name, @NonNull String description,
+                                                 @NonNull Place place) {
+        return new UserDefinedTask(name,
+                                   description,
+                                   Collections.singletonList(
+                                        (TimeFilter) WeekFilter.newWeekFilterFromMinutesInterval(
+                                            "", 0, 0,
+                                            EnumSet.allOf(WeekFilter.DaysOfWeek.class),
+                                            TimeFilter.ExclusionType.COMMON)),
+                                   Type.QUICKIE,
+                                   0,
+                                   place);
+    }
+
+    /**
      * Возвращает тип задания.
      */
     public Type getType() {
@@ -150,7 +174,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
                             int duration, @Nullable Place place) {
         super(name, description, filterList);
 
-        if (duration <= 0) {
+        if (duration < 0) {
             throw new IllegalArgumentException("Duration of task is non positive.");
         }
 
@@ -159,5 +183,5 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         this.place = place;
     }
 
-    public enum Type { GENERAL, FIXED };
+    public enum Type { GENERAL, FIXED, QUICKIE }
 }
