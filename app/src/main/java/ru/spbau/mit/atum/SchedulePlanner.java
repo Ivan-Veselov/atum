@@ -27,9 +27,11 @@ public final class SchedulePlanner {
         List<Interval> resultIntervals = new ArrayList<>();
         for (TimeLineTask task: tasks.getTaskList()) {
             if (task.getType() == UserDefinedTask.Type.FIXED) {
-                Interval interval = task.getTimeIntervals().get(0);
-                resultIntervals.add(interval);
-                task.getHolder().setScheduledTime(initialMoment.toDateTime().plusMinutes(interval.left()));
+                if (task.getTimeIntervals().size() > 0) {
+                    Interval interval = task.getTimeIntervals().get(0);
+                    resultIntervals.add(interval);
+                    task.getHolder().setScheduledTime(initialMoment.toDateTime().plusMinutes(interval.left()));
+                }
             }
         }
         SimplePlanScheduleAlgorithm(tasks, initialMoment, resultIntervals);
