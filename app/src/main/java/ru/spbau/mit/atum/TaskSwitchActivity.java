@@ -33,6 +33,13 @@ public class TaskSwitchActivity extends AppCompatActivity {
         startActivityForResult(intent, FIXED_TASK_CODE);
     }
 
+    public void onAdditionalTaskButtonClick(View view) {
+        Intent intent = new Intent(this, AdditionalTaskEditorActivity.class);
+        if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
+
+        startActivityForResult(intent, ADDITIONAL_TASK_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {

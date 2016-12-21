@@ -38,7 +38,8 @@
             android:exported="true" />
         <activity android:name=".SchedulerViewerActivity" />
         <activity android:name=".TaskSwitchActivity" />
-        <activity android:name=".FixedTaskEditorActivity"></activity>
+        <activity android:name=".FixedTaskEditorActivity" />
+        <activity android:name=".AdditionalTaskEditorActivity"></activity>
     </application>
 
 </manifest>

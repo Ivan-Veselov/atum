@@ -41,6 +41,9 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity {
         if (task.getType() == UserDefinedTask.Type.GENERAL) {
             return new Intent(this, TaskEditorActivity.class);
         }
+        if (task.getType() == UserDefinedTask.Type.QUICKIE) {
+            return new Intent(this, AdditionalTaskEditorActivity.class);
+        }
         return null;
     }
 }
