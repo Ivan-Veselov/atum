@@ -151,7 +151,7 @@
                 android:layout_weight="15"
                 android:layout_height="wrap_content"
                 android:onClick="onClearLocationButtonClick"
-                android:id="@+id/task_editor_clear_location_button"
+                android:id="@+id/fixed_task_editor_clear_location_button"
                 android:background="@android:drawable/ic_delete" />
 
         </LinearLayout>
