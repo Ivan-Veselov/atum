@@ -122,6 +122,11 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         }
     }
 
+    public void onClearLocationButtonClick(View view) {
+        chosenPlace = null;
+        placeTextView.setText("Location");
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
