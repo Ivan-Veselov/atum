@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +29,21 @@ import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;
 public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
     private static final String STATE_CHOSEN_PLACE = "CHOSEN_PLACE";
 
+    private static final String STATE_CHOSEN_PRIORITY = "CHOSEN_PRIORITY";
+
     private EditText durationField;
 
     private TextView placeTextView;
 
-    private Place chosenPlace = null;
-
     private static final int PLACE_PICKER_REQUEST = 10;
 
     private EditText restDuration;
+
+    private Spinner prioritySpinner;
+
+    private Place chosenPlace = null;
+
+    private int chosenPriority = 1;
 
     @Override
     protected void initializeLayout() {
@@ -47,8 +55,20 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         timeFilterListView = (ListView) findViewById(R.id.task_editor_filter_list);
         placeTextView = (TextView) findViewById(R.id.task_editor_location_text);
         restDuration = (EditText) findViewById(R.id.task_editor_rest_duration);
+        prioritySpinner = (Spinner) findViewById(R.id.task_editor_priority_spinner);
 
         restDuration.setHint(((Integer)DEFAULT_REST_DURATION).toString());
+
+        prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                chosenPriority = Integer.valueOf(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     @Override
@@ -59,22 +79,28 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
 
         if (savedInstanceState != null) {
             chosenPlace = savedInstanceState.getParcelable(STATE_CHOSEN_PLACE);
+            chosenPriority = savedInstanceState.getInt(STATE_CHOSEN_PRIORITY);
         } else if (taskToEdit != null) {
             durationField.setText(Integer.toString(taskToEdit.getDuration()));
             restDuration.setText(((Integer)taskToEdit.getRestDuration()).toString());
 
             chosenPlace = taskToEdit.getPlace();
+            chosenPriority = taskToEdit.getPriority();
 
             if (chosenPlace != null) {
                 placeTextView.setText(chosenPlace.getAddress());
             }
         }
+
+        prioritySpinner.setSelection(chosenPriority - 1);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         outState.putParcelable(STATE_CHOSEN_PLACE, (Parcelable) chosenPlace);
+        outState.putInt(STATE_CHOSEN_PRIORITY, chosenPriority);
     }
 
     @Override
@@ -91,11 +117,12 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             return null;
         }
 
-        UserDefinedTask task = new UserDefinedTask(nameField.getText().toString(),
+        UserDefinedTask task = UserDefinedTask.newGeneralTask(nameField.getText().toString(),
                 descriptionField.getText().toString(),
                 timeFilters,
                 duration,
-                chosenPlace);
+                chosenPlace,
+                chosenPriority);
 
         if (!restDuration.getText().toString().isEmpty()) {
             task.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
@@ -119,6 +146,11 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
                  GooglePlayServicesRepairableException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void onClearLocationButtonClick(View view) {
+        chosenPlace = null;
+        placeTextView.setText("Location");
     }
 
     @Override

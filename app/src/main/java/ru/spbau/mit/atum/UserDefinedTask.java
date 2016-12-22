@@ -34,6 +34,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
     private final Place place;
 
+    private final int priority;
+
     private ReadableDateTime scheduledTime = null;
 
     public static final Parcelable.Creator<UserDefinedTask> CREATOR
@@ -48,7 +50,6 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     };
 
     /**
-     * TODO: заменить на статический метод
      * Создает новое задание общего типа, без каких либо особенных свойств.
      *
      * @param name имя задания.
@@ -57,11 +58,19 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      *                   можно выполнять.
      * @param duration продолжительность выполнения задания.
      * @param place место, в котором нужно выполнять задание.
+     * @param priority приоритет задания.
      */
-    public UserDefinedTask(@NonNull String name, @NonNull String description,
-                           @NonNull List<TimeFilter> filterList,
-                           int duration, @Nullable Place place) {
-        this(name, description, filterList, Type.GENERAL, duration, place);
+    public static UserDefinedTask newGeneralTask(@NonNull String name, @NonNull String description,
+                                                 @NonNull List<TimeFilter> filterList,
+                                                 int duration, @Nullable Place place,
+                                                 int priority) {
+        return new UserDefinedTask(name,
+                                   description,
+                                   filterList,
+                                   Type.GENERAL,
+                                   duration,
+                                   place,
+                                   priority);
     }
 
     /**
@@ -90,7 +99,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
                                    Type.FIXED,
                                    TimeIntervalUtils.convertToPointRelative(initialMoment,
                                                                             finalMoment),
-                                   place);
+                                   place,
+                                   0);
     }
 
     /**
@@ -113,7 +123,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
                                             TimeFilter.ExclusionType.COMMON)),
                                    Type.QUICKIE,
                                    0,
-                                   place);
+                                   place,
+                                   0);
     }
 
     /**
@@ -146,6 +157,13 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     }
 
     /**
+     * Возвращает приоритет задания.
+     */
+    public int getPriority() {
+        return priority;
+    }
+
+    /**
      * @return запланированное время начала выполнения задания.
      */
     public @Nullable ReadableDateTime getScheduledTime() {
@@ -169,6 +187,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         out.writeInt(duration);
         out.writeInt(restDuration);
         out.writeParcelable((Parcelable) place, flags);
+        out.writeInt(priority);
         out.writeSerializable((Serializable) scheduledTime);
     }
 
@@ -179,13 +198,14 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         duration = in.readInt();
         restDuration = in.readInt();
         place = in.readParcelable(getClass().getClassLoader());
+        priority = in.readInt();
         scheduledTime = (ReadableDateTime) in.readSerializable();
     }
 
     private UserDefinedTask(@NonNull String name, @NonNull String description,
                             @NonNull List<TimeFilter> filterList,
                             @NonNull Type type,
-                            int duration, @Nullable Place place) {
+                            int duration, @Nullable Place place, int priority) {
         super(name, description, filterList);
 
         if (duration < 0) {
@@ -195,6 +215,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         this.type = type;
         this.duration = duration;
         this.place = place;
+        this.priority = priority;
     }
 
     public enum Type { GENERAL, FIXED, QUICKIE }
