@@ -41,9 +41,10 @@
             android:layout_weight="0.22" />
 
         <TextView
-            android:text="TextView"
+            android:text="Location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onClickLocationButton"
             android:id="@+id/additional_task_location_text_view" />
 
     </LinearLayout>
