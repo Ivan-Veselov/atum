@@ -132,13 +132,29 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.11" />
 
-        <TextView
-            android:text="Location"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fixed_task_location_text_view"
-            android:clickable="true"
-            android:onClick="onClickLocationButton" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/fixed_task_location_text_view"
+                android:clickable="true"
+                android:onClick="onClickLocationButton"
+                android:layout_weight="100" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="15"
+                android:layout_height="wrap_content"
+                android:onClick="onClearLocationButtonClick"
+                android:id="@+id/task_editor_clear_location_button"
+                android:background="@android:drawable/ic_delete" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -150,4 +166,5 @@
         android:layout_alignParentEnd="true"
         android:onClick="onButtonApplyClick"
         android:id="@+id/fixed_task_editor_apply_button" />
+
 </RelativeLayout>
