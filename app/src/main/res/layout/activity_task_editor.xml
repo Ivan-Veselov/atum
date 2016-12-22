@@ -16,7 +16,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <EditText
@@ -91,14 +91,29 @@
 
         </LinearLayout>
 
-        <TextView
-            android:text="Location"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/task_editor_location_text"
-            android:clickable="true"
-            android:textSize="15sp"
-            android:onClick="onClickLocationButton" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_editor_location_text"
+                android:clickable="true"
+                android:layout_weight="100"
+                android:onClick="onClickLocationButton" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="15"
+                android:layout_height="wrap_content"
+                android:onClick="onClearLocationButtonClick"
+                android:id="@+id/task_editor_clear_location_button"
+                android:background="@android:drawable/ic_delete" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -109,10 +124,12 @@
             android:id="@+id/task_editor_filter_list"
             android:headerDividersEnabled="false"
             android:footerDividersEnabled="false"
-            android:layout_height="230dp" />
+            android:layout_height="0dp"
+            android:layout_weight="40"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_gravity="bottom"
             android:layout_height="59dp">
 
             <Button

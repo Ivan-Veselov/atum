@@ -102,8 +102,11 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
             endHour = end.getHourOfDay();
             endMinute = end.getMinuteOfHour();
 
-            chosenPlace = taskToEdit.getPlace();
-            placeTextView.setText(chosenPlace.getAddress());
+            if (taskToEdit.getPlace() != null) {
+                chosenPlace = taskToEdit.getPlace();
+                placeTextView.setText(chosenPlace.getAddress());
+            }
+
         }
 
         tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
@@ -242,6 +245,11 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
     public void onBackPressed() {
         setResult(RESULT_CANCELED, null);
         finish();
+    }
+
+    public void onClearLocationButtonClick(View view) {
+        chosenPlace = null;
+        placeTextView.setText("Location");
     }
 
     @Override
