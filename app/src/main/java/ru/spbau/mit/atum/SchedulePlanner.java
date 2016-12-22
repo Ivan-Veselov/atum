@@ -40,10 +40,16 @@ public final class SchedulePlanner {
             if (task.getType() == UserDefinedTask.Type.QUICKIE) {
                 DateTime minTime = null;
                 for (TimeLineTask taskFirst: tasks.getTaskList()) {
+                    CharSequence address = null;
+                    if (taskFirst.getHolder().getPlace() != null) {
+                        address = task.getHolder().getPlace().getAddress();
+                    }
                     if (taskFirst.getHolder().getScheduledTime() != null &&
-                            task.getHolder().getPlace().equals(taskFirst.getHolder().getPlace())) {
-                        if (minTime == null || taskFirst.getHolder().getScheduledTime().isBefore(minTime)) {
-                            minTime = (DateTime)taskFirst.getHolder().getScheduledTime();
+                            task.getHolder().getPlace().getAddress().equals(address)) {
+                        DateTime taskFirstEnd = ((DateTime)taskFirst.getHolder().getScheduledTime())
+                                .plusMinutes(taskFirst.getHolder().getDuration());
+                        if (minTime == null || taskFirstEnd.isBefore(minTime)) {
+                            minTime = taskFirstEnd;
                         }
                     }
                 }
@@ -59,7 +65,8 @@ public final class SchedulePlanner {
         for (TimeLineTask task: tasks.getTaskList()) {
             if (task.getType() == UserDefinedTask.Type.FIXED) {
                 if (task.getTimeIntervals().size() > 0) {
-                    Interval interval = task.getTimeIntervals().get(0);
+                    Interval interval = new Interval(task.getTimeIntervals().get(0).left(),
+                            task.getTimeIntervals().get(0).left() + task.getDuration());
                     resultIntervals.add(interval);
                     task.getHolder().setScheduledTime(initialMoment.toDateTime().plusMinutes(interval.left()));
                 }
