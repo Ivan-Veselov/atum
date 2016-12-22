@@ -119,6 +119,18 @@
             android:layout_width="match_parent"
             android:layout_height="11dp" />
 
+        <TextView
+            android:text="Priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/task_editor_priority_spinner"
+            android:entries="@array/priorities" />
+
         <ListView
             android:layout_width="match_parent"
             android:id="@+id/task_editor_filter_list"
