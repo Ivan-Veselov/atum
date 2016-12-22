@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -33,11 +34,27 @@ public class AdditionalTaskEditorActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.additional_task_name);
         description = (EditText) findViewById(R.id.additional_task_descripion);
         placeTextView = (TextView) findViewById(R.id.additional_task_location_text_view);
+
+        UserDefinedTask taskToEdit = getIntent().getParcelableExtra(EXTRA_FILTER_HOLDER);
+
+        if (taskToEdit != null) {
+            name.setText(taskToEdit.getName());
+            description.setText(taskToEdit.getDescription());
+            placeTextView.setText(taskToEdit.getPlace().getAddress());
+            
+            chosenPlace = taskToEdit.getPlace();
+        }
+
     }
 
     public void onButtonApplyClick(View view) {
 
         Intent intent = new Intent();
+
+        if (chosenPlace == null) {
+            Toast.makeText(getApplicationContext(), "Don't you forget location?", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         UserDefinedTask additionalTask = UserDefinedTask.newQuickieTask(name.getText().toString(),
                 description.getText().toString(), chosenPlace);
