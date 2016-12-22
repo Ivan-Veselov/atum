@@ -21,7 +21,7 @@ public class TaskEditorActivityStarter extends Activity {
         Intent intent = new Intent(this, TaskEditorActivity.class);
 
         intent.putExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER,
-                        new UserDefinedTask("TaskName",
+                        UserDefinedTask.newGeneralTask("TaskName",
                                             "TaskDescription",
                                             new ArrayList<>(Arrays.asList(new TimeFilter[] {
                                                     new IntervalFilter("First filter",
@@ -33,7 +33,7 @@ public class TaskEditorActivityStarter extends Activity {
                                                                        new DateTime(2000, 1, 1, 17, 0, 0),
                                                                        TimeFilter.ExclusionType.COMMON)
                                             })),
-                                            42, null));
+                                            42, null, 0));
 
         startActivityForResult(intent, 0);
     }

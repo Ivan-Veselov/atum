@@ -91,11 +91,12 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             return null;
         }
 
-        UserDefinedTask task = new UserDefinedTask(nameField.getText().toString(),
+        UserDefinedTask task = UserDefinedTask.newGeneralTask(nameField.getText().toString(),
                 descriptionField.getText().toString(),
                 timeFilters,
                 duration,
-                chosenPlace);
+                chosenPlace,
+                0);
 
         if (!restDuration.getText().toString().isEmpty()) {
             task.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
