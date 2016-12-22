@@ -6,6 +6,9 @@ import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public final class SchedulePlanner {
@@ -31,7 +34,7 @@ public final class SchedulePlanner {
         clearAllSchedule(tasks);
 
         PlanFixedTasksScheduleAlgorithm(tasks, initialMoment, resultIntervals);
-        PlanGeneralTasksScheduleAlgorithm(tasks, initialMoment, resultIntervals);
+        PlanGeneralTasksWithPrioritiesScheduleAlgorithm(tasks, initialMoment, resultIntervals);
         PlanAdditionalTasksScheduleAlgorithm(tasks);
     }
 
@@ -74,6 +77,22 @@ public final class SchedulePlanner {
         }
 
     }
+
+    private static void PlanGeneralTasksWithPrioritiesScheduleAlgorithm(TimeLineTaskGroup tasks,
+                                                          @NonNull ReadableDateTime initialMoment,
+                                                          List<Interval> resultIntervals) {
+        Comparator<TimeLineTask> comp = new Comparator<TimeLineTask>() {
+            @Override
+            public int compare(TimeLineTask o1, TimeLineTask o2) {
+                return ((Integer)o2.getHolder().getPriority()).compareTo(o1.getHolder().getPriority());
+            }
+        };
+        Collections.sort(tasks.getTaskList(), comp);
+
+        PlanGeneralTasksScheduleAlgorithm(tasks, initialMoment, resultIntervals);
+
+    }
+
 
     private static void PlanGeneralTasksScheduleAlgorithm(TimeLineTaskGroup tasks,
                                                     @NonNull ReadableDateTime initialMoment,
