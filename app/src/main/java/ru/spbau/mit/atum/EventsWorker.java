@@ -86,7 +86,7 @@ public class EventsWorker {
             return;
         }
         long startMillis = task.getScheduledTime().getMillis();
-        long endMillis = task.getScheduledTime().toDateTime().plusMinutes(task.getDuration()).getMillis();
+        long endMillis = task.getScheduledTime().toDateTime().plusMinutes((int) task.getDuration().getStandardMinutes()).getMillis();
 
         ContentValues values = new ContentValues();
         values.put(Events.CALENDAR_ID, calID);

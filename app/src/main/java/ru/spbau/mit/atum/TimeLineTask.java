@@ -18,7 +18,7 @@ public class TimeLineTask {
         List<Interval> intervals = Interval.difference(holder.intervalRepresentation(initialMoment, finalMoment),
                                             blockerIntervalList);
         for (Interval interval: intervals) {
-            if (interval.right() - interval.left() >= holder.getDuration()) {
+            if (interval.right() - interval.left() >= holder.getDuration().getStandardMinutes()) {
                 timeIntervals.add(interval);
             }
         }
@@ -38,6 +38,7 @@ public class TimeLineTask {
     }
 
     public int getDuration() {
-        return holder.getDuration() + holder.getRestDuration();
+        return (int) holder.getDuration().getStandardMinutes() +
+                (int) holder.getRestDuration().getStandardMinutes();
     }
 }

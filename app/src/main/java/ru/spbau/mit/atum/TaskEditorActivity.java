@@ -81,8 +81,8 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             chosenPlace = savedInstanceState.getParcelable(STATE_CHOSEN_PLACE);
             chosenPriority = savedInstanceState.getInt(STATE_CHOSEN_PRIORITY);
         } else if (taskToEdit != null) {
-            durationField.setText(Integer.toString(taskToEdit.getDuration()));
-            restDuration.setText(((Integer)taskToEdit.getRestDuration()).toString());
+            durationField.setText(Long.toString(taskToEdit.getDuration().getStandardMinutes()));
+            restDuration.setText(((Long) taskToEdit.getRestDuration().getStandardMinutes()).toString());
 
             chosenPlace = taskToEdit.getPlace();
             chosenPriority = taskToEdit.getPriority();

@@ -50,9 +50,9 @@ public class SchedulePlannerTest {
         assertTrue(task1.getScheduledTime().isBefore(finalMoment));
         assertTrue(task2.getScheduledTime().isBefore(finalMoment));
 
-        assertTrue(task1.getScheduledTime().toDateTime().plusMinutes(task1.getDuration()).
+        assertTrue(task1.getScheduledTime().toDateTime().plusMinutes((int) task1.getDuration().getStandardMinutes()).
                 isBefore(task2.getScheduledTime()) ||
-                task2.getScheduledTime().toDateTime().plusMinutes(task2.getDuration()).
+                task2.getScheduledTime().toDateTime().plusMinutes((int) task2.getDuration().getStandardMinutes()).
                         isBefore(task1.getScheduledTime())
         );
     }

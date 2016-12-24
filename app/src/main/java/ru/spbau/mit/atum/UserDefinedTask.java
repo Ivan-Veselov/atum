@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.google.android.gms.location.places.Place;
 
+import org.joda.time.Duration;
 import org.joda.time.ReadableDateTime;
 
 import java.io.Serializable;
@@ -28,9 +29,9 @@ public class UserDefinedTask extends AbstractFiltersHolder {
 
     private final Type type;
 
-    private final int duration;
+    private final Duration duration;
 
-    private int restDuration = 0;
+    private Duration restDuration = Duration.ZERO;
 
     private final Place place;
 
@@ -62,7 +63,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
      */
     public static UserDefinedTask newGeneralTask(@NonNull String name, @NonNull String description,
                                                  @NonNull List<TimeFilter> filterList,
-                                                 int duration, @Nullable Place place,
+                                                 long duration, @Nullable Place place,
                                                  int priority) {
         return new UserDefinedTask(name,
                                    description,
@@ -135,17 +136,17 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     }
 
     public void setRestDuration(int restDuration) {
-        this.restDuration = restDuration;
+        this.restDuration = Duration.standardMinutes(restDuration);
     }
 
-    public int getRestDuration() {
+    public Duration getRestDuration() {
         return restDuration;
     }
 
     /**
      * @return продолжительность выполнения задания.
      */
-    public int getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
@@ -184,8 +185,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         super.writeToParcel(out, flags);
 
         out.writeSerializable(type);
-        out.writeInt(duration);
-        out.writeInt(restDuration);
+        out.writeSerializable(duration);
+        out.writeSerializable(restDuration);
         out.writeParcelable((Parcelable) place, flags);
         out.writeInt(priority);
         out.writeSerializable((Serializable) scheduledTime);
@@ -195,8 +196,8 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         super(in);
 
         type = (Type) in.readSerializable();
-        duration = in.readInt();
-        restDuration = in.readInt();
+        duration = (Duration) in.readSerializable();
+        restDuration = (Duration) in.readSerializable();
         place = in.readParcelable(getClass().getClassLoader());
         priority = in.readInt();
         scheduledTime = (ReadableDateTime) in.readSerializable();
@@ -205,7 +206,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
     private UserDefinedTask(@NonNull String name, @NonNull String description,
                             @NonNull List<TimeFilter> filterList,
                             @NonNull Type type,
-                            int duration, @Nullable Place place, int priority) {
+                            long duration, @Nullable Place place, int priority) {
         super(name, description, filterList);
 
         if (duration < 0) {
@@ -213,7 +214,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
         }
 
         this.type = type;
-        this.duration = duration;
+        this.duration = Duration.standardMinutes(duration);
         this.place = place;
         this.priority = priority;
     }

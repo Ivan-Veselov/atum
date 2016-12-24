@@ -50,7 +50,7 @@ public final class SchedulePlanner {
                     if (taskFirst.getHolder().getScheduledTime() != null &&
                             task.getHolder().getPlace().getAddress().equals(address)) {
                         DateTime taskFirstEnd = ((DateTime)taskFirst.getHolder().getScheduledTime())
-                                .plusMinutes(taskFirst.getHolder().getDuration());
+                                .plusMinutes((int) taskFirst.getHolder().getDuration().getStandardMinutes());
                         if (minTime == null || taskFirstEnd.isBefore(minTime)) {
                             minTime = taskFirstEnd;
                         }
