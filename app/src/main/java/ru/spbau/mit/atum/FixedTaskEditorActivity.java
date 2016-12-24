@@ -210,7 +210,12 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
                 description.getText().toString(), startTime, endTime, chosenPlace);
 
         if (!restDuration.getText().toString().isEmpty()) {
-            fixedTask.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
+            try {
+                fixedTask.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
+            } catch (NumberFormatException e) {
+                Toast.makeText(getApplicationContext(), "Incorrect rest duration", Toast.LENGTH_SHORT).show();
+                return;
+            }
         } else {
             fixedTask.setRestDuration(DEFAULT_REST_DURATION);
         }

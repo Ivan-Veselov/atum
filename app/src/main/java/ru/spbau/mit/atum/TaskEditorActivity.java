@@ -111,7 +111,14 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             return null;
         }
 
-        int duration = Integer.parseInt(durationString);
+        int duration;
+        try {
+            duration = Integer.parseInt(durationString);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Incorrect duration", Toast.LENGTH_LONG).show();
+            return null;
+        }
+
         if (duration == 0) {
             Toast.makeText(this, "Duration must not be 0", Toast.LENGTH_LONG).show();
             return null;
@@ -125,7 +132,12 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
                 chosenPriority);
 
         if (!restDuration.getText().toString().isEmpty()) {
-            task.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
+            try {
+                task.setRestDuration(Integer.parseInt(restDuration.getText().toString()));
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Incorrect rest duration", Toast.LENGTH_LONG).show();
+                return null;
+            }
         } else {
             task.setRestDuration(DEFAULT_REST_DURATION);
         }
