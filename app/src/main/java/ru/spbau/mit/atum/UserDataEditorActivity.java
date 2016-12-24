@@ -40,29 +40,31 @@ public abstract class UserDataEditorActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESOLVE_CONNECTION_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                mGoogleApiClient.connect();
-            } else {
-                Toast.makeText(this, "Connection to Google API failed. Check your internet connection.",
+            if (resultCode != RESULT_OK) {
+                Toast.makeText(this, "Connection to Google API failed.",
                         Toast.LENGTH_LONG).show();
             }
+
+            mGoogleApiClient.connect();
         }
     }
 
     protected void loadUserData() {
         reason = ConnectionReason.LOAD;
+
+        disableActions();
         mGoogleApiClient.connect();
     }
 
     protected void saveUserData() {
         reason = ConnectionReason.SAVE;
+
+        disableActions();
         mGoogleApiClient.connect();
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        disableActions();
-
         switch (reason) {
             case LOAD:
                 UserSynchronisableData.getInstance().loadData(this, mGoogleApiClient,
@@ -92,7 +94,7 @@ public abstract class UserDataEditorActivity extends AppCompatActivity
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "Connection suspended", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Connection suspended.", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -103,9 +105,11 @@ public abstract class UserDataEditorActivity extends AppCompatActivity
             } catch (IntentSender.SendIntentException e) {
                 Toast.makeText(this, "Unable to resolve connection with Google API",
                         Toast.LENGTH_LONG).show();
+                mGoogleApiClient.connect();
             }
         } else {
             GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
+            finish();
         }
     }
 
