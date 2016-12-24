@@ -52,7 +52,7 @@ public class AdditionalTaskEditorActivity extends AppCompatActivity {
         Intent intent = new Intent();
 
         if (chosenPlace == null) {
-            Toast.makeText(getApplicationContext(), "Don't you forget location?", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You need to enter location.", Toast.LENGTH_LONG).show();
             return;
         }
 
