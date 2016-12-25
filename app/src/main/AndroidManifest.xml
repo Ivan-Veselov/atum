@@ -16,30 +16,32 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDrI6smCg5_n7QSXQ0bJFfQip7tYk82x3I" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskEditorActivity" />
-        <activity android:name=".TaskListActivity" />
-        <activity android:name=".TimeBlockerListActivity" />
-        <activity android:name=".FilterEditorActivity" />
-        <activity android:name=".WeekFilterEditorActivity" />
-        <activity android:name=".IntervalFilterEditorActivity" />
+        <activity android:name=".TaskEditorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".TaskListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".TimeBlockerListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".FilterEditorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".WeekFilterEditorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".IntervalFilterEditorActivity" android:screenOrientation="portrait" />
         <activity
             android:name=".TaskEditorActivityStarter"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity android:name=".TimeBlockerEditorActivity" />
         <activity
             android:name=".TimeBlockerEditorActivityStarter"
-            android:exported="true" />
-        <activity android:name=".SchedulerViewerActivity" />
-        <activity android:name=".TaskSwitchActivity" />
-        <activity android:name=".FixedTaskEditorActivity" />
-        <activity android:name=".AdditionalTaskEditorActivity"></activity>
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SchedulerViewerActivity" android:screenOrientation="portrait" />
+        <activity android:name=".TaskSwitchActivity" android:screenOrientation="portrait" />
+        <activity android:name=".FixedTaskEditorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".AdditionalTaskEditorActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>
