@@ -227,7 +227,12 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_FILTER_HOLDER_POSITION, position);
         }
 
-        setResult(RESULT_OK, intent);
+        if (getParent() == null) {
+            setResult(RESULT_OK, intent);
+        } else {
+            getParent().setResult(RESULT_OK, intent);
+        }
+
         finish();
     }
 
@@ -248,7 +253,11 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_CANCELED, null);
+        if (getParent() == null) {
+            setResult(RESULT_CANCELED, null);
+        } else {
+            getParent().setResult(RESULT_CANCELED, null);
+        }
         finish();
     }
 

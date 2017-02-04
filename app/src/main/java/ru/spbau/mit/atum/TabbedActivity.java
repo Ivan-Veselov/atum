@@ -32,4 +32,5 @@ public class TabbedActivity extends TabActivity {
         tabHost.addTab(tabSpec);
 
     }
+
 }

@@ -66,7 +66,11 @@ public class AdditionalTaskEditorActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_FILTER_HOLDER_POSITION, position);
         }
 
-        setResult(RESULT_OK, intent);
+        if (getParent() == null) {
+            setResult(RESULT_OK, intent);
+        } else {
+            getParent().setResult(RESULT_OK, intent);
+        }
         finish();
 
     }
