@@ -92,7 +92,7 @@
         android:layout_toStartOf="@+id/interval_filter_editor_OK"
         android:id="@+id/interval_filter_name"
         android:layout_alignParentEnd="true"
-        android:hint="enter filter name" />
+        android:hint="Name" />
 
     <CheckBox
         android:text="Exclusionary"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/isExclusionary"
         android:checked="false"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/interval_filter_name"
         android:layout_alignParentStart="true" />
 
