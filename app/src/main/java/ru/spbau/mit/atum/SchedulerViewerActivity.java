@@ -14,15 +14,7 @@ import java.util.Map;
 
 public class SchedulerViewerActivity extends AppCompatActivity {
 
-    private ListView listView;
-
-    private SimpleAdapter adapter;
-
     private ArrayList<Map<String, Object>> data = new ArrayList<>();
-
-    private Map<String, Object> m;
-
-    private ArrayList<UserDefinedTask> tasks;
 
     private static final String TASK_NAME = "task_name";
 
@@ -33,7 +25,7 @@ public class SchedulerViewerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduler_viewer);
 
-        tasks = getIntent().getParcelableArrayListExtra("all tasks");
+        ArrayList<UserDefinedTask> tasks = getIntent().getParcelableArrayListExtra("all tasks");
         for (UserDefinedTask task: tasks) {
             if (task.getScheduledTime() != null) {
                 addNewTask(task);
@@ -42,9 +34,9 @@ public class SchedulerViewerActivity extends AppCompatActivity {
         String[] from = { TASK_NAME, SCHEDULE_TIME };
         int[] to = { R.id.scheduled_task_name, R.id.scheduled_time };
 
-        adapter = new SimpleAdapter(this, data, R.layout.scheduled_item, from, to);
+        SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.scheduled_item, from, to);
 
-        listView = (ListView) findViewById(R.id.scheduled_task_list);
+        ListView listView = (ListView) findViewById(R.id.scheduled_task_list);
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
 
@@ -52,7 +44,7 @@ public class SchedulerViewerActivity extends AppCompatActivity {
     }
 
     private void addNewTask(UserDefinedTask task) {
-        m = new HashMap<>();
+        Map<String, Object> m = new HashMap<>();
         m.put(TASK_NAME, task.getName());
         m.put(SCHEDULE_TIME, task.getScheduledTime().toString());
 

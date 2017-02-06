@@ -82,12 +82,10 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
     protected Dialog onCreateDialog(int id) {
         if (id == FIRST_MINUTE) {
-            TimePickerDialog tpd = new TimePickerDialog(this, CallBackForFirstMinute, firstMinuteHour, firstMinuteMinute, true);
-            return tpd;
+            return new TimePickerDialog(this, CallBackForFirstMinute, firstMinuteHour, firstMinuteMinute, true);
         }
         if (id == DURATION) {
-            TimePickerDialog tpd = new TimePickerDialog(this, CallBackForDuration, minuteAfterLastHour, minuteAfterLastMinute, true);
-            return tpd;
+            return new TimePickerDialog(this, CallBackForDuration, minuteAfterLastHour, minuteAfterLastMinute, true);
         }
         return super.onCreateDialog(id);
     }

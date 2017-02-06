@@ -7,12 +7,6 @@ import android.view.View;
 
 public class TaskSwitchActivity extends AppCompatActivity {
 
-    private int FIXED_TASK_CODE = 0;
-
-    private int GENERAL_TASK_CODE = 1;
-
-    private int ADDITIONAL_TASK_CODE = 2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +17,7 @@ public class TaskSwitchActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TaskEditorActivity.class);
         if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
 
+        int GENERAL_TASK_CODE = 1;
         startActivityForResult(intent, GENERAL_TASK_CODE);
     }
 
@@ -30,6 +25,7 @@ public class TaskSwitchActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FixedTaskEditorActivity.class);
         if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
 
+        int FIXED_TASK_CODE = 0;
         startActivityForResult(intent, FIXED_TASK_CODE);
     }
 
@@ -37,6 +33,7 @@ public class TaskSwitchActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AdditionalTaskEditorActivity.class);
         if (getIntent().getExtras() != null) intent.putExtras(getIntent().getExtras());
 
+        int ADDITIONAL_TASK_CODE = 2;
         startActivityForResult(intent, ADDITIONAL_TASK_CODE);
     }
 

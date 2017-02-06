@@ -6,17 +6,13 @@ import java.util.List;
 
 public class CalendarExporter {
 
-    private final String defaultAccountName = "ATUM";
-
-    private final String defaultDisplayName = "ATUM";
-
-    private CalendarsWorker calendarsWorker;
-
     private EventsWorker eventsWorker;
 
     public CalendarExporter(Context context) {
-        calendarsWorker = new CalendarsWorker(context);
+        CalendarsWorker calendarsWorker = new CalendarsWorker(context);
 
+        String defaultAccountName = "ATUM";
+        String defaultDisplayName = "ATUM";
         calendarsWorker.addNewCalendarIfNotExist(defaultAccountName, defaultDisplayName);
 
         eventsWorker = new EventsWorker(context,
