@@ -152,7 +152,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
     }
 
     public void onClickAddFilterButton(View view) {
-        Intent intent = new Intent(this, FilterEditorActivity.class);
+        Intent intent = new Intent(this, FiltersTabbedActivity.class);
         startActivityForResult(intent, ADD_FILTER_REQUEST);
     }
 
@@ -206,7 +206,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             case ADD_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
                     TimeFilter filter =
-                        (TimeFilter) data.getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
+                        (TimeFilter) data.getParcelableExtra("filter");
 
                     timeFilters.add(filter);
                     timeFilterListViewAdapter.notifyDataSetChanged();

@@ -84,4 +84,7 @@
 
     <string name="interval_filter">Interval Filter</string>
     <string name="week_filter">Week Filter</string>
+    <string name="title_activity_filters_tabbed">FiltersTabbedActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
