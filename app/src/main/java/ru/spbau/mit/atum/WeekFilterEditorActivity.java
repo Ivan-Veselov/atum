@@ -66,10 +66,10 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
 
         tvFirstMinute = (TextView) findViewById(R.id.first_minute);
-        tvFirstMinute.setText("Begin: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+        tvFirstMinute.setText(firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
 
         tvDuration = (TextView) findViewById(R.id.duration);
-        tvDuration.setText("End: " + minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
+        tvDuration.setText(minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
     }
 
     public void onFirstMinuteClick(View view) {
@@ -96,7 +96,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             firstMinuteHour = hourOfDay;
             firstMinuteMinute = minute;
-            tvFirstMinute.setText("Begin: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+            tvFirstMinute.setText(firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
         }
     };
 
@@ -104,7 +104,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             minuteAfterLastHour = hourOfDay;
             minuteAfterLastMinute = minute;
-            tvDuration.setText("End: " + minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
+            tvDuration.setText(minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
         }
     };
 

@@ -97,18 +97,56 @@
         android:layout_below="@+id/week_filter_name"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="First minute"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/first_minute_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:id="@+id/first_minute"
-        android:clickable="true"
-        android:onClick="onFirstMinuteClick"
-        android:textSize ="15dp"
         android:layout_below="@+id/isExclusionary"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="Begin:"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8" />
+
+        <TextView
+            android:text="Time"
+            android:layout_width="0dp"
+            android:layout_weight="24"
+            android:layout_height="wrap_content"
+            android:id="@+id/first_minute"
+            android:clickable="true"
+            android:onClick="onFirstMinuteClick" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/duration_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_minute_layout"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="End:"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:id="@+id/interval_start" />
+
+        <TextView
+            android:text="Time"
+            android:layout_width="0dp"
+            android:layout_weight="24"
+            android:layout_height="wrap_content"
+            android:id="@+id/duration"
+            android:clickable="true"
+            android:onClick="onDurationClick" />
+
+    </LinearLayout>
 
     <TextView
         android:text="Select days of week"
@@ -116,21 +154,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
         android:id="@+id/days_of_week"
-        android:layout_below="@+id/duration"
+        android:layout_below="@+id/duration_layout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="Expected Duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/duration"
-        android:layout_marginTop="17dp"
-        android:clickable="true"
-        android:onClick="onDurationClick"
-        android:textSize ="15dp"
-        android:layout_below="@+id/first_minute"
-        android:layout_alignStart="@+id/first_minute"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
