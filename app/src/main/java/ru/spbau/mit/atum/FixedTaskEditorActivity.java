@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
+import java.util.Date;
+
 import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER;
 import static ru.spbau.mit.atum.AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION;
 import static ru.spbau.mit.atum.PlacesUtils.setBuilderPositionNearPlace;
@@ -39,17 +41,8 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
     private final DateTime currentDateTime = new DateTime();
 
-    private int startYear = currentDateTime.getYear();
-    private int startMonth = currentDateTime.getMonthOfYear();
-    private int startDay = currentDateTime.getDayOfMonth();
-    private int endYear = currentDateTime.getYear();
-    private int endMonth = currentDateTime.getMonthOfYear();
-    private int endDay = currentDateTime.getDayOfMonth();
-
-    private int startHour = currentDateTime.getHourOfDay();
-    private int startMinute = currentDateTime.getMinuteOfHour();
-    private int endHour = currentDateTime.getHourOfDay();
-    private int endMinute = currentDateTime.getMinuteOfHour();
+    private DateTime start = currentDateTime;
+    private DateTime end = currentDateTime;
 
     private TextView tvStartDate;
     private TextView tvStartTime;
@@ -87,20 +80,8 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
             restDuration.setText(((Long) taskToEdit.getRestDuration().getStandardMinutes()).toString());
 
             IntervalFilter filter = (IntervalFilter) taskToEdit.getFilterList().get(0);
-            DateTime start = (DateTime)filter.getInitialMoment();
-            DateTime end = (DateTime)filter.getFinalMoment();
-
-            startYear = start.getYear();
-            startMonth = start.getMonthOfYear();
-            startDay = start.getDayOfMonth();
-            startHour = start.getHourOfDay();
-            startMinute = start.getMinuteOfHour();
-
-            endYear = end.getYear();
-            endMonth = end.getMonthOfYear();
-            endDay = end.getDayOfMonth();
-            endHour = end.getHourOfDay();
-            endMinute = end.getMinuteOfHour();
+            start = (DateTime)filter.getInitialMoment();
+            end = (DateTime)filter.getFinalMoment();
 
             if (taskToEdit.getPlace() != null) {
                 chosenPlace = taskToEdit.getPlace();
@@ -109,11 +90,11 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
         }
 
-        tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
-        tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
+        tvStartDate.setText(start.getDayOfMonth() + "/" + start.getMonthOfYear() + "/" + start.getYear());
+        tvStartTime.setText(start.getHourOfDay() + " hours " + start.getMinuteOfHour() + " minutes");
 
-        tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
-        tvEndTime.setText(endHour + " hours " + endMinute + " minutes");
+        tvEndDate.setText(end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear());
+        tvEndTime.setText(end.getHourOfDay() + " hours " + end.getMinuteOfHour() + " minutes");
 
     }
 
@@ -135,22 +116,20 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
     protected Dialog onCreateDialog(int id) {
         if (id == START_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, callBackStartIntervalDate,
-                    startYear, startMonth - 1, startDay);
-            return tpd;
+            return new DatePickerDialog(this, callBackStartIntervalDate,
+                    start.getYear(), start.getMonthOfYear() - 1, start.getDayOfMonth());
         }
         if (id == START_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, callBackStartIntevalTime, startHour, startMinute, true);
-            return tpd;
+            return new TimePickerDialog(this, callBackStartIntevalTime,
+                    start.getHourOfDay(), start.getMinuteOfHour(), true);
         }
         if (id == END_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, callBackEndIntervalDate,
-                    endYear, endMonth - 1, endDay);
-            return tpd;
+            return new DatePickerDialog(this, callBackEndIntervalDate,
+                    end.getYear(), end.getMonthOfYear() - 1, end.getDayOfMonth());
         }
         if (id == END_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, callBackEndIntevalTime, endHour, endMinute, true);
-            return tpd;
+            return new TimePickerDialog(this, callBackEndIntevalTime,
+                    end.getHourOfDay(), end.getMinuteOfHour(), true);
         }
         return super.onCreateDialog(id);
     }
@@ -159,10 +138,8 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            startYear = year;
-            startMonth = monthOfYear + 1;
-            startDay = dayOfMonth;
-            tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
+            start = start.withDate(year, monthOfYear + 1, dayOfMonth);
+            tvStartDate.setText(start.getDayOfMonth() + "/" + start.getMonthOfYear() + "/" + start.getYear());
         }
     };
 
@@ -170,44 +147,35 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            endYear = year;
-            endMonth = monthOfYear + 1;
-            endDay = dayOfMonth;
-            tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
+            end = end.withDate(year, monthOfYear + 1, dayOfMonth);
+            tvEndDate.setText(end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear());
         }
     };
 
     private TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            startHour = hourOfDay;
-            startMinute = minute;
-            tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
+            start = start.withTime(hourOfDay, minute, 0, 0);
+            tvStartTime.setText(start.getHourOfDay() + " hours " + start.getMinuteOfHour() + " minutes");
         }
     };
 
     private TimePickerDialog.OnTimeSetListener callBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            endHour = hourOfDay;
-            endMinute = minute;
-            tvEndTime.setText(endHour + " hours " + endMinute + " minutes");
+            end = end.withTime(hourOfDay, minute, 0, 0);
+            tvEndTime.setText(end.getHourOfDay() + " hours " + end.getMinuteOfHour() + " minutes");
         }
     };
 
     public void onButtonApplyClick(View view) {
         Intent intent = new Intent();
 
-        ReadableDateTime startTime = new DateTime(startYear, startMonth,
-                startDay, startHour, startMinute);
-        ReadableDateTime endTime = new DateTime(endYear, endMonth,
-                endDay, endHour, endMinute);
-
-        if (endTime.compareTo(startTime) < 0) {
+        if (end.compareTo(start) < 0) {
             Toast.makeText(getApplicationContext(), "Invalid time interval", Toast.LENGTH_SHORT).show();
             return;
         }
 
         UserDefinedTask fixedTask = UserDefinedTask.newFixedTask(name.getText().toString(),
-                description.getText().toString(), startTime, endTime, chosenPlace);
+                description.getText().toString(), start, end, chosenPlace);
 
         if (!restDuration.getText().toString().isEmpty()) {
             try {
@@ -232,7 +200,6 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         } else {
             getParent().setResult(RESULT_OK, intent);
         }
-
         finish();
     }
 
