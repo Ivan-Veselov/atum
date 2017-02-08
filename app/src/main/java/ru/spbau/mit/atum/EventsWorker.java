@@ -36,34 +36,6 @@ public class EventsWorker {
         this.calID = calID;
     }
 
-    public long addExampleEvent() {
-        long startMillis = new DateTime(2016, 12, 20, 7, 30).getMillis();
-        long endMillis = new DateTime(2016, 12, 20, 8, 45).getMillis();
-
-        ContentValues values = new ContentValues();
-        values.put(Events.DTSTART, startMillis);
-        values.put(Events.DTEND, endMillis);
-        values.put(Events.TITLE, "Jazzercise");
-        values.put(Events.DESCRIPTION, "Group workout");
-        values.put(Events.CALENDAR_ID, calID);
-        values.put(Events.EVENT_TIMEZONE, "America/Los_Angeles");
-        Uri uri;
-
-        try {
-            uri = contentResolver.insert(Events.CONTENT_URI, values);
-        } catch (SecurityException e) {
-            Log.i("myLog", e.toString());
-            throw e;
-        } catch (Exception e) {
-            Log.i("myLog", e.toString());
-            throw e;
-        }
-
-        Log.i("myLog", "Yaaay!!!");
-
-        return Long.parseLong(uri.getLastPathSegment());
-    }
-
     public long findEventIfByTitle(String title) {
         Cursor cur;
         try {
@@ -155,7 +127,5 @@ public class EventsWorker {
             throw e;
         }
     }
-
-    public void changeEvent() {}
 
 }

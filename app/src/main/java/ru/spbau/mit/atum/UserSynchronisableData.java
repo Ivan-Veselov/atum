@@ -2,9 +2,7 @@ package ru.spbau.mit.atum;
 
 import android.content.Context;
 import android.os.Parcel;
-import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -22,11 +20,8 @@ import com.google.android.gms.drive.query.SearchableField;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Даные пользователя, которые могут быть сохранены на Google Drive и прочитаны с него обратно.

@@ -11,9 +11,6 @@ import org.joda.time.Duration;
 import org.joda.time.ReadableDateTime;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;

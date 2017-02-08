@@ -5,12 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-
 import org.joda.time.ReadableDateTime;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

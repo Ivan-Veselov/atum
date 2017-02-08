@@ -55,12 +55,6 @@ public class CalendarsWorker {
         contentResolver.delete(hzUri, "(" + CalendarContract.Calendars.CALENDAR_DISPLAY_NAME + " = ?)", new String[]{name});
     }
 
-    public void changeAccountName(String accountName, String name) {
-    }
-
-    public void changeDisplayName(String accountName, String name) {
-    }
-
     public void printAllCalendars() {
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
 

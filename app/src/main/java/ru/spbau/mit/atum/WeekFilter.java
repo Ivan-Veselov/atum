@@ -5,14 +5,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.ArrayList;
-
 import org.joda.time.DateTimeConstants;
 import org.joda.time.ReadableDateTime;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -184,5 +181,5 @@ public class WeekFilter extends TimeFilter {
         mask = (EnumSet<DaysOfWeek>) in.readSerializable();
     }
 
-    public enum DaysOfWeek {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
+    public enum DaysOfWeek {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY}
 }

@@ -16,8 +16,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 import static ru.spbau.mit.atum.PlacesUtils.setBuilderPositionNearPlace;
 import static ru.spbau.mit.atum.UserDefinedTask.DEFAULT_REST_DURATION;

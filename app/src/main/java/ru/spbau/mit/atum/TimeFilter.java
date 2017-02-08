@@ -5,14 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.joda.time.ReadableDateTime;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Временной фильтр задает некоторым специфичным образом временные промежутки. Фильтр может быть

@@ -122,5 +122,5 @@ public abstract class UserDataEditorActivity extends AppCompatActivity
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    private enum ConnectionReason { LOAD, SAVE };
+    private enum ConnectionReason { LOAD, SAVE }
 }

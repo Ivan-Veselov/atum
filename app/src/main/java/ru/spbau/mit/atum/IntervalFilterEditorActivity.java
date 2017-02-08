@@ -102,22 +102,18 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
     protected Dialog onCreateDialog(int id) {
         if (id == START_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, callBackStartIntervalDate,
+            return new DatePickerDialog(this, callBackStartIntervalDate,
                     startYear, startMonth - 1, startDay);
-            return tpd;
         }
         if (id == START_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, callBackStartIntevalTime, startHour, startMinute, true);
-            return tpd;
+            return new TimePickerDialog(this, callBackStartIntevalTime, startHour, startMinute, true);
         }
         if (id == END_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, callBackEndIntervalDate,
+            return new DatePickerDialog(this, callBackEndIntervalDate,
                     endYear, endMonth - 1, endDay);
-            return tpd;
         }
         if (id == END_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, callBackEndIntevalTime, endHour, endMinute, true);
-            return tpd;
+            return new TimePickerDialog(this, callBackEndIntevalTime, endHour, endMinute, true);
         }
         return super.onCreateDialog(id);
     }
