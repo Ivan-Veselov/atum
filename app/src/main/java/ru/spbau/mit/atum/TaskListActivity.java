@@ -29,7 +29,7 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity {
 
     @Override
     protected Intent initializeIntent() {
-        return new Intent(this, TaskSwitchActivity.class);
+        return new Intent(this, TabbedActivity.class);
     }
 
     @Override

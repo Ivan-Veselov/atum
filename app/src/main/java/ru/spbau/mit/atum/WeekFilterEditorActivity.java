@@ -66,10 +66,10 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
 
         tvFirstMinute = (TextView) findViewById(R.id.first_minute);
-        tvFirstMinute.setText("Begin: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+        tvFirstMinute.setText(firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
 
         tvDuration = (TextView) findViewById(R.id.duration);
-        tvDuration.setText("End: " + minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
+        tvDuration.setText(minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
     }
 
     public void onFirstMinuteClick(View view) {
@@ -94,7 +94,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             firstMinuteHour = hourOfDay;
             firstMinuteMinute = minute;
-            tvFirstMinute.setText("Begin: " + firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+            tvFirstMinute.setText(firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
         }
     };
 
@@ -102,7 +102,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             minuteAfterLastHour = hourOfDay;
             minuteAfterLastMinute = minute;
-            tvDuration.setText("End: " + minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
+            tvDuration.setText(minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
         }
     };
 
@@ -134,13 +134,23 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
                     getIntent().getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, -1));
         }
 
-        setResult(RESULT_OK, intent);
+        if (getParent() == null) {
+            setResult(RESULT_OK, intent);
+        } else {
+            getParent().setResult(RESULT_OK, intent);
+        }
+
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_CANCELED, null);
+        if (getParent() == null) {
+            setResult(RESULT_CANCELED);
+        } else {
+            getParent().setResult(RESULT_CANCELED);
+        }
+
         finish();
     }
 }

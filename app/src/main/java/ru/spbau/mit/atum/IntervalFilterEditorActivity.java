@@ -191,13 +191,22 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
                     getIntent().getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, -1));
         }
 
-        setResult(RESULT_OK, intent);
+        if (getParent() == null) {
+            setResult(RESULT_OK, intent);
+        } else {
+            getParent().setResult(RESULT_OK, intent);
+        }
+
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_CANCELED, null);
+        if (getParent() == null) {
+            setResult(RESULT_CANCELED);
+        } else {
+            getParent().setResult(RESULT_CANCELED);
+        }
         finish();
     }
 }

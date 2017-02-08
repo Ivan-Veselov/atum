@@ -152,13 +152,17 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
     }
 
     public void onClickAddFilterButton(View view) {
-        Intent intent = new Intent(this, FilterEditorActivity.class);
+        Intent intent = new Intent(this, FiltersTabbedActivity.class);
         startActivityForResult(intent, ADD_FILTER_REQUEST);
     }
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_CANCELED);
+        if (getParent() == null) {
+            setResult(RESULT_CANCELED, null);
+        } else {
+            getParent().setResult(RESULT_CANCELED, null);
+        }
         finish();
     }
 
@@ -189,7 +193,11 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             result.putExtra(EXTRA_FILTER_HOLDER_POSITION, position);
         }
 
-        setResult(RESULT_OK, result);
+        if (getParent() == null) {
+            setResult(RESULT_OK, result);
+        } else {
+            getParent().setResult(RESULT_OK, result);
+        }
         finish();
     }
 
@@ -198,7 +206,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             case ADD_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
                     TimeFilter filter =
-                        (TimeFilter) data.getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
+                        (TimeFilter) data.getParcelableExtra("filter");
 
                     timeFilters.add(filter);
                     timeFilterListViewAdapter.notifyDataSetChanged();

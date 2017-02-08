@@ -3,6 +3,7 @@ package ru.spbau.mit.atum;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,7 +86,9 @@ public abstract class AbstractFiltersHolderListActivity extends UserDataEditorAc
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("myLog", "requestCode = " + requestCode + ", resultCode = " + resultCode);
         if (requestCode == NEW_TASK_CODE && resultCode == RESULT_OK) {
+            Log.i("myLog", "HeyYOU");
             AbstractFiltersHolder newTask = data
                     .getParcelableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
