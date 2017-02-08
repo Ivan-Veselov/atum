@@ -5,10 +5,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ru.spbau.mit.atum.model.IntervalFilter;
+import ru.spbau.mit.atum.model.TimeFilter;
+import ru.spbau.mit.atum.model.UserDefinedTask;
+
 import static ru.spbau.mit.atum.TestUtilities.assertIntervalListEquals;
 import static ru.spbau.mit.atum.TestUtilities.theFirstOfJan;
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.EXCLUSIONARY;
+import static ru.spbau.mit.atum.model.TimeFilter.ExclusionType.COMMON;
+import static ru.spbau.mit.atum.model.TimeFilter.ExclusionType.EXCLUSIONARY;
 
 public class UserDefinedTaskTest {
     @Test(expected = IllegalArgumentException.class)

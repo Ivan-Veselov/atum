@@ -6,14 +6,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import ru.spbau.mit.atum.Interval.EndPoint.Type;
+
+import ru.spbau.mit.atum.model.Interval;
+import ru.spbau.mit.atum.model.Interval.EndPoint.Type;
 
 import static org.junit.Assert.assertEquals;
 import static ru.spbau.mit.atum.TestUtilities.assertIntervalEquals;
 import static ru.spbau.mit.atum.TestUtilities.assertIntervalListEquals;
 
-import static ru.spbau.mit.atum.Interval.EndPoint.Type.LEFT;
-import static ru.spbau.mit.atum.Interval.EndPoint.Type.RIGHT;
+import static ru.spbau.mit.atum.model.Interval.EndPoint.Type.LEFT;
+import static ru.spbau.mit.atum.model.Interval.EndPoint.Type.RIGHT;
 
 public class IntervalTest {
     @Test

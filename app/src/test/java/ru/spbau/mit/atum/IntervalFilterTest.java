@@ -5,12 +5,14 @@ import org.junit.Test;
 
 import java.util.List;
 
-import ru.spbau.mit.atum.TimeFilter.ExclusionType;
+import ru.spbau.mit.atum.model.IntervalFilter;
+import ru.spbau.mit.atum.model.TimeFilter.ExclusionType;
+import ru.spbau.mit.atum.model.Interval;
 
 import static org.junit.Assert.assertEquals;
 import static ru.spbau.mit.atum.TestUtilities.theFirstOfJan;
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.EXCLUSIONARY;
+import static ru.spbau.mit.atum.model.TimeFilter.ExclusionType.COMMON;
+import static ru.spbau.mit.atum.model.TimeFilter.ExclusionType.EXCLUSIONARY;
 
 public class IntervalFilterTest {
     @Test

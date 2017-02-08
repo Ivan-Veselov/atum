@@ -6,21 +6,23 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import ru.spbau.mit.atum.WeekFilter.DaysOfWeek;
+import ru.spbau.mit.atum.model.WeekFilter;
+import ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek;
+import ru.spbau.mit.atum.model.Interval;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import static ru.spbau.mit.atum.TestUtilities.theNthOfJan;
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.COMMON;
-import static ru.spbau.mit.atum.TimeFilter.ExclusionType.EXCLUSIONARY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.FRIDAY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.MONDAY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.SATURDAY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.SUNDAY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.THURSDAY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.TUESDAY;
-import static ru.spbau.mit.atum.WeekFilter.DaysOfWeek.WEDNESDAY;
+import static ru.spbau.mit.atum.model.TimeFilter.ExclusionType.COMMON;
+import static ru.spbau.mit.atum.model.TimeFilter.ExclusionType.EXCLUSIONARY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.FRIDAY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.MONDAY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.SATURDAY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.SUNDAY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.THURSDAY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.TUESDAY;
+import static ru.spbau.mit.atum.model.WeekFilter.DaysOfWeek.WEDNESDAY;
 
 public class WeekFilterTest {
     @Test

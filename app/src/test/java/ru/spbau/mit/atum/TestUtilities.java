@@ -5,6 +5,8 @@ import org.joda.time.base.AbstractDateTime;
 
 import java.util.List;
 
+import ru.spbau.mit.atum.model.Interval;
+
 import static org.junit.Assert.assertEquals;
 
 /**

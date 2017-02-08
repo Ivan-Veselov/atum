@@ -17,7 +17,7 @@
             android:value="AIzaSyDrI6smCg5_n7QSXQ0bJFfQip7tYk82x3I" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,52 +26,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TaskEditorActivity"
+            android:name=".ui.TaskEditorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaskListActivity"
+            android:name=".ui.TaskListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TimeBlockerListActivity"
+            android:name=".ui.TimeBlockerListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FilterEditorActivity"
+            android:name=".ui.FilterEditorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WeekFilterEditorActivity"
+            android:name=".ui.WeekFilterEditorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".IntervalFilterEditorActivity"
+            android:name=".ui.IntervalFilterEditorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaskEditorActivityStarter"
+            android:name=".ui.TaskEditorActivityStarter"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".TimeBlockerEditorActivity" />
+        <activity android:name=".ui.TimeBlockerEditorActivity" />
         <activity
-            android:name=".TimeBlockerEditorActivityStarter"
+            android:name=".ui.TimeBlockerEditorActivityStarter"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SchedulerViewerActivity"
+            android:name=".ui.SchedulerViewerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaskSwitchActivity"
+            android:name=".ui.TaskSwitchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FixedTaskEditorActivity"
+            android:name=".ui.FixedTaskEditorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AdditionalTaskEditorActivity"
+            android:name=".ui.AdditionalTaskEditorActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".TabbedActivity">
+        <activity android:name=".ui.TabbedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FiltersTabbedActivity" />
+        <activity android:name=".ui.FiltersTabbedActivity" />
     </application>
 
 </manifest>
