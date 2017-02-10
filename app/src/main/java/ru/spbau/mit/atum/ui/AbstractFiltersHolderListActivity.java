@@ -15,12 +15,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ru.spbau.mit.atum.model.AbstractFiltersHolder;
 import ru.spbau.mit.atum.R;
 
-public abstract class AbstractFiltersHolderListActivity extends UserDataEditorActivity {
+public abstract class AbstractFiltersHolderListActivity<T extends AbstractFiltersHolder> extends UserDataEditorActivity {
     protected static final String TASK_NAME = "task_name";
 
     protected static final String IS_SCHEDULED = "is_scheduled";
@@ -33,7 +34,7 @@ public abstract class AbstractFiltersHolderListActivity extends UserDataEditorAc
 
     protected static final int EDIT_TASK_CODE = 1;
 
-    protected ArrayList<AbstractFiltersHolder> filtersHolders;
+    protected List<T> filtersHolders;
 
     protected ListView listView;
 
@@ -92,7 +93,7 @@ public abstract class AbstractFiltersHolderListActivity extends UserDataEditorAc
         Log.i("myLog", "requestCode = " + requestCode + ", resultCode = " + resultCode);
         if (requestCode == NEW_TASK_CODE && resultCode == RESULT_OK) {
             Log.i("myLog", "HeyYOU");
-            AbstractFiltersHolder newTask = data
+            T newTask = data
                     .getParcelableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
             addNewTask(newTask);
@@ -103,7 +104,7 @@ public abstract class AbstractFiltersHolderListActivity extends UserDataEditorAc
         if (requestCode == EDIT_TASK_CODE && resultCode == RESULT_OK) {
             int position = data.getIntExtra
                     (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION, -1);
-            AbstractFiltersHolder filtersHolder = data.getParcelableExtra
+            T filtersHolder = data.getParcelableExtra
                     (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.set(position, filtersHolder);
 

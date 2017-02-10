@@ -11,7 +11,7 @@ import ru.spbau.mit.atum.model.AbstractFiltersHolder;
 import ru.spbau.mit.atum.model.UserDefinedTask;
 import ru.spbau.mit.atum.model.UserSynchronisableData;
 
-public class TaskListActivity extends AbstractFiltersHolderListActivity {
+public class TaskListActivity extends AbstractFiltersHolderListActivity<UserDefinedTask> {
     @Override
     protected void setTitleText() {
         title.setText(R.string.task_list);
@@ -19,7 +19,7 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity {
 
     @Override
     protected void initializeHolder() {
-        filtersHolders = (ArrayList<AbstractFiltersHolder>) (List) UserSynchronisableData.getInstance().getTasks();
+        filtersHolders = UserSynchronisableData.getInstance().getTasks();
     }
 
     @Override
@@ -51,4 +51,6 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity {
         }
         return null;
     }
+
+
 }

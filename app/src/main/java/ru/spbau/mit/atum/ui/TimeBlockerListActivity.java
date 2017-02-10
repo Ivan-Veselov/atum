@@ -9,9 +9,10 @@ import java.util.Map;
 
 import ru.spbau.mit.atum.R;
 import ru.spbau.mit.atum.model.AbstractFiltersHolder;
+import ru.spbau.mit.atum.model.UserDefinedTimeBlocker;
 import ru.spbau.mit.atum.model.UserSynchronisableData;
 
-public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity {
+public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity<UserDefinedTimeBlocker> {
 
     @Override
     protected void setTitleText() {
@@ -20,7 +21,7 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity {
 
     @Override
     protected void initializeHolder() {
-        filtersHolders = (ArrayList<AbstractFiltersHolder>) (List) UserSynchronisableData.getInstance().getBlockers();
+        filtersHolders = UserSynchronisableData.getInstance().getBlockers();
     }
 
     @Override
