@@ -59,7 +59,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         tvEndTime = (TextView) findViewById(R.id.interval_end_time);
         description = (EditText) findViewById(R.id.interval_filter_name);
 
-        previousFilter = (IntervalFilter) getIntent().getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
+        previousFilter = getIntent().getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
         if (previousFilter != null) {
             isExclusionary.setChecked(previousFilter.isExclusive());
             description.setText(previousFilter.getDescription());

@@ -205,8 +205,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
         switch (requestCode) {
             case ADD_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    TimeFilter filter =
-                        (TimeFilter) data.getParcelableExtra("filter");
+                    TimeFilter filter = data.getParcelableExtra("filter");
 
                     timeFilters.add(filter);
                     timeFilterListViewAdapter.notifyDataSetChanged();
@@ -216,8 +215,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
 
             case EDIT_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    TimeFilter filter =
-                        (TimeFilter) data.getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
+                    TimeFilter filter = data.getParcelableExtra(FilterEditorActivity.EXTRA_FILTER);
 
                     int position = data.getIntExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, 0);
 

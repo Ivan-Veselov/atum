@@ -89,8 +89,6 @@ public class EventsWorker {
             throw e;
         }
 
-        Log.i("myLog", "Yaaay!!!");
-
         addReminder(Long.parseLong(uri.getLastPathSegment()));
 
     }

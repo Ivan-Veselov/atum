@@ -41,8 +41,7 @@ public class TaskEditorActivityStarter extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                UserDefinedTask task =
-                        (UserDefinedTask) data.getParcelableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
+                UserDefinedTask task = data.getParcelableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
 
                 Toast.makeText(this, task.getName() + " " + task.getFilterList().size(), Toast.LENGTH_LONG).show();
             }
