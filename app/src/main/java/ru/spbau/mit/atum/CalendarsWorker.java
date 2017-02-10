@@ -100,6 +100,7 @@ public class CalendarsWorker {
         }
 
         cur.close();
+
     }
 
     private Uri addNewCalendar(Uri uri, String accountName, String displayName) {

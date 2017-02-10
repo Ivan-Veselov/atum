@@ -114,13 +114,13 @@
     <string name="apply">Apply</string>
     <string name="add_filter">Add filter</string>
     <string name="plan_schedule">plan schedule</string>
-    <string name="task_list">Task List</string>
+    <string name="task_list">TASK LIST</string>
     <string name="location">Location</string>
     <string name="rest_duration">Rest duration</string>
     <string name="priority">Priority</string>
     <string name="view_schedule">view schedule</string>
     <string name="export_to_google_calendar">EXPORT TO GOOGLE CALENDAR</string>
-    <string name="blocker_list">Blocker List</string>
+    <string name="blocker_list">BLOCKER LIST</string>
     <string name="starts_at">Starts at</string>
     <string name="ends_at">Ends at</string>
 </resources>

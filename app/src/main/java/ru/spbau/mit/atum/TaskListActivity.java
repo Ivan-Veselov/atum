@@ -9,7 +9,7 @@ import java.util.Map;
 public class TaskListActivity extends AbstractFiltersHolderListActivity {
     @Override
     protected void setTitleText() {
-        title.setText("TASK LIST");
+        title.setText(R.string.task_list);
     }
 
     @Override

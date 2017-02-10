@@ -160,7 +160,7 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
 
     public void onClearLocationButtonClick(View view) {
         chosenPlace = null;
-        placeTextView.setText("Location");
+        placeTextView.setText(R.string.location);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity {
 
     @Override
     protected void setTitleText() {
-        title.setText("BLOCKER LIST");
+        title.setText(R.string.blocker_list);
     }
 
     @Override
