@@ -12,7 +12,7 @@
     tools:context="ru.spbau.mit.atum.ui.SchedulerViewerActivity">
 
     <TextView
-        android:text="SCHEDULE"
+        android:text="@string/schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"

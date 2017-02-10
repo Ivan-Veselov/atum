@@ -335,6 +335,6 @@ public final class Interval {
             }
         }
 
-        public enum Type {LEFT, RIGHT};
+        public enum Type {LEFT, RIGHT}
     }
 }

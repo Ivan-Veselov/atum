@@ -6,7 +6,6 @@
     android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tab_header">
+        android:layout_height="wrap_content">
     </TextView>
 </LinearLayout>

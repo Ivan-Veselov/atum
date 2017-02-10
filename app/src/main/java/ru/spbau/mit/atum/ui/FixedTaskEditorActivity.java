@@ -19,7 +19,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import org.joda.time.DateTime;
-
 import ru.spbau.mit.atum.model.IntervalFilter;
 import ru.spbau.mit.atum.R;
 import ru.spbau.mit.atum.model.UserDefinedTask;
@@ -228,7 +227,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
     public void onClearLocationButtonClick(View view) {
         chosenPlace = null;
-        placeTextView.setText("Location");
+        placeTextView.setText(R.string.location);
     }
 
     @Override

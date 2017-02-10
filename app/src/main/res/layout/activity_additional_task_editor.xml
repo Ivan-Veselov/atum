@@ -25,7 +25,7 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/additional_task_name"
-            android:hint="Name" />
+            android:hint="@string/name" />
 
         <EditText
             android:layout_width="match_parent"
@@ -33,15 +33,15 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/additional_task_descripion"
-            android:hint="Description" />
+            android:hint="@string/description" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="0.22" />
 
         <TextView
-            android:text="Location"
+            android:text="@string/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClickLocationButton"
@@ -50,7 +50,7 @@
     </LinearLayout>
 
     <Button
-        android:text="Apply"
+        android:text="@string/apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

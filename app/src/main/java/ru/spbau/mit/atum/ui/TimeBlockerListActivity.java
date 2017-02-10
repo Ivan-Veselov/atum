@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ru.spbau.mit.atum.R;
 import ru.spbau.mit.atum.model.AbstractFiltersHolder;
 import ru.spbau.mit.atum.model.UserSynchronisableData;
 
@@ -14,7 +15,7 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity {
 
     @Override
     protected void setTitleText() {
-        title.setText("BLOCKER LIST");
+        title.setText(R.string.blocker_list);
     }
 
     @Override

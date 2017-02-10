@@ -25,7 +25,7 @@
             android:inputType="text"
             android:ems="10"
             android:id="@+id/task_editor_name_field"
-            android:hint="Name" />
+            android:hint="@string/name" />
 
         <EditText
             android:layout_width="match_parent"
@@ -33,13 +33,14 @@
             android:ems="10"
             android:id="@+id/task_editor_description_field"
             android:layout_height="wrap_content"
-            android:hint="Description" />
+            android:hint="@string/description" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="13dp" />
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -51,7 +52,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:text="Duration"
+                    android:text="@string/duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -74,7 +75,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:text="Rest duration"
+                    android:text="@string/rest_duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -101,7 +102,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:text="Location"
+                android:text="@string/location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/task_editor_location_text"
@@ -123,7 +124,7 @@
             android:layout_height="11dp" />
 
         <TextView
-            android:text="Priority"
+            android:text="@string/priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView3" />
@@ -148,7 +149,7 @@
             android:layout_height="59dp">
 
             <Button
-                android:text="Apply"
+                android:text="@string/apply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -157,7 +158,7 @@
                 android:onClick="onClickApplyButton" />
 
             <Button
-                android:text="Add filter"
+                android:text="@string/add_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
