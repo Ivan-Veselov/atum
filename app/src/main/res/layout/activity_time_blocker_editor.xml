@@ -18,7 +18,7 @@
         android:id="@+id/time_blocker_editor_name_field"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:hint="Name"
+        android:hint="@string/name"
         android:layout_alignParentEnd="true" />
 
     <EditText
@@ -30,11 +30,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_height="wrap_content"
-        android:hint="Description" />
+        android:hint="@string/description" />
 
 
     <Button
-        android:text="Apply"
+        android:text="@string/apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -53,7 +53,7 @@
         android:layout_below="@+id/time_blocker_editor_description_field" />
 
     <Button
-        android:text="Add filter"
+        android:text="@string/add_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

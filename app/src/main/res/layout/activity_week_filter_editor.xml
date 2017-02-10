@@ -11,7 +11,7 @@
     tools:context="ru.spbau.mit.atum.WeekFilterEditorActivity">
 
     <CheckBox
-        android:text="Monday"
+        android:text="@string/monday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -20,7 +20,7 @@
         android:layout_alignParentStart="true" />
 
     <CheckBox
-        android:text="Tuesday"
+        android:text="@string/tuesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBoxMonday"
@@ -28,7 +28,7 @@
         android:id="@+id/checkBoxTuesday" />
 
     <CheckBox
-        android:text="Wednesday"
+        android:text="@string/wednesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBoxTuesday"
@@ -36,7 +36,7 @@
         android:id="@+id/checkBoxWednesday" />
 
     <CheckBox
-        android:text="Thursday"
+        android:text="@string/thursday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBoxWednesday"
@@ -44,7 +44,7 @@
         android:id="@+id/checkBoxThursday" />
 
     <CheckBox
-        android:text="Friday"
+        android:text="@string/friday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBoxThursday"
@@ -52,7 +52,7 @@
         android:id="@+id/checkBoxFriday" />
 
     <CheckBox
-        android:text="Saturday"
+        android:text="@string/saturday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBoxFriday"
@@ -60,7 +60,7 @@
         android:id="@+id/checkBoxSaturday" />
 
     <CheckBox
-        android:text="Sunday"
+        android:text="@string/sunday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBoxSaturday"
@@ -68,7 +68,7 @@
         android:id="@+id/checkBoxSunday" />
 
     <Button
-        android:text="OK"
+        android:text="@string/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -85,10 +85,10 @@
         android:id="@+id/week_filter_name"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:hint="Name" />
+        android:hint="@string/name" />
 
     <CheckBox
-        android:text="Exclusionary"
+        android:text="@string/exclusionary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/isExclusionary"
@@ -106,13 +106,13 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:text="Begin:"
+            android:text="@string/begin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8" />
 
         <TextView
-            android:text="Time"
+            android:text="@string/time"
             android:layout_width="0dp"
             android:layout_weight="24"
             android:layout_height="wrap_content"
@@ -131,14 +131,14 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:text="End:"
+            android:text="@string/end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:id="@+id/interval_start" />
 
         <TextView
-            android:text="Time"
+            android:text="@string/time"
             android:layout_width="0dp"
             android:layout_weight="24"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
     </LinearLayout>
 
     <TextView
-        android:text="Select days of week"
+        android:text="@string/select_days_of_week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"

@@ -11,7 +11,7 @@
     tools:context="ru.spbau.mit.atum.FilterEditorActivity">
 
     <Button
-        android:text="Interval filter"
+        android:text="@string/interval_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="127dp"
@@ -21,7 +21,7 @@
         android:onClick = "onIntervalFilterClick" />
 
     <Button
-        android:text="Week filter"
+        android:text="@string/week_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/interval_filter"
@@ -32,7 +32,7 @@
         android:onClick="onWeekFilterClick" />
 
     <Button
-        android:text="OK"
+        android:text="@string/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

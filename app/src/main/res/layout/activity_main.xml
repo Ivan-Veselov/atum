@@ -11,7 +11,7 @@
     tools:context="ru.spbau.mit.atum.MainActivity">
 
     <Button
-        android:text="view schedule"
+        android:text="@string/view_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/view_schedule_button"
@@ -21,7 +21,7 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="EXPORT TO GOOGLE CALENDAR"
+        android:text="@string/export_to_google_calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_schedule_button"
@@ -31,7 +31,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Blocker List"
+        android:text="@string/blocker_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button"
@@ -41,7 +41,7 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="plan schedule"
+        android:text="@string/plan_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_planner_button"
@@ -51,7 +51,7 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Task List"
+        android:text="@string/task_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

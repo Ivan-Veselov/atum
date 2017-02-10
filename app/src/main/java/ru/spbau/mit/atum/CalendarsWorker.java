@@ -46,6 +46,7 @@ public class CalendarsWorker {
         while (cur.moveToNext()) {
             calID = cur.getLong(PROJECTION_ID_INDEX);
         }
+        cur.close();
 
         return calID;
     }
@@ -76,6 +77,8 @@ public class CalendarsWorker {
                     + "; accountName = " + accountName + "; ownerName = " + ownerName + "; accountType = " + accountType);
         }
 
+        cur.close();
+
     }
 
     public void addNewCalendarIfNotExist(String accountName, String displayName) {
@@ -95,6 +98,8 @@ public class CalendarsWorker {
         } else {
             addNewCalendar(uri, accountName, displayName);
         }
+
+        cur.close();
     }
 
     private Uri addNewCalendar(Uri uri, String accountName, String displayName) {

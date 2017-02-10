@@ -11,8 +11,6 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 
-import org.joda.time.DateTime;
-
 public class EventsWorker {
 
     private ContentResolver contentResolver;
@@ -48,6 +46,8 @@ public class EventsWorker {
         while (cur.moveToNext()) {
             eventID = cur.getLong(PROJECTION_ID_INDEX);
         }
+
+        cur.close();
 
         return eventID;
 
