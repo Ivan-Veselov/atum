@@ -11,26 +11,6 @@
     tools:context="ru.spbau.mit.atum.ui.MainActivity">
 
     <Button
-        android:text="@string/view_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view_schedule_button"
-        android:layout_below="@+id/schedule_planner_button"
-        android:layout_alignParentStart="true"
-        android:onClick="onViewScheduleClick"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/export_to_google_calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_schedule_button"
-        android:id="@+id/button2"
-        android:onClick="onExportToGoogleCalendarClick"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:text="@string/blocker_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,17 +18,8 @@
         android:onClick="onBlockerListClick"
         android:layout_below="@+id/task_list_button"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/plan_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/schedule_planner_button"
-        android:onClick="onSchedulePlannerClick"
-        android:layout_below="@+id/button"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        style="@style/Widget.AppCompat.Button.Borderless" />
 
     <Button
         android:text="@string/task_list"
@@ -59,6 +30,41 @@
         android:onClick="onTaskListClick"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:elevation="0dp"
+        style="@style/Widget.AppCompat.Button.Borderless" />
+
+    <Button
+        android:text="@string/view_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_schedule_button"
+        android:onClick="onViewScheduleClick"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_below="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/plan_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_planner_button"
+        android:onClick="onSchedulePlannerClick"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_below="@+id/view_schedule_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/export_to_google_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:onClick="onExportToGoogleCalendarClick"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_below="@+id/schedule_planner_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
