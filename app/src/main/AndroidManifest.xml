@@ -64,14 +64,12 @@
         <activity
             android:name=".ui.AdditionalTaskEditorActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.TabbedActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.FiltersTabbedActivity" />
+        <activity
+            android:name=".ui.TabbedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.FiltersTabbedActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

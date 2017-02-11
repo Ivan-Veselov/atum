@@ -108,7 +108,8 @@
                 android:id="@+id/task_editor_location_text"
                 android:clickable="true"
                 android:layout_weight="100"
-                android:onClick="onClickLocationButton" />
+                android:onClick="onClickLocationButton"
+                android:paddingLeft="5dp" />
 
             <Button
                 android:layout_width="25dp"
@@ -127,7 +128,8 @@
             android:text="@string/priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3" />
+            android:id="@+id/textView3"
+            android:paddingLeft="5dp" />
 
         <Spinner
             android:layout_width="match_parent"

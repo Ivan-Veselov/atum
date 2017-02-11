@@ -35,17 +35,14 @@
             android:id="@+id/additional_task_descripion"
             android:hint="@string/description" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.22" />
-
         <TextView
             android:text="@string/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:onClick="onClickLocationButton"
-            android:id="@+id/additional_task_location_text_view" />
+            android:id="@+id/additional_task_location_text_view"
+            android:padding="5dp" />
 
     </LinearLayout>
 
