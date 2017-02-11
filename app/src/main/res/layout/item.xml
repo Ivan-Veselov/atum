@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="20sp"
-        android:id="@+id/task_name" />
+        android:id="@+id/task_name"
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="12sp"
-        android:id="@+id/is_scheduled" />
+        android:id="@+id/is_scheduled"
+        android:textColor="?android:attr/textColorSecondary" />
 
 </LinearLayout>
