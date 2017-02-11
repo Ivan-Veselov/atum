@@ -25,8 +25,9 @@ public class TimeLineTaskGroup {
                              @NonNull ReadableDateTime initialMoment,
                              @NonNull ReadableDateTime finalMoment) {
         List<Interval> blockerIntervalList = new ArrayList<>();
-        for (AbstractFiltersHolder blocker: blockerList) {
-            blockerIntervalList.addAll(blocker.intervalRepresentation(initialMoment, finalMoment));
+        for (UserDefinedTimeBlocker blocker: blockerList) {
+            blockerIntervalList.addAll(
+                    blocker.getFilterSet().intervalRepresentation(initialMoment, finalMoment));
         }
 
         blockerIntervalList = Interval.normalize(blockerIntervalList);

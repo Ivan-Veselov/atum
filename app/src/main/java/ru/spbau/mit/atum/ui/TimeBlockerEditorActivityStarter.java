@@ -46,7 +46,8 @@ public class TimeBlockerEditorActivityStarter extends Activity {
             if (resultCode == RESULT_OK) {
                 UserDefinedTimeBlocker task = data.getParcelableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
 
-                Toast.makeText(this, task.getName() + " " + task.getFilterList().size(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, task.getName() + " " +
+                        task.getFilterSet().getFilterList().size(), Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -47,7 +47,8 @@ public class TaskEditorActivityStarter extends Activity {
             if (resultCode == RESULT_OK) {
                 UserDefinedTask task = data.getParcelableExtra(TaskEditorActivity.EXTRA_FILTER_HOLDER);
 
-                Toast.makeText(this, task.getName() + " " + task.getFilterList().size(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, task.getName() + " " +
+                        task.getFilterSet().getFilterList().size(), Toast.LENGTH_LONG).show();
             }
         }
     }

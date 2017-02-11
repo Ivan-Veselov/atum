@@ -18,8 +18,9 @@ public class TimeLineTask {
                         @NonNull ReadableDateTime initialMoment,
                         @NonNull ReadableDateTime finalMoment,
                         List<Interval> blockerIntervalList) {
-        List<Interval> intervals = Interval.difference(holder.intervalRepresentation(initialMoment, finalMoment),
-                                            blockerIntervalList);
+        List<Interval> intervals = Interval.difference(
+                        holder.getFilterSet().intervalRepresentation(initialMoment, finalMoment),
+                        blockerIntervalList);
         for (Interval interval: intervals) {
             if (interval.right() - interval.left() >= holder.getDuration().getStandardMinutes()) {
                 timeIntervals.add(interval);

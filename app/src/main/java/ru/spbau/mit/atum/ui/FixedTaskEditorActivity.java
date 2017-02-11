@@ -76,7 +76,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
             restDuration.setText(((Long) taskToEdit.getRestDuration().getStandardMinutes()).toString());
 
-            IntervalFilter filter = (IntervalFilter) taskToEdit.getFilterList().get(0);
+            IntervalFilter filter = (IntervalFilter) taskToEdit.getFilterSet().getFilterList().get(0);
             start = (DateTime)filter.getInitialMoment();
             end = (DateTime)filter.getFinalMoment();
 
