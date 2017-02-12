@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="20dp"
-    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textSize="20sp"
-        android:id="@+id/task_name"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:layout_weight="100">
 
-    <TextView
-        android:layout_width="match_parent"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:id="@+id/task_name"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:id="@+id/is_scheduled"
+            android:textColor="?android:attr/textColorSecondary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textSize="12sp"
-        android:id="@+id/is_scheduled"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:gravity="center_vertical">
 
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/item_edit_button"
+            android:background="@android:drawable/ic_menu_edit"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/item_delete_button"
+            android:background="@android:drawable/ic_menu_delete"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
 </LinearLayout>

@@ -33,6 +33,8 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity<U
     }
 
     @Override
-    protected void addSchedule(Map<String, Object> m, AbstractFiltersHolder u) {}
+    protected String getScheduleStatus(AbstractFiltersHolder u) {
+        return "";
+    }
 
 }

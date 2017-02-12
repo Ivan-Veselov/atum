@@ -21,12 +21,12 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity<UserDefi
     }
 
     @Override
-    protected void addSchedule(Map<String, Object> m, AbstractFiltersHolder task) {
+    protected String getScheduleStatus(AbstractFiltersHolder task) {
         UserDefinedTask userDefinedTask = (UserDefinedTask)task;
         if (userDefinedTask.getScheduledTime() == null) {
-            m.put(IS_SCHEDULED, "not scheduled");
+            return "not scheduled";
         } else {
-            m.put(IS_SCHEDULED, "OK");
+            return "OK";
         }
     }
 

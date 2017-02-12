@@ -1,15 +1,19 @@
 package ru.spbau.mit.atum.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +25,8 @@ import java.util.Map;
 import ru.spbau.mit.atum.model.AbstractFiltersHolder;
 import ru.spbau.mit.atum.R;
 
-public abstract class AbstractFiltersHolderListActivity<T extends AbstractFiltersHolder> extends UserDataEditorActivity {
-    protected static final String TASK_NAME = "task_name";
-
-    protected static final String IS_SCHEDULED = "is_scheduled";
-
-    protected static final int DELETE_ID = 0;
-
-    protected static final int EDIT_ID = 1;
-
+public abstract class AbstractFiltersHolderListActivity<T extends AbstractFiltersHolder>
+        extends UserDataEditorActivity {
     protected static final int NEW_TASK_CODE = 0;
 
     protected static final int EDIT_TASK_CODE = 1;
@@ -38,9 +35,7 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
 
     protected ListView listView;
 
-    protected SimpleAdapter adapter;
-
-    protected ArrayList<Map<String, Object>> data;
+    protected ListOfFiltersHoldersAdapter adapter;
 
     protected TextView title;
 
@@ -52,23 +47,13 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
 
         initializeHolder();
 
-        data = new ArrayList<>();
-        for (AbstractFiltersHolder task: filtersHolders) {
-            addNewTask(task);
-        }
-
         title = (TextView) findViewById(R.id.title);
         setTitleText();
 
-        String[] from = { TASK_NAME, IS_SCHEDULED };
-        int[] to = { R.id.task_name, R.id.is_scheduled };
-
-        adapter = new SimpleAdapter(this, data, R.layout.item, from, to);
+        adapter = new ListOfFiltersHoldersAdapter(filtersHolders, this);
 
         listView = (ListView) findViewById(R.id.task_list);
         listView.setAdapter(adapter);
-        registerForContextMenu(listView);
-
     }
 
     protected abstract void setTitleText();
@@ -80,14 +65,6 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
         startActivityForResult(intent, NEW_TASK_CODE);
     }
 
-    private void addNewTask(AbstractFiltersHolder task) {
-        Map<String, Object> m = new HashMap<>();
-        m.put(TASK_NAME, task.getName());
-
-        addSchedule(m, task);
-        data.add(m);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i("myLog", "requestCode = " + requestCode + ", resultCode = " + resultCode);
@@ -96,7 +73,6 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
             T newTask = data
                     .getParcelableExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.add(newTask);
-            addNewTask(newTask);
 
             adapter.notifyDataSetChanged();
             saveUserData();
@@ -108,58 +84,84 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
                     (AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER);
             filtersHolders.set(position, filtersHolder);
 
-            Map<String, Object> m = this.data.get(position);
-            m.put(TASK_NAME, filtersHolder.getName());
-            addSchedule(m, filtersHolder);
-
             adapter.notifyDataSetChanged();
             saveUserData();
         }
     }
 
-    protected abstract void addSchedule(Map<String, Object> m, AbstractFiltersHolder task);
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        menu.add(0, DELETE_ID, 0, "Delete");
-        menu.add(0, EDIT_ID, 0, "Edit");
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == DELETE_ID) {
-            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            filtersHolders.remove(adapterContextMenuInfo.position);
-            data.remove(adapterContextMenuInfo.position);
-            Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_LONG).show();
-            adapter.notifyDataSetChanged();
-            saveUserData();
-            return true;
-        }
-        if (item.getItemId() == EDIT_ID) {
-            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo
-                    = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-            Intent intent = initializeEditIntent(filtersHolders.get(adapterContextMenuInfo.position));
-
-            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER,
-                    filtersHolders.get(adapterContextMenuInfo.position));
-
-            intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION,
-                    adapterContextMenuInfo.position);
-
-            startActivityForResult(intent, EDIT_TASK_CODE);
-
-            adapter.notifyDataSetChanged();
-            return true;
-        }
-
-        return false;
-    }
+    protected abstract String getScheduleStatus(AbstractFiltersHolder task);
 
     protected abstract Intent initializeIntent();
 
     protected abstract Intent initializeEditIntent(AbstractFiltersHolder holder);
+
+    private class ListOfFiltersHoldersAdapter extends BaseAdapter implements ListAdapter {
+        private List<T> list;
+
+        private Context context;
+
+        public ListOfFiltersHoldersAdapter(List<T> list, Context context) {
+            this.list = list;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.item, null);
+            }
+
+            TextView name = (TextView) view.findViewById(R.id.task_name);
+            name.setText(list.get(position).getName());
+
+            TextView isScheduled = (TextView) view.findViewById(R.id.is_scheduled);
+            isScheduled.setText(getScheduleStatus(list.get(position)));
+
+            Button editBtn = (Button)view.findViewById(R.id.item_edit_button);
+            Button deleteBtn = (Button)view.findViewById(R.id.item_delete_button);
+
+            editBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intent = initializeEditIntent(list.get(position));
+
+                    intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER,
+                            list.get(position));
+
+                    intent.putExtra(AbstractFiltersHolderEditorActivity.EXTRA_FILTER_HOLDER_POSITION, position);
+
+                    startActivityForResult(intent, EDIT_TASK_CODE);
+                    notifyDataSetChanged();
+                }
+            });
+
+            deleteBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    list.remove(position);
+                    saveUserData();
+                    notifyDataSetChanged();
+                }
+            });
+
+            return view;
+        }
+    }
 
 }
