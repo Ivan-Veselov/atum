@@ -3,8 +3,6 @@ package ru.spbau.mit.atum.ui;
 
 import android.content.Intent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import ru.spbau.mit.atum.R;
@@ -35,6 +33,8 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity<U
     }
 
     @Override
-    protected void addSchedule(Map<String, Object> m, AbstractFiltersHolder u) {}
+    protected String getScheduleStatus(AbstractFiltersHolder u) {
+        return "";
+    }
 
 }

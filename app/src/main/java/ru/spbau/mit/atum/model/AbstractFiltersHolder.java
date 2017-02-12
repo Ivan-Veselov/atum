@@ -4,28 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import org.joda.time.ReadableDateTime;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import ru.spbau.mit.atum.model.Interval;
-import ru.spbau.mit.atum.model.TimeFilter;
 
 /**
  * Абстрактный класс, описывающий объекты, которые состоят из набора фильтров. Типичный пример
  * такого объекта - задача.
- * Весь набор фильтров описывает некоторое подмножество временной прямой. Объединение обычных
- * фильтров дает некоторое подмножество прямой. Если из этого объединения вычесть объединение
- * исключающих фильтров, то получится подмножество временной прямой, которое задает набор фильтров.
  */
 public abstract class AbstractFiltersHolder implements Parcelable {
     private final String name;
 
     private final String description;
 
-    private final List<TimeFilter> filterList;
+    private final FilterSet filterSet;
 
     /**
      * Конструктор абстрактного объекта, содержащего набор фильтров.
@@ -38,7 +28,7 @@ public abstract class AbstractFiltersHolder implements Parcelable {
                                  @NonNull List<TimeFilter> filterList) {
         this.name = name;
         this.description = description;
-        this.filterList = Collections.unmodifiableList(filterList);
+        this.filterSet = new FilterSet(filterList);
     }
 
     /**
@@ -56,42 +46,10 @@ public abstract class AbstractFiltersHolder implements Parcelable {
     }
 
     /**
-     * @return неизменяемый набор фильтров.
+     * @return набор фильтров.
      */
-    public @NonNull List<TimeFilter> getFilterList() {
-        return filterList;
-    }
-
-    /**
-     * Конвертирует подмножество временной прямой, которое задает набор фильтров, в набор
-     * непересекающихся интервалов на прямой. Интервалы целочисленные, единицей дискретизации
-     * является минута.
-     * Точкой отсчета считается первый аргумент, все интервалы до нее обрезаются или отбрасываются.
-     * Второй аргумент задает правую границу, все интервалы после нее обрезаются или отбрасываются.
-     * Таким образом бесконечное число интервалов получится не может. Интервалы расположены в
-     * отсортированном порядке.
-     *
-     * @param initialMoment точка отсчета и нижняя граница времени.
-     * @param finalMoment верхняя граница времени.
-     * @return набор непересекающихся интервалов, представляющий подмножество временной прямой,
-     *         которое задает набор фильтров, в отсортированном порядке.
-     */
-    public @NonNull List<Interval> intervalRepresentation(@NonNull ReadableDateTime initialMoment,
-                                                          @NonNull ReadableDateTime finalMoment) {
-        List<Interval> commonFiltersRepresentation = new ArrayList<>();
-        List<Interval> exclusiveFiltersRepresentation = new ArrayList<>();
-
-        for (TimeFilter filter : filterList) {
-            List<Interval> filterRepresentation = filter.intervalRepresentation(initialMoment,
-                                                                                finalMoment);
-            if (filter.isExclusive()) {
-                exclusiveFiltersRepresentation.addAll(filterRepresentation);
-            } else {
-                commonFiltersRepresentation.addAll(filterRepresentation);
-            }
-        }
-
-        return Interval.difference(commonFiltersRepresentation, exclusiveFiltersRepresentation);
+    public @NonNull FilterSet getFilterSet() {
+        return filterSet;
     }
 
     @Override
@@ -103,14 +61,12 @@ public abstract class AbstractFiltersHolder implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
         out.writeString(description);
-        out.writeList(filterList);
+        out.writeParcelable(filterSet, flags);
     }
 
     protected AbstractFiltersHolder(Parcel in) {
         name = in.readString();
         description = in.readString();
-
-        filterList = new ArrayList<>();
-        in.readList(filterList, getClass().getClassLoader());
+        filterSet = in.readParcelable(getClass().getClassLoader());
     }
 }

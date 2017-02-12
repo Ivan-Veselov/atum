@@ -125,7 +125,7 @@ public class UserSynchronisableData extends UserData {
                  .setResultCallback(
                  new ResultCallback<DriveApi.MetadataBufferResult>() {
                      @Override
-                     public void onResult(DriveApi.MetadataBufferResult result) {
+                     public void onResult(@NonNull DriveApi.MetadataBufferResult result) {
                          MetadataBuffer mdResultSet = result.getMetadataBuffer();
                          int resultCount = mdResultSet.getCount();
 
@@ -154,8 +154,7 @@ public class UserSynchronisableData extends UserData {
         parcel.recycle();
     }
 
-    private void loadFromInputStream(@NonNull InputStream stream)
-            throws IOException, ClassNotFoundException {
+    private void loadFromInputStream(@NonNull InputStream stream) throws IOException {
         byte[] data = new byte[stream.available()];
         stream.read(data);
 
@@ -196,7 +195,7 @@ public class UserSynchronisableData extends UserData {
                     contents.commit(googleApiClient, null).setResultCallback(
                         new ResultCallback<Status>() {
                             @Override
-                            public void onResult(Status result) {
+                            public void onResult(@NonNull Status result) {
                                 callback.call();
                             }
                         }
@@ -223,7 +222,7 @@ public class UserSynchronisableData extends UserData {
 
                     try {
                         loadFromInputStream(contents.getInputStream());
-                    } catch (IOException | ClassNotFoundException e) {
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 

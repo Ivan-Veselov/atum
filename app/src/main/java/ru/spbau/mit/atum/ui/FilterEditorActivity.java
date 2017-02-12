@@ -8,6 +8,9 @@ import android.view.View;
 import ru.spbau.mit.atum.R;
 import ru.spbau.mit.atum.model.TimeFilter;
 
+/**
+ * TODO: убрать, сама activity уже не используется.
+ */
 public class FilterEditorActivity extends AppCompatActivity {
     public static final String EXTRA_FILTER =
             "ru.spbau.mit.atum.ui.FilterEditorActivity.EXTRA_FILTER";

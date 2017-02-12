@@ -13,7 +13,7 @@ import static android.provider.CalendarContract.ACCOUNT_TYPE_LOCAL;
 
 public class CalendarsWorker {
 
-    private ContentResolver contentResolver;
+    private final ContentResolver contentResolver;
 
     private static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0

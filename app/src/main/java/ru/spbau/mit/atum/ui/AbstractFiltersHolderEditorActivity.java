@@ -76,7 +76,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
         } else if (holderToEdit == null) {
             timeFilters = new ArrayList<>();
         } else {
-            timeFilters = new ArrayList<>(holderToEdit.getFilterList());
+            timeFilters = new ArrayList<>(holderToEdit.getFilterSet().getFilterList());
 
             nameField.setText(holderToEdit.getName());
             descriptionField.setText(holderToEdit.getDescription());

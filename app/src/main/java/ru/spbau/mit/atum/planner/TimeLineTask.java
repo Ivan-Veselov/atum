@@ -11,15 +11,16 @@ import ru.spbau.mit.atum.model.Interval;
 import ru.spbau.mit.atum.model.UserDefinedTask;
 
 public class TimeLineTask {
-    private List<Interval> timeIntervals = new ArrayList<>();
-    private UserDefinedTask holder;
+    private final List<Interval> timeIntervals = new ArrayList<>();
+    private final UserDefinedTask holder;
 
     public TimeLineTask(UserDefinedTask holder,
                         @NonNull ReadableDateTime initialMoment,
                         @NonNull ReadableDateTime finalMoment,
                         List<Interval> blockerIntervalList) {
-        List<Interval> intervals = Interval.difference(holder.intervalRepresentation(initialMoment, finalMoment),
-                                            blockerIntervalList);
+        List<Interval> intervals = Interval.difference(
+                        holder.getFilterSet().intervalRepresentation(initialMoment, finalMoment),
+                        blockerIntervalList);
         for (Interval interval: intervals) {
             if (interval.right() - interval.left() >= holder.getDuration().getStandardMinutes()) {
                 timeIntervals.add(interval);

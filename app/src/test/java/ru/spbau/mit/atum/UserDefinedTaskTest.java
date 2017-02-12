@@ -37,7 +37,7 @@ public class UserDefinedTaskTest {
 
         assertIntervalListEquals(new int[] {0, 60},
                                  new int[] {30, 90},
-                                 task.intervalRepresentation(theFirstOfJan(1, 30),
-                                                             theFirstOfJan(12, 0)));
+                                 task.getFilterSet().intervalRepresentation(theFirstOfJan(1, 30),
+                                                                            theFirstOfJan(12, 0)));
     }
 }

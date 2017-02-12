@@ -11,15 +11,13 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 
-import org.joda.time.DateTime;
-
 import ru.spbau.mit.atum.model.UserDefinedTask;
 
 public class EventsWorker {
 
-    private ContentResolver contentResolver;
+    private final ContentResolver contentResolver;
 
-    private long calID;
+    private final long calID;
 
     private static final int PURPLE = 0xAB47BC;
     private static final int RED = 0xF44336;

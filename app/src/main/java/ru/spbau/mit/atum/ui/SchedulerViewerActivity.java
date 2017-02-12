@@ -14,7 +14,7 @@ import ru.spbau.mit.atum.model.UserDefinedTask;
 
 public class SchedulerViewerActivity extends AppCompatActivity {
 
-    private ArrayList<Map<String, Object>> data = new ArrayList<>();
+    private final ArrayList<Map<String, Object>> data = new ArrayList<>();
 
     private static final String TASK_NAME = "task_name";
 
