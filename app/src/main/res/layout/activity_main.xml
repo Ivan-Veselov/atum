@@ -8,57 +8,123 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/cubes"
     tools:context="ru.spbau.mit.atum.ui.MainActivity">
 
-    <Button
-        android:text="@string/view_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view_schedule_button"
-        android:layout_below="@+id/schedule_planner_button"
-        android:layout_alignParentStart="true"
-        android:onClick="onViewScheduleClick"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/export_to_google_calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_schedule_button"
-        android:id="@+id/button2"
-        android:onClick="onExportToGoogleCalendarClick"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="@string/blocker_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:onClick="onBlockerListClick"
-        android:layout_below="@+id/task_list_button"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/plan_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/schedule_planner_button"
-        android:onClick="onSchedulePlannerClick"
-        android:layout_below="@+id/button"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/task_list"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:id="@+id/task_list_button"
-        android:onClick="onTaskListClick"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:id="@+id/button5"
+                android:background="@drawable/task_list" />
+
+            <Button
+                android:text="@string/task_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_list_button"
+                android:onClick="onTaskListClick" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button4"
+                android:background="@drawable/tea_cup"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size" />
+
+            <Button
+                android:text="@string/blocker_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:onClick="onBlockerListClick" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:id="@+id/button6"
+                android:background="@drawable/schedule" />
+
+            <Button
+                android:text="@string/plan_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/schedule_planner_button"
+                android:onClick="onSchedulePlannerClick" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:id="@+id/button7"
+                android:background="@drawable/view" />
+
+            <Button
+                android:text="@string/view_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_schedule_button"
+                android:onClick="onViewScheduleClick" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:id="@+id/button8"
+                android:background="@drawable/calendar" />
+
+            <Button
+                android:text="@string/export_to_google_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                android:onClick="onExportToGoogleCalendarClick" />
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
