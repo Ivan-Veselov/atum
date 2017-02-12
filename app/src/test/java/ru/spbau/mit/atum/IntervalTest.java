@@ -182,7 +182,7 @@ public class IntervalTest {
 
     @Test
     public void testDifference1() throws Exception {
-        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+        List<Interval> list = Interval.difference(Collections.singletonList(new Interval(5, 10)),
                                                   Arrays.asList(new Interval(0, 1),
                                                                 new Interval(2, 3),
                                                                 new Interval(4, 5)));
@@ -194,8 +194,8 @@ public class IntervalTest {
 
     @Test
     public void testDifference2() throws Exception {
-        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
-                                                  Arrays.asList(new Interval(3, 7)));
+        List<Interval> list = Interval.difference(Collections.singletonList(new Interval(5, 10)),
+                                                  Collections.singletonList(new Interval(3, 7)));
 
         assertIntervalListEquals(new int[] {7},
                                  new int[] {10},
@@ -204,7 +204,7 @@ public class IntervalTest {
 
     @Test
     public void testDifference3() throws Exception {
-        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+        List<Interval> list = Interval.difference(Collections.singletonList(new Interval(5, 10)),
                                                   Arrays.asList(new Interval(6, 7),
                                                                 new Interval(8, 9)));
 
@@ -215,8 +215,8 @@ public class IntervalTest {
 
     @Test
     public void testDifference4() throws Exception {
-        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
-                                                  Arrays.asList(new Interval(8, 13)));
+        List<Interval> list = Interval.difference(Collections.singletonList(new Interval(5, 10)),
+                                                  Collections.singletonList(new Interval(8, 13)));
 
         assertIntervalListEquals(new int[] {5},
                                  new int[] {8},
@@ -225,8 +225,8 @@ public class IntervalTest {
 
     @Test
     public void testDifference5() throws Exception {
-        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
-                                                  Arrays.asList(new Interval(3, 10)));
+        List<Interval> list = Interval.difference(Collections.singletonList(new Interval(5, 10)),
+                                                  Collections.singletonList(new Interval(3, 10)));
 
         assertIntervalListEquals(new int[] {},
                                  new int[] {},
@@ -235,7 +235,7 @@ public class IntervalTest {
 
     @Test
     public void testDifference6() throws Exception {
-        List<Interval> list = Interval.difference(Arrays.asList(new Interval(5, 10)),
+        List<Interval> list = Interval.difference(Collections.singletonList(new Interval(5, 10)),
                                                   Arrays.asList(new Interval(12, 13),
                                                                 new Interval(14, 15)));
 

@@ -125,7 +125,7 @@ public class UserSynchronisableData extends UserData {
                  .setResultCallback(
                  new ResultCallback<DriveApi.MetadataBufferResult>() {
                      @Override
-                     public void onResult(DriveApi.MetadataBufferResult result) {
+                     public void onResult(@NonNull DriveApi.MetadataBufferResult result) {
                          MetadataBuffer mdResultSet = result.getMetadataBuffer();
                          int resultCount = mdResultSet.getCount();
 
@@ -195,7 +195,7 @@ public class UserSynchronisableData extends UserData {
                     contents.commit(googleApiClient, null).setResultCallback(
                         new ResultCallback<Status>() {
                             @Override
-                            public void onResult(Status result) {
+                            public void onResult(@NonNull Status result) {
                                 callback.call();
                             }
                         }
