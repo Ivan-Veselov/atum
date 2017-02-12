@@ -20,7 +20,7 @@ public final class Interval {
 
     private final int right;
 
-    public static Interval empty = new Interval(0, 0);
+    public static final Interval empty = new Interval(0, 0);
 
     /**
      * Создает новый интервал с заданными концами. В случае некорректных аргументов выбрасывается

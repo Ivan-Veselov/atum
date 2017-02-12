@@ -122,7 +122,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         return super.onCreateDialog(id);
     }
 
-    private DatePickerDialog.OnDateSetListener callBackStartIntervalDate = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener callBackStartIntervalDate = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -133,7 +133,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
     };
 
-    private DatePickerDialog.OnDateSetListener callBackEndIntervalDate = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener callBackEndIntervalDate = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -144,7 +144,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
+    private final TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             startHour = hourOfDay;
             startMinute = minute;
@@ -161,7 +161,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     };
 
     public void onButtonOKClick(View view) {
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
 
         ReadableDateTime startTime = new DateTime(startYear, startMonth,
                 startDay, startHour, startMinute);

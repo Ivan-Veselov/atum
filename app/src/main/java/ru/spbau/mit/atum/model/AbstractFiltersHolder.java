@@ -4,14 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import org.joda.time.ReadableDateTime;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import ru.spbau.mit.atum.model.Interval;
-import ru.spbau.mit.atum.model.TimeFilter;
 
 /**
  * Абстрактный класс, описывающий объекты, которые состоят из набора фильтров. Типичный пример

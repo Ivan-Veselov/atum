@@ -154,8 +154,7 @@ public class UserSynchronisableData extends UserData {
         parcel.recycle();
     }
 
-    private void loadFromInputStream(@NonNull InputStream stream)
-            throws IOException, ClassNotFoundException {
+    private void loadFromInputStream(@NonNull InputStream stream) throws IOException {
         byte[] data = new byte[stream.available()];
         stream.read(data);
 
@@ -223,7 +222,7 @@ public class UserSynchronisableData extends UserData {
 
                     try {
                         loadFromInputStream(contents.getInputStream());
-                    } catch (IOException | ClassNotFoundException e) {
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 

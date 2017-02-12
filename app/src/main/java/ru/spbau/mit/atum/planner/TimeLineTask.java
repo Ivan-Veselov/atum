@@ -11,8 +11,8 @@ import ru.spbau.mit.atum.model.Interval;
 import ru.spbau.mit.atum.model.UserDefinedTask;
 
 public class TimeLineTask {
-    private List<Interval> timeIntervals = new ArrayList<>();
-    private UserDefinedTask holder;
+    private final List<Interval> timeIntervals = new ArrayList<>();
+    private final UserDefinedTask holder;
 
     public TimeLineTask(UserDefinedTask holder,
                         @NonNull ReadableDateTime initialMoment,

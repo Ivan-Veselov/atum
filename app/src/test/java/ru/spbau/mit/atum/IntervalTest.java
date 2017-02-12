@@ -107,7 +107,7 @@ public class IntervalTest {
 
     private void assertEndPoint(int coordinate,
                                 Type type,
-                                Interval.EndPoint endPoint) throws Exception{
+                                Interval.EndPoint endPoint) {
         assertEquals(coordinate, endPoint.getCoordinate());
         assertEquals(type, endPoint.getType());
     }

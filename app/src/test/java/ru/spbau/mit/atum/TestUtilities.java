@@ -50,9 +50,8 @@ public final class TestUtilities {
      * @param left левая граница интервала.
      * @param right правая граница интервала.
      * @param interval состояние класса Interval.
-     * @throws Exception любое исключение, которое может вылететь во время тестирования.
      */
-    public static void assertIntervalEquals(int left, int right, Interval interval) throws Exception {
+    public static void assertIntervalEquals(int left, int right, Interval interval) {
         assertEquals(left, interval.left());
         assertEquals(right, interval.right());
     }

@@ -33,7 +33,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
     private EditText description;
 
     private final int DAYS_IN_WEEK = 7;
-    private CheckBox [] checkBoxList = new CheckBox[DAYS_IN_WEEK];
+    private final CheckBox [] checkBoxList = new CheckBox[DAYS_IN_WEEK];
 
     private WeekFilter previousFilter;
 
@@ -94,7 +94,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         return super.onCreateDialog(id);
     }
 
-    private TimePickerDialog.OnTimeSetListener CallBackForFirstMinute = new TimePickerDialog.OnTimeSetListener() {
+    private final TimePickerDialog.OnTimeSetListener CallBackForFirstMinute = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             firstMinuteHour = hourOfDay;
             firstMinuteMinute = minute;
@@ -102,7 +102,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener CallBackForDuration = new TimePickerDialog.OnTimeSetListener() {
+    private final TimePickerDialog.OnTimeSetListener CallBackForDuration = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             minuteAfterLastHour = hourOfDay;
             minuteAfterLastMinute = minute;

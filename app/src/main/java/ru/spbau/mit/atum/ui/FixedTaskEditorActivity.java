@@ -131,7 +131,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         return super.onCreateDialog(id);
     }
 
-    private DatePickerDialog.OnDateSetListener callBackStartIntervalDate = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener callBackStartIntervalDate = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -140,7 +140,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         }
     };
 
-    private DatePickerDialog.OnDateSetListener callBackEndIntervalDate = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener callBackEndIntervalDate = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -149,14 +149,14 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
+    private final TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             start = start.withTime(hourOfDay, minute, 0, 0);
             tvStartTime.setText(start.getHourOfDay() + " hours " + start.getMinuteOfHour() + " minutes");
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener callBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
+    private final TimePickerDialog.OnTimeSetListener callBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             end = end.withTime(hourOfDay, minute, 0, 0);
             tvEndTime.setText(end.getHourOfDay() + " hours " + end.getMinuteOfHour() + " minutes");

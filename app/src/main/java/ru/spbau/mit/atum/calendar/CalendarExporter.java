@@ -6,7 +6,7 @@ import java.util.List;
 
 import ru.spbau.mit.atum.model.UserDefinedTask;
 
-public class CalendarExporter {
+public final class CalendarExporter {
 
     private EventsWorker eventsWorker;
 
