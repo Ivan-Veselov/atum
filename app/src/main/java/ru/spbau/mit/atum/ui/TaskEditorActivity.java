@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,11 +42,11 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
 
     private EditText restDuration;
 
-    private Spinner prioritySpinner;
-
     private Place chosenPlace = null;
 
     private int chosenPriority = 1;
+
+    private SeekBar seekBar;
 
     @Override
     protected void initializeLayout() {
@@ -57,20 +58,10 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
         timeFilterListView = (ListView) findViewById(R.id.task_editor_filter_list);
         placeTextView = (TextView) findViewById(R.id.task_editor_location_text);
         restDuration = (EditText) findViewById(R.id.task_editor_rest_duration);
-        prioritySpinner = (Spinner) findViewById(R.id.task_editor_priority_spinner);
+        seekBar = (SeekBar)findViewById(R.id.seek_bar);
 
         restDuration.setHint(((Integer)DEFAULT_REST_DURATION).toString());
 
-        prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                chosenPriority = Integer.valueOf(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
     }
 
     @Override
@@ -94,7 +85,7 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
             }
         }
 
-        prioritySpinner.setSelection(chosenPriority - 1);
+        seekBar.setProgress(chosenPriority - 1);
     }
 
     @Override
@@ -132,7 +123,7 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
                 timeFilters,
                 duration,
                 chosenPlace,
-                chosenPriority);
+                seekBar.getProgress() + 1);
 
         if (!restDuration.getText().toString().isEmpty()) {
             try {

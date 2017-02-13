@@ -124,18 +124,27 @@
             android:layout_width="match_parent"
             android:layout_height="11dp" />
 
-        <TextView
-            android:text="@string/priority"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:paddingLeft="5dp" />
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/task_editor_priority_spinner"
-            android:entries="@array/priorities" />
+            <TextView
+                android:text="@string/priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:paddingTop="5dp" />
+
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seek_bar"
+                android:max="4" />
+
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
