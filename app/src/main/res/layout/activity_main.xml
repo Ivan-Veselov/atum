@@ -8,7 +8,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/cubes"
     tools:context="ru.spbau.mit.atum.ui.MainActivity">
 
     <LinearLayout
@@ -58,27 +57,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:id="@+id/button6"
-                android:background="@drawable/schedule" />
-
-            <Button
-                android:text="@string/plan_schedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/schedule_planner_button"
-                android:onClick="onSchedulePlannerClick" />
-
-
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,6 +79,27 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:id="@+id/button6"
+                android:background="@drawable/schedule" />
+
+            <Button
+                android:text="@string/plan_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/schedule_planner_button"
+                android:onClick="onSchedulePlannerClick" />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
