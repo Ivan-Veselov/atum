@@ -10,28 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ru.spbau.mit.atum.ui.TimeBlockerEditorActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:id="@+id/time_blocker_editor_name_field"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:hint="@string/name"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:layout_below="@+id/time_blocker_editor_name_field"
-        android:id="@+id/time_blocker_editor_description_field"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/time_blocker_editor_filter_list"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:layout_above="@+id/time_blocker_editor_apply_button"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="wrap_content"
-        android:hint="@string/description" />
-
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/apply"
@@ -41,16 +29,6 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/time_blocker_editor_apply_button"
         android:onClick="onClickApplyButton" />
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/time_blocker_editor_filter_list"
-        android:headerDividersEnabled="false"
-        android:footerDividersEnabled="false"
-        android:layout_above="@+id/time_blocker_editor_apply_button"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/time_blocker_editor_description_field" />
 
     <Button
         android:text="@string/add_filter"
