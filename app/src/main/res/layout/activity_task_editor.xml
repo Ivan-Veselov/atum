@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_task"
     android:layout_width="match_parent"
@@ -12,173 +12,40 @@
     android:alwaysDrawnWithCache="false"
     android:focusable="false"
     android:focusableInTouchMode="false"
-    android:clickable="false">
+    android:clickable="false"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/task_editor_filter_list"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:layout_height="0dp"
+        android:layout_weight="40"/>
 
-        <EditText
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="59dp">
+
+        <Button
+            android:text="@string/apply"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/task_editor_name_field"
-            android:hint="@string/name" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/task_editor_apply_button"
+            android:onClick="onClickApplyButton" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/task_editor_description_field"
+        <Button
+            android:text="@string/add_filter"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/description" />
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/task_editor_apply_button"
+            android:id="@+id/task_editor_add_filter_button"
+            android:onClick="onClickAddFilterButton" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="13dp" />
+    </RelativeLayout>
 
-        <LinearLayout
-            android:baselineAligned="false"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:orientation="vertical">
-
-                <TextView
-                    android:text="@string/duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:id="@+id/textView" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/task_editor_duration_field" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:orientation="vertical">
-
-                <TextView
-                    android:text="@string/rest_duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:id="@+id/textView2" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/task_editor_rest_duration" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="11dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:text="@string/location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/task_editor_location_text"
-                android:clickable="true"
-                android:layout_weight="100"
-                android:onClick="onClickLocationButton"
-                android:paddingLeft="5dp" />
-
-            <Button
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:onClick="onClearLocationButtonClick"
-                android:id="@+id/task_editor_clear_location_button"
-                android:background="@android:drawable/ic_menu_close_clear_cancel" />
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="11dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp">
-
-            <TextView
-                android:text="@string/priority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:paddingTop="5dp" />
-
-            <SeekBar
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/seek_bar"
-                android:max="4" />
-
-        </LinearLayout>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:id="@+id/task_editor_filter_list"
-            android:headerDividersEnabled="false"
-            android:footerDividersEnabled="false"
-            android:layout_height="0dp"
-            android:layout_weight="40"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_height="59dp">
-
-            <Button
-                android:text="@string/apply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/task_editor_apply_button"
-                android:onClick="onClickApplyButton" />
-
-            <Button
-                android:text="@string/add_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toStartOf="@+id/task_editor_apply_button"
-                android:id="@+id/task_editor_add_filter_button"
-                android:onClick="onClickAddFilterButton" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

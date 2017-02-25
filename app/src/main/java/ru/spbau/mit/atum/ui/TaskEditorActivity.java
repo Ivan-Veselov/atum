@@ -52,16 +52,19 @@ public class TaskEditorActivity extends AbstractFiltersHolderEditorActivity {
     protected void initializeLayout() {
         setContentView(R.layout.activity_task_editor);
 
-        nameField = (EditText) findViewById(R.id.task_editor_name_field);
-        descriptionField = (EditText) findViewById(R.id.task_editor_description_field);
-        durationField = (EditText) findViewById(R.id.task_editor_duration_field);
-        timeFilterListView = (ListView) findViewById(R.id.task_editor_filter_list);
-        placeTextView = (TextView) findViewById(R.id.task_editor_location_text);
-        restDuration = (EditText) findViewById(R.id.task_editor_rest_duration);
-        seekBar = (SeekBar)findViewById(R.id.seek_bar);
+        View header = getLayoutInflater().inflate(R.layout.activity_task_editor_header, null);
+
+        nameField = (EditText) header.findViewById(R.id.task_editor_name_field);
+        descriptionField = (EditText) header.findViewById(R.id.task_editor_description_field);
+        durationField = (EditText) header.findViewById(R.id.task_editor_duration_field);
+        placeTextView = (TextView) header.findViewById(R.id.task_editor_location_text);
+        restDuration = (EditText) header.findViewById(R.id.task_editor_rest_duration);
+        seekBar = (SeekBar) header.findViewById(R.id.seek_bar);
 
         restDuration.setHint(((Integer)DEFAULT_REST_DURATION).toString());
 
+        timeFilterListView = (ListView) findViewById(R.id.task_editor_filter_list);
+        timeFilterListView.addHeaderView(header);
     }
 
     @Override

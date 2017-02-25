@@ -1,6 +1,7 @@
 package ru.spbau.mit.atum.ui;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -16,9 +17,13 @@ public class TimeBlockerEditorActivity extends AbstractFiltersHolderEditorActivi
     protected void initializeLayout() {
         setContentView(R.layout.activity_time_blocker_editor);
 
-        nameField = (EditText) findViewById(R.id.time_blocker_editor_name_field);
-        descriptionField = (EditText) findViewById(R.id.time_blocker_editor_description_field);
+        View header = getLayoutInflater().inflate(R.layout.activity_time_blocker_editor_header, null);
+
+        nameField = (EditText) header.findViewById(R.id.time_blocker_editor_name_field);
+        descriptionField = (EditText) header.findViewById(R.id.time_blocker_editor_description_field);
+
         timeFilterListView = (ListView) findViewById(R.id.time_blocker_editor_filter_list);
+        timeFilterListView.addHeaderView(header);
     }
 
     @Override
