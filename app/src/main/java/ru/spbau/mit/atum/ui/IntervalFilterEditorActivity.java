@@ -15,10 +15,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
-import org.joda.time.ReadableDateTime;
 
-import ru.spbau.mit.atum.model.IntervalFilter;
 import ru.spbau.mit.atum.R;
+import ru.spbau.mit.atum.model.IntervalFilter;
 import ru.spbau.mit.atum.model.TimeFilter;
 
 public class IntervalFilterEditorActivity extends AppCompatActivity {
@@ -29,17 +28,8 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
     private final DateTime currentDateTime = new DateTime();
 
-    private int startYear = currentDateTime.getYear();
-    private int startMonth = currentDateTime.getMonthOfYear();
-    private int startDay = currentDateTime.getDayOfMonth();
-    private int endYear = currentDateTime.getYear();
-    private int endMonth = currentDateTime.getMonthOfYear();
-    private int endDay = currentDateTime.getDayOfMonth();
-
-    private int startHour = currentDateTime.getHourOfDay();
-    private int startMinute = currentDateTime.getMinuteOfHour();
-    private int endHour = currentDateTime.getHourOfDay();
-    private int endMinute = currentDateTime.getMinuteOfHour();
+    private DateTime start = currentDateTime;
+    private DateTime end = currentDateTime;
 
     private TextView tvStartDate;
     private TextView tvStartTime;
@@ -68,23 +58,15 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
             isExclusionary.setChecked(previousFilter.isExclusive());
             description.setText(previousFilter.getDescription());
 
-            startYear = previousFilter.getInitialMoment().getYear();
-            startMonth = previousFilter.getInitialMoment().getMonthOfYear();
-            startDay = previousFilter.getInitialMoment().getDayOfMonth();
-            startHour = previousFilter.getInitialMoment().getHourOfDay();
-            startMinute = previousFilter.getInitialMoment().getMinuteOfHour();
-
-            endYear = previousFilter.getFinalMoment().getYear();
-            endMonth = previousFilter.getFinalMoment().getMonthOfYear();
-            endDay = previousFilter.getFinalMoment().getDayOfMonth();
-            endHour = previousFilter.getFinalMoment().getHourOfDay();
-            endMinute = previousFilter.getFinalMoment().getMinuteOfHour();
+            start = previousFilter.getInitialMoment().toDateTime();
+            end = previousFilter.getFinalMoment().toDateTime();
         }
-        tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
-        tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
 
-        tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
-        tvEndTime.setText(endHour + " hours " + endMinute + " minutes");
+        tvStartDate.setText(start.toString("dd.MM.yyyy"));
+        tvStartTime.setText(start.toString("HH:mm"));
+
+        tvEndDate.setText(end.toString("dd.MM.yyyy"));
+        tvEndTime.setText(end.toString("HH:mm"));
 
     }
 
@@ -107,17 +89,19 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == START_DATE) {
             return new DatePickerDialog(this, callBackStartIntervalDate,
-                    startYear, startMonth - 1, startDay);
+                    start.getYear(), start.getMonthOfYear() - 1, start.getDayOfMonth());
         }
         if (id == START_TIME) {
-            return new TimePickerDialog(this, callBackStartIntevalTime, startHour, startMinute, true);
+            return new TimePickerDialog(this, callBackStartIntevalTime,
+                    start.getHourOfDay(), start.getMinuteOfHour(), true);
         }
         if (id == END_DATE) {
             return new DatePickerDialog(this, callBackEndIntervalDate,
-                    endYear, endMonth - 1, endDay);
+                    start.getYear(), end.getMonthOfYear() - 1, end.getDayOfMonth());
         }
         if (id == END_TIME) {
-            return new TimePickerDialog(this, callBackEndIntevalTime, endHour, endMinute, true);
+            return new TimePickerDialog(this, callBackEndIntevalTime,
+                    end.getHourOfDay(), end.getMinuteOfHour(), true);
         }
         return super.onCreateDialog(id);
     }
@@ -126,10 +110,8 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            startYear = year;
-            startMonth = monthOfYear + 1;
-            startDay = dayOfMonth;
-            tvStartDate.setText(startDay + "/" + startMonth + "/" + startYear);
+            start = start.withDate(year, monthOfYear + 1, dayOfMonth);
+            tvStartDate.setText(start.toString("dd.MM.yyyy"));
         }
     };
 
@@ -137,38 +119,29 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            endYear = year;
-            endMonth = monthOfYear + 1;
-            endDay = dayOfMonth;
-            tvEndDate.setText(endDay + "/" + endMonth + "/" + endYear);
+            end = end.withDate(year, monthOfYear + 1, dayOfMonth);
+            tvEndDate.setText(end.toString("dd.MM.yyyy"));
         }
     };
 
     private final TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            startHour = hourOfDay;
-            startMinute = minute;
-            tvStartTime.setText(startHour + " hours " + startMinute + " minutes");
+            start = start.withTime(hourOfDay, minute, 0, 0);
+            tvStartTime.setText(start.toString("HH:mm"));
         }
     };
 
     private TimePickerDialog.OnTimeSetListener callBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            endHour = hourOfDay;
-            endMinute = minute;
-            tvEndTime.setText(endHour + " hours " + endMinute + " minutes");
+            end = end.withTime(hourOfDay, minute, 0, 0);
+            tvEndTime.setText(end.toString("HH:mm"));
         }
     };
 
     public void onButtonOKClick(View view) {
         final Intent intent = new Intent();
 
-        ReadableDateTime startTime = new DateTime(startYear, startMonth,
-                startDay, startHour, startMinute);
-        ReadableDateTime endTime = new DateTime(endYear, endMonth,
-                endDay, endHour, endMinute);
-
-        if (endTime.compareTo(startTime) < 0) {
+        if (end.compareTo(start) < 0) {
             Toast.makeText(getApplicationContext(), "Invalid time interval", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -181,7 +154,7 @@ public class IntervalFilterEditorActivity extends AppCompatActivity {
         }
 
         TimeFilter timeFilter = new IntervalFilter(description.getText().toString(),
-                    startTime, endTime, exclusionType);
+                    start, end, exclusionType);
 
         if (previousFilter == null) {
             intent.putExtra("filter", timeFilter);

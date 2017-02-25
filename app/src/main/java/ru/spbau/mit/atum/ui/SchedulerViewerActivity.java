@@ -5,8 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import ru.spbau.mit.atum.R;
@@ -46,7 +50,7 @@ public class SchedulerViewerActivity extends AppCompatActivity {
     private void addNewTask(UserDefinedTask task) {
         Map<String, Object> m = new HashMap<>();
         m.put(TASK_NAME, task.getName());
-        m.put(SCHEDULE_TIME, task.getScheduledTime().toString());
+        m.put(SCHEDULE_TIME, task.getScheduledTime().toString("yyyy-MM-dd HH:mm:ss"));
 
         data.add(m);
     }

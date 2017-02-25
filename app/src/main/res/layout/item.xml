@@ -40,7 +40,8 @@
             android:layout_height="25dp"
             android:id="@+id/item_scheduled_button"
             android:background="?android:attr/textCheckMarkInverse"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:visibility="invisible" />
 
         <Button
             android:layout_width="25dp"

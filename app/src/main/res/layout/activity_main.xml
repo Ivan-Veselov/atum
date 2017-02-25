@@ -57,6 +57,26 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:id="@+id/button6"
+                android:background="@drawable/schedule" />
+
+            <Button
+                android:text="@string/plan_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/schedule_planner_button"
+                android:onClick="onSchedulePlannerClick" />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,28 +95,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/view_schedule_button"
                 android:onClick="onViewScheduleClick" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:id="@+id/button6"
-                android:background="@drawable/schedule" />
-
-            <Button
-                android:text="@string/plan_schedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/schedule_planner_button"
-                android:onClick="onSchedulePlannerClick" />
 
 
         </LinearLayout>

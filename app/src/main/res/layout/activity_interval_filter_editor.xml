@@ -59,7 +59,7 @@
         <TextView
             android:text="@string/time"
             android:layout_width="0dp"
-            android:layout_weight="14"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:id="@+id/interval_start_time"
             android:clickable="true"
@@ -68,7 +68,7 @@
         <TextView
             android:text="@string/date"
             android:layout_width="0dp"
-            android:layout_weight="10"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:id="@+id/interval_start_date"
             android:clickable="true"
@@ -96,7 +96,7 @@
         <TextView
             android:text="@string/time"
             android:layout_width="0dp"
-            android:layout_weight="14"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:id="@+id/interval_end_time"
             android:clickable="true"
@@ -105,7 +105,7 @@
         <TextView
             android:text="@string/date"
             android:layout_width="0dp"
-            android:layout_weight="10"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:id="@+id/interval_end_date"
             android:clickable="true"

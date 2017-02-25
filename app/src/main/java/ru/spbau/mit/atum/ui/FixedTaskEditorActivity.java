@@ -87,11 +87,11 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
 
         }
 
-        tvStartDate.setText(start.getDayOfMonth() + "/" + start.getMonthOfYear() + "/" + start.getYear());
-        tvStartTime.setText(start.getHourOfDay() + " hours " + start.getMinuteOfHour() + " minutes");
+        tvStartDate.setText(start.toString("dd.MM.yyyy"));
+        tvStartTime.setText(start.toString("HH:mm"));
 
-        tvEndDate.setText(end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear());
-        tvEndTime.setText(end.getHourOfDay() + " hours " + end.getMinuteOfHour() + " minutes");
+        tvEndDate.setText(end.toString("dd.MM.yyyy"));
+        tvEndTime.setText(end.toString("HH:mm"));
 
     }
 
@@ -136,7 +136,7 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             start = start.withDate(year, monthOfYear + 1, dayOfMonth);
-            tvStartDate.setText(start.getDayOfMonth() + "/" + start.getMonthOfYear() + "/" + start.getYear());
+            tvStartDate.setText(start.toString("dd.MM.yyyy"));
         }
     };
 
@@ -145,21 +145,21 @@ public class FixedTaskEditorActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             end = end.withDate(year, monthOfYear + 1, dayOfMonth);
-            tvEndDate.setText(end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear());
+            tvEndDate.setText(end.toString("dd.MM.yyyy"));
         }
     };
 
     private final TimePickerDialog.OnTimeSetListener callBackStartIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             start = start.withTime(hourOfDay, minute, 0, 0);
-            tvStartTime.setText(start.getHourOfDay() + " hours " + start.getMinuteOfHour() + " minutes");
+            tvStartTime.setText(start.toString("HH:mm"));
         }
     };
 
     private final TimePickerDialog.OnTimeSetListener callBackEndIntevalTime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             end = end.withTime(hourOfDay, minute, 0, 0);
-            tvEndTime.setText(end.getHourOfDay() + " hours " + end.getMinuteOfHour() + " minutes");
+            tvEndTime.setText(end.toString("HH:mm"));
         }
     };
 

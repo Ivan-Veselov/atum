@@ -53,7 +53,7 @@
         <TextView
             android:text="@string/time"
             android:layout_width="0dp"
-            android:layout_weight="24"
+            android:layout_weight="12"
             android:layout_height="wrap_content"
             android:id="@+id/first_minute"
             android:clickable="true"
@@ -78,7 +78,7 @@
         <TextView
             android:text="@string/time"
             android:layout_width="0dp"
-            android:layout_weight="24"
+            android:layout_weight="12"
             android:layout_height="wrap_content"
             android:id="@+id/duration"
             android:clickable="true"

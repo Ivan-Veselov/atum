@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import org.joda.time.DateTime;
+
 import java.util.EnumSet;
 
 import ru.spbau.mit.atum.R;
@@ -21,10 +23,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
     private final int FIRST_MINUTE = 1;
     private final int DURATION = 2;
 
-    private int firstMinuteHour = 0;
-    private int firstMinuteMinute = 0;
-    private int minuteAfterLastHour = 0;
-    private int minuteAfterLastMinute = 0;
+    private DateTime first = new DateTime().withTime(0, 0, 0, 0);
+    private DateTime after = new DateTime().withTime(0, 0, 0, 0);
 
     private CheckBox isExclusionary;
 
@@ -58,10 +58,8 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
             isExclusionary.setChecked(previousFilter.isExclusive());
             description.setText(previousFilter.getDescription());
 
-            firstMinuteHour = previousFilter.getFirstMinute() / 60;
-            firstMinuteMinute = previousFilter.getFirstMinute() % 60;
-            minuteAfterLastHour = previousFilter.getMinuteAfterLast() / 60;
-            minuteAfterLastMinute = previousFilter.getMinuteAfterLast() % 60;
+            first = new DateTime().withTime(0, 0, 0, 0).plusMinutes(previousFilter.getFirstMinute());
+            after = new DateTime().withTime(0, 0, 0, 0).plusMinutes(previousFilter.getMinuteAfterLast());
 
             for (int i = 0; i < 7; i++) {
                 checkBoxList[i].setChecked(
@@ -70,10 +68,10 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
 
         tvFirstMinute = (TextView) findViewById(R.id.first_minute);
-        tvFirstMinute.setText(firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+        tvFirstMinute.setText(first.toString("HH:mm"));
 
         tvDuration = (TextView) findViewById(R.id.duration);
-        tvDuration.setText(minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
+        tvDuration.setText(after.toString("HH:mm"));
     }
 
     public void onFirstMinuteClick(View view) {
@@ -86,27 +84,25 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
 
     protected Dialog onCreateDialog(int id) {
         if (id == FIRST_MINUTE) {
-            return new TimePickerDialog(this, CallBackForFirstMinute, firstMinuteHour, firstMinuteMinute, true);
+            return new TimePickerDialog(this, CallBackForFirstMinute, first.getHourOfDay(), first.getMinuteOfHour(), true);
         }
         if (id == DURATION) {
-            return new TimePickerDialog(this, CallBackForDuration, minuteAfterLastHour, minuteAfterLastMinute, true);
+            return new TimePickerDialog(this, CallBackForDuration, after.getHourOfDay(), after.getMinuteOfHour(), true);
         }
         return super.onCreateDialog(id);
     }
 
     private final TimePickerDialog.OnTimeSetListener CallBackForFirstMinute = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            firstMinuteHour = hourOfDay;
-            firstMinuteMinute = minute;
-            tvFirstMinute.setText(firstMinuteHour + " hours " + firstMinuteMinute + " minutes");
+            first = first.withTime(hourOfDay, minute, 0, 0);
+            tvFirstMinute.setText(first.toString("HH:mm"));
         }
     };
 
     private final TimePickerDialog.OnTimeSetListener CallBackForDuration = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            minuteAfterLastHour = hourOfDay;
-            minuteAfterLastMinute = minute;
-            tvDuration.setText(minuteAfterLastHour + " hours " + minuteAfterLastMinute + " minutes");
+            after = after.withTime(hourOfDay, minute, 0, 0);
+            tvDuration.setText(after.toString("HH:mm"));
         }
     };
 
@@ -127,7 +123,7 @@ public class WeekFilterEditorActivity extends AppCompatActivity {
         }
 
         TimeFilter timeFilter = WeekFilter.newWeekFilterFromMinutesInterval(description.getText().toString(),
-                firstMinuteHour * 60 + firstMinuteMinute, minuteAfterLastHour * 60 + minuteAfterLastMinute,
+                first.getMinuteOfDay(), after.getMinuteOfDay(),
                 mask, exclusionType);
 
         if (previousFilter == null) {
