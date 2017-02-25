@@ -91,6 +91,10 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
 
     protected abstract String getScheduleStatus(AbstractFiltersHolder task);
 
+    protected abstract boolean getScheduleStatusBool(AbstractFiltersHolder task);
+
+    protected abstract String getTaskType(AbstractFiltersHolder task);
+
     protected abstract Intent initializeIntent();
 
     protected abstract Intent initializeEditIntent(AbstractFiltersHolder holder);
@@ -131,7 +135,12 @@ public abstract class AbstractFiltersHolderListActivity<T extends AbstractFilter
             name.setText(list.get(position).getName());
 
             TextView isScheduled = (TextView) view.findViewById(R.id.is_scheduled);
-            isScheduled.setText(getScheduleStatus(list.get(position)));
+            isScheduled.setText(getTaskType(list.get(position)));
+
+            Button isScheduledButton = (Button)view.findViewById(R.id.item_scheduled_button);
+
+            if (getScheduleStatusBool(list.get(position))) isScheduledButton.setVisibility(View.VISIBLE);
+            else isScheduledButton.setVisibility(View.INVISIBLE);
 
             Button editBtn = (Button)view.findViewById(R.id.item_edit_button);
             Button deleteBtn = (Button)view.findViewById(R.id.item_delete_button);

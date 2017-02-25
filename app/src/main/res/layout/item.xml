@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:id="@+id/is_scheduled"
             android:textColor="?android:attr/textColorSecondary" />
     </LinearLayout>
@@ -38,8 +38,16 @@
         <Button
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:id="@+id/item_scheduled_button"
+            android:background="?android:attr/textCheckMarkInverse"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/item_edit_button"
             android:background="@android:drawable/ic_menu_edit"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -49,4 +57,5 @@
             android:background="@android:drawable/ic_menu_delete"
             android:layout_marginLeft="5dp" />
     </LinearLayout>
+
 </LinearLayout>

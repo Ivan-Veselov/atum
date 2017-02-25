@@ -37,4 +37,14 @@ public class TimeBlockerListActivity extends AbstractFiltersHolderListActivity<U
         return "";
     }
 
+    @Override
+    protected boolean getScheduleStatusBool(AbstractFiltersHolder u) {
+        return false;
+    }
+
+    @Override
+    protected String getTaskType(AbstractFiltersHolder u) {
+        return "";
+    }
+
 }

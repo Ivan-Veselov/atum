@@ -31,6 +31,23 @@ public class TaskListActivity extends AbstractFiltersHolderListActivity<UserDefi
     }
 
     @Override
+    protected String getTaskType(AbstractFiltersHolder task) {
+        UserDefinedTask userDefinedTask = (UserDefinedTask)task;
+        if (userDefinedTask.getType() == UserDefinedTask.Type.GENERAL) {
+            return "GENERAL TASK";
+        } else if (userDefinedTask.getType() == UserDefinedTask.Type.FIXED) {
+            return "FIXED TASK";
+        } else {
+            return "ADDITIONAL TASK";
+        }
+    }
+
+    @Override
+    protected boolean getScheduleStatusBool(AbstractFiltersHolder task) {
+        return ((UserDefinedTask)task).getScheduledTime() != null;
+    }
+
+    @Override
     protected Intent initializeIntent() {
         return new Intent(this, TabbedActivity.class);
     }
