@@ -1,5 +1,6 @@
 package ru.spbau.mit.atum.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,17 +8,24 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;import ru.spbau.mit.atum.model.AbstractFiltersHolder;
+import java.util.ArrayList;
+import java.util.List;
+
+import ru.spbau.mit.atum.model.AbstractFiltersHolder;
 import ru.spbau.mit.atum.model.IntervalFilter;
 import ru.spbau.mit.atum.R;import ru.spbau.mit.atum.model.TimeFilter;import ru.spbau.mit.atum.model.WeekFilter;
 
@@ -55,7 +63,7 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
 
     protected ArrayList<TimeFilter> timeFilters;
 
-    private ArrayAdapter<TimeFilter> timeFilterListViewAdapter;
+    private ListOfTimeFiltersAdapter timeFilterListViewAdapter;
 
     /**
      * Классы наследники должны перегрузить этот метод. В нем они должны инициализировать элементы
@@ -82,75 +90,8 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
             descriptionField.setText(holderToEdit.getDescription());
         }
 
-        timeFilterListViewAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_2,
-                android.R.id.text1,
-                timeFilters);
-
-        timeFilterListViewAdapter =
-                new ArrayAdapter<TimeFilter>(this,
-                        android.R.layout.simple_list_item_2,
-                        android.R.id.text1,
-                        timeFilters) {
-                    @Override
-                    public @NonNull
-                    View getView(int position,
-                                 View convertView,
-                                 @NonNull ViewGroup parent) {
-                        View view = super.getView(position, convertView, parent);
-                        TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-                        TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-
-                        TimeFilter filter = timeFilters.get(position);
-                        text1.setText(filter.getDescription());
-                        text2.setText(
-                                filter.getTypeDescription(AbstractFiltersHolderEditorActivity.this));
-                        return view;
-                    }
-                };
-
+        timeFilterListViewAdapter = new ListOfTimeFiltersAdapter(timeFilters, this);
         timeFilterListView.setAdapter(timeFilterListViewAdapter);
-        registerForContextMenu(timeFilterListView);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.filter_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.filter_menu_edit_item:
-                TimeFilter filter = timeFilters.get(info.position);
-                Intent intent;
-
-                if (filter instanceof IntervalFilter) {
-                    intent = new Intent(this, IntervalFilterEditorActivity.class);
-                } else if (filter instanceof WeekFilter) {
-                    intent = new Intent(this, WeekFilterEditorActivity.class);
-                } else {
-                    return super.onContextItemSelected(item);
-                }
-
-                intent.putExtra(FilterEditorActivity.EXTRA_FILTER, filter);
-                intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, info.position);
-                startActivityForResult(intent, EDIT_FILTER_REQUEST);
-
-                return true;
-            case R.id.filter_menu_delete_item:
-                timeFilters.remove(info.position);
-                timeFilterListViewAdapter.notifyDataSetChanged();
-
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
     }
 
     public void onClickAddFilterButton(View view) {
@@ -229,6 +170,82 @@ public abstract class AbstractFiltersHolderEditorActivity extends AppCompatActiv
 
             default:
                 break;
+        }
+    }
+
+    private class ListOfTimeFiltersAdapter extends BaseAdapter implements ListAdapter {
+        private List<TimeFilter> list;
+
+        private Context context;
+
+        public ListOfTimeFiltersAdapter(List<TimeFilter> list, Context context) {
+            this.list = list;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.item, null);
+            }
+
+            TextView name = (TextView) view.findViewById(R.id.task_name);
+            name.setText(list.get(position).getDescription());
+
+            TextView filterType = (TextView) view.findViewById(R.id.is_scheduled);
+            filterType.setText(
+                    list.get(position).getTypeDescription(
+                            AbstractFiltersHolderEditorActivity.this));
+
+            Button editBtn = (Button)view.findViewById(R.id.item_edit_button);
+            Button deleteBtn = (Button)view.findViewById(R.id.item_delete_button);
+
+            editBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    TimeFilter filter = timeFilters.get(position);
+                    Intent intent = null;
+
+                    if (filter instanceof IntervalFilter) {
+                        intent = new Intent(AbstractFiltersHolderEditorActivity.this,
+                                IntervalFilterEditorActivity.class);
+                    } else if (filter instanceof WeekFilter) {
+                        intent = new Intent(AbstractFiltersHolderEditorActivity.this,
+                                WeekFilterEditorActivity.class);
+                    }
+
+                    intent.putExtra(FilterEditorActivity.EXTRA_FILTER, filter);
+                    intent.putExtra(FilterEditorActivity.EXTRA_FILTER_POSITION, position);
+                    startActivityForResult(intent, EDIT_FILTER_REQUEST);
+                    notifyDataSetChanged();
+                }
+            });
+
+            deleteBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    timeFilters.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+
+            return view;
         }
     }
 }
