@@ -4,3 +4,6 @@ android:
   components:
     - build-tools-24.0.2
     - android-24
+    
+script:
+  - ./gradlew build check
