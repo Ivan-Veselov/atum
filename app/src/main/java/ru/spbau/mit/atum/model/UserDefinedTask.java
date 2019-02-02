@@ -206,7 +206,7 @@ public class UserDefinedTask extends AbstractFiltersHolder {
                             long duration, @Nullable Place place, int priority) {
         super(name, description, filterList);
 
-        if (duration < 0) {
+        if (duration <= 0) {
             throw new IllegalArgumentException("Duration of task is non positive.");
         }
 
