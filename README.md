@@ -1,19 +1,18 @@
-# ATUM
-AU Time Manager
+# ATUM — Android Time Manager App
 
-<a href="https://www.codacy.com/app/veselov-iva/atum?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ivan-Veselov/atum&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/c9d261bd8fc54aadbd7dd17d0711571e"/></a>
+[![Build Status](https://travis-ci.org/Ivan-Veselov/atum.svg?branch=master)](https://travis-ci.org/Ivan-Veselov/atum)
 
+<p align="center">
+  <img width="250" src="https://github.com/Ivan-Veselov/atum/wiki/images/demo.gif">
+</p>
 
-<a href="http://mit.spbau.ru/sewiki/index.php/%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5">Описание проекта</a>
+Android application that accepts list of tasks and automatically creates a schedule. Created schedule can be exported to Google Calendar.
 
-Инструкция по сборке:
+## Building
 
-1. Установить Java Development Kit
+JDK and <a href="https://developer.android.com/studio/index.html">Android SDK</a> are required. This command from project root directory should build the app:
 
-2. Склонировать репозиторий
-
-3. Установить gradle
-
-4. Установить <a href="https://developer.android.com/studio/index.html">Android SDK</a>
-
-5. В корневой папке проекта запустить команду `./gradlew build`
+```
+./gradlew build
+```
+You may also download built <a href="https://github.com/Ivan-Veselov/atum/wiki/app/atum-debug.apk">apk</a> file.
